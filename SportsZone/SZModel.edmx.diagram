@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="09b8b37697b1463e89037ebd9395065f" Name="Diagram1">
+        <EntityTypeShape EntityType="sportszoneModel.club_games" Width="1.5" PointX="5.25" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.club" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.coach_associations" Width="1.5" PointX="8.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.coach_associations_request" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.coach" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.feedback" Width="1.5" PointX="3" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.game" Width="1.5" PointX="1.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.games_positions" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.match_result" Width="1.5" PointX="10.5" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.match" Width="1.5" PointX="8.25" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.player_associations" Width="1.5" PointX="5.25" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.player_associations_request" Width="1.5" PointX="8.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.player_role" Width="1.5" PointX="3.75" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.player" Width="1.5" PointX="6" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.team" Width="1.5" PointX="8.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="sportszoneModel.user" Width="1.5" PointX="0.75" PointY="17" IsExpanded="true" />
+        <AssociationConnector Association="sportszoneModel.which_club_in_club_games" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.which_game_in_club_games" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.a_player_associate_in_which_club" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.club_associated_with_user" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.coach_associate_in_which_club" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.its_shows_request_to_club__" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.its_shows_request_to_club_of_coach" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.team_of_which_club" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.coach_associate_in_which_team" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.coach_is_playing_which_role_of_game" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.its_gives_the_coach_id" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.its_shows_coach_request_id_of_coach" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.its_shows_request_of_coach_of_which_base" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.its_shows_request_of_teams_of_coach" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.coach_associated_with_user" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.coach_type" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.feedback_from_which_user" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.feedback_to_which_user" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.game_positions_in_game_position" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.team_of_which_game" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.user_of_which_game_role" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.loser_and_winner" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.which_match_which_team" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.a_player_associate_in_which_team" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.a_player_is_playing_which_role_of_game" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.its_gives_the_player_id_" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.its_shows_player_request_id_" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.its_shows_request_of_teams" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.its_shows_request_of_which_role_base" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.user_role_in_game" ManuallyRouted="false" />
+        <AssociationConnector Association="sportszoneModel.player_user_rel" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

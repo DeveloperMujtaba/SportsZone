@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -120,34 +128,410 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="club.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="club_games.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="coach.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="coach_associations.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="coach_associations_request.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="feedback.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="game.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="games_positions.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="match.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="match_result.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="player.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="player_associations.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="player_associations_request.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="player_role.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SZModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SZModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SZModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SZModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SZModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="team.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="user.cs">
+      <DependentUpon>SZModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="themes\default\browserconfig.xml" />
+    <Content Include="themes\default\css\animate.css" />
+    <Content Include="themes\default\css\bootstrap\bootstrap.min.css" />
+    <Content Include="themes\default\css\color.css" />
+    <Content Include="themes\default\css\font-awesome.min.css" />
+    <Content Include="themes\default\css\icomoon.css" />
+    <Content Include="themes\default\css\main.css" />
+    <Content Include="themes\default\css\normalize.css" />
+    <Content Include="themes\default\css\responsive.css" />
+    <Content Include="themes\default\css\transition.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="themes\default\favicon.ico" />
+    <Content Include="themes\default\fonts\fontawesome-webfont.svg" />
+    <Content Include="themes\default\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="themes\default\fonts\icomoon.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="themes\default\images\about-video-1.jpg" />
+    <Content Include="themes\default\images\about-video-2.jpg" />
+    <Content Include="themes\default\images\about-video-bg.jpg" />
+    <Content Include="themes\default\images\about-video.jpg" />
+    <Content Include="themes\default\images\add-banner-2.jpg" />
+    <Content Include="themes\default\images\add-banner.jpg" />
+    <Content Include="themes\default\images\add-banners\img-01.jpg" />
+    <Content Include="themes\default\images\add-banners\img-02.jpg" />
+    <Content Include="themes\default\images\add-banners\img-03.jpg" />
+    <Content Include="themes\default\images\add-shirt.jpg" />
+    <Content Include="themes\default\images\adds-02.jpg" />
+    <Content Include="themes\default\images\adds-3.jpg" />
+    <Content Include="themes\default\images\adds.jpg" />
+    <Content Include="themes\default\images\arrow-left.png" />
+    <Content Include="themes\default\images\arrow-right.png" />
+    <Content Include="themes\default\images\aside-post.jpg" />
+    <Content Include="themes\default\images\aurthor-img.jpg" />
+    <Content Include="themes\default\images\banner-bgs\img-01.jpg" />
+    <Content Include="themes\default\images\banner-bgs\img-02.jpg" />
+    <Content Include="themes\default\images\banner-bgs\img-03.jpg" />
+    <Content Include="themes\default\images\banner-slider-2\banner-layer-1.png" />
+    <Content Include="themes\default\images\banner-slider-2\img-01.jpg" />
+    <Content Include="themes\default\images\banner-slider\img-01.jpg" />
+    <Content Include="themes\default\images\banner-slider\img-02.jpg" />
+    <Content Include="themes\default\images\banner-slider\img-03.jpg" />
+    <Content Include="themes\default\images\best-sellers\img-01.jpg" />
+    <Content Include="themes\default\images\best-sellers\img-02.jpg" />
+    <Content Include="themes\default\images\best-sellers\img-03.jpg" />
+    <Content Include="themes\default\images\blog-detail\aurthor.jpg" />
+    <Content Include="themes\default\images\blog-detail\img-01.jpg" />
+    <Content Include="themes\default\images\blog-detail\img-02.jpg" />
+    <Content Include="themes\default\images\blog-detail\img-03.jpg" />
+    <Content Include="themes\default\images\blog-detail\img-2-1.jpg" />
+    <Content Include="themes\default\images\blog-detail\img-2-2.jpg" />
+    <Content Include="themes\default\images\blog-detail\img-2-3.jpg" />
+    <Content Include="themes\default\images\blog-detail\next-img.jpg" />
+    <Content Include="themes\default\images\blog-detail\prev-img.jpg" />
+    <Content Include="themes\default\images\blog-grid-view\img-01.jpg" />
+    <Content Include="themes\default\images\blog-grid-view\img-02.jpg" />
+    <Content Include="themes\default\images\blog-grid-view\img-03.jpg" />
+    <Content Include="themes\default\images\blog-grid-view\img-2-1.jpg" />
+    <Content Include="themes\default\images\blog-grid-view\img-2-2.jpg" />
+    <Content Include="themes\default\images\blog-grid-view\img-2-3.jpg" />
+    <Content Include="themes\default\images\blog-grid-view\img-2-4.jpg" />
+    <Content Include="themes\default\images\blog-list-view\img-01.jpg" />
+    <Content Include="themes\default\images\blog-list-view\img-02.jpg" />
+    <Content Include="themes\default\images\blog-list-view\img-03.jpg" />
+    <Content Include="themes\default\images\blog\img-01.jpg" />
+    <Content Include="themes\default\images\blog\img-02.jpg" />
+    <Content Include="themes\default\images\brand-icon-bg.jpg" />
+    <Content Include="themes\default\images\brand-icons\img-01.png" />
+    <Content Include="themes\default\images\brand-icons\img-02.png" />
+    <Content Include="themes\default\images\brand-icons\img-03.jpg" />
+    <Content Include="themes\default\images\brand-icons\img-03.png" />
+    <Content Include="themes\default\images\brand-icons\img-04.png" />
+    <Content Include="themes\default\images\brand-icons\img-05.png" />
+    <Content Include="themes\default\images\brand-icons\img-06.png" />
+    <Content Include="themes\default\images\brand-icons\img-07.png" />
+    <Content Include="themes\default\images\brand-icons\img-08.png" />
+    <Content Include="themes\default\images\brand-icons\img-1-1.png" />
+    <Content Include="themes\default\images\brand-icons\img-1-2.png" />
+    <Content Include="themes\default\images\brand-icons\img-1-3.png" />
+    <Content Include="themes\default\images\brand-icons\img-1-4.png" />
+    <Content Include="themes\default\images\brand-icons\img-1-5.png" />
+    <Content Include="themes\default\images\brand-icons\img-1-6.png" />
+    <Content Include="themes\default\images\coach-statement-bg.jpg" />
+    <Content Include="themes\default\images\coach.jpg" />
+    <Content Include="themes\default\images\commenter\img-01.jpg" />
+    <Content Include="themes\default\images\commenter\img-02.jpg" />
+    <Content Include="themes\default\images\commenter\img-1-1.jpg" />
+    <Content Include="themes\default\images\commenter\img-2-1.jpg" />
+    <Content Include="themes\default\images\country-flags-bg.jpg" />
+    <Content Include="themes\default\images\flags\img-01.jpg" />
+    <Content Include="themes\default\images\flags\img-02.jpg" />
+    <Content Include="themes\default\images\flags\img-03.jpg" />
+    <Content Include="themes\default\images\flags\img-04.jpg" />
+    <Content Include="themes\default\images\footer-add.jpg" />
+    <Content Include="themes\default\images\footer-logo.png" />
+    <Content Include="themes\default\images\footer-shop\img-01.png" />
+    <Content Include="themes\default\images\gallery-v1\img-01.jpg" />
+    <Content Include="themes\default\images\gallery-v1\img-02.jpg" />
+    <Content Include="themes\default\images\gallery-v1\img-03.jpg" />
+    <Content Include="themes\default\images\gallery-v1\img-04.jpg" />
+    <Content Include="themes\default\images\gallery-v1\img-05.jpg" />
+    <Content Include="themes\default\images\gallery-v1\img-06.jpg" />
+    <Content Include="themes\default\images\gallery-v1\img-07.jpg" />
+    <Content Include="themes\default\images\gallery-v1\img-08.jpg" />
+    <Content Include="themes\default\images\gallery-v1\img-09.jpg" />
+    <Content Include="themes\default\images\gallery-v1\img-10.jpg" />
+    <Content Include="themes\default\images\gallery-v1\img-11.jpg" />
+    <Content Include="themes\default\images\gallery-v2\img-01.jpg" />
+    <Content Include="themes\default\images\gallery-v2\img-02.jpg" />
+    <Content Include="themes\default\images\gallery-v2\img-03.jpg" />
+    <Content Include="themes\default\images\gallery-v2\img-04.jpg" />
+    <Content Include="themes\default\images\gallery-v2\img-05.jpg" />
+    <Content Include="themes\default\images\gallery-v2\img-06.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-01.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-02.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-03.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-04.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-05.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-06.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-1-1.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-1-2.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-1-3.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-1-4.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-1-5.jpg" />
+    <Content Include="themes\default\images\gallery-v3\img-1-6.jpg" />
+    <Content Include="themes\default\images\gallery\img-01.jpg" />
+    <Content Include="themes\default\images\gallery\img-02.jpg" />
+    <Content Include="themes\default\images\gallery\img-03.jpg" />
+    <Content Include="themes\default\images\gallery\img-04.jpg" />
+    <Content Include="themes\default\images\gallery\img-05.jpg" />
+    <Content Include="themes\default\images\gallery\img-06.jpg" />
+    <Content Include="themes\default\images\gallery\img-07.jpg" />
+    <Content Include="themes\default\images\gallery\img-08.jpg" />
+    <Content Include="themes\default\images\heading-pettren.jpg" />
+    <Content Include="themes\default\images\heading-pettren.png" />
+    <Content Include="themes\default\images\inner-banner\img-01.jpg" />
+    <Content Include="themes\default\images\inner-banner\img-02.jpg" />
+    <Content Include="themes\default\images\inner-banner\img-03.jpg" />
+    <Content Include="themes\default\images\inner-banner\img-04.jpg" />
+    <Content Include="themes\default\images\inner-banner\img-05.jpg" />
+    <Content Include="themes\default\images\inner-banner\img-06.jpg" />
+    <Content Include="themes\default\images\inner-banner\img-07.jpg" />
+    <Content Include="themes\default\images\inner-banner\img-08.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\img-01.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\img-02.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\img-03.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\img-032.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\img-04.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\img-05.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\img-06.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\img-07.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\img-08.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\img-09.jpg" />
+    <Content Include="themes\default\images\instgram-imgs\instgram-writer.jpg" />
+    <Content Include="themes\default\images\keper-img.jpg" />
+    <Content Include="themes\default\images\latest-news\img-01.jpg" />
+    <Content Include="themes\default\images\latest-news\img-02.jpg" />
+    <Content Include="themes\default\images\latest-news\img-03.jpg" />
+    <Content Include="themes\default\images\latest-news\img-04.jpg" />
+    <Content Include="themes\default\images\logo-1.png" />
+    <Content Include="themes\default\images\logo-2.png" />
+    <Content Include="themes\default\images\logo-3.png" />
+    <Content Include="themes\default\images\logo-4.png" />
+    <Content Include="themes\default\images\match-detail\img-01.jpg" />
+    <Content Include="themes\default\images\match-detail\team-logo-01.png" />
+    <Content Include="themes\default\images\match-detail\team-logo-02.png" />
+    <Content Include="themes\default\images\match-detail\team-logo-03.png" />
+    <Content Include="themes\default\images\match-detail\team-logo-04.png" />
+    <Content Include="themes\default\images\match-fixtuer\img-01.png" />
+    <Content Include="themes\default\images\match-fixtuer\img-02.png" />
+    <Content Include="themes\default\images\match-fixtuer\img-03.png" />
+    <Content Include="themes\default\images\match-fixtuer\img-04.png" />
+    <Content Include="themes\default\images\match-fixtuer\img-05.png" />
+    <Content Include="themes\default\images\match-fixtuer\img-06.png" />
+    <Content Include="themes\default\images\match-fixtuer\img-07.png" />
+    <Content Include="themes\default\images\match-fixtuer\img-08.png" />
+    <Content Include="themes\default\images\matches-logo\img-01.png" />
+    <Content Include="themes\default\images\matches-logo\img-02.png" />
+    <Content Include="themes\default\images\matches-logo\img-03.png" />
+    <Content Include="themes\default\images\matches-logo\img-04.png" />
+    <Content Include="themes\default\images\matches-logo\img-05.png" />
+    <Content Include="themes\default\images\matches-logo\img-06.png" />
+    <Content Include="themes\default\images\mobile.png" />
+    <Content Include="themes\default\images\news-post\img-01.jpg" />
+    <Content Include="themes\default\images\news-post\img-02.jpg" />
+    <Content Include="themes\default\images\parallax-bg\img-01.jpg" />
+    <Content Include="themes\default\images\parallax-bg\img-02.jpg" />
+    <Content Include="themes\default\images\parallax-bg\img-03.jpg" />
+    <Content Include="themes\default\images\pattern-bg.jpg" />
+    <Content Include="themes\default\images\player-img.png" />
+    <Content Include="themes\default\images\png-icons\img-01.png" />
+    <Content Include="themes\default\images\png-icons\img-02.png" />
+    <Content Include="themes\default\images\png-icons\img-03.png" />
+    <Content Include="themes\default\images\png-icons\img-04.png" />
+    <Content Include="themes\default\images\png-icons\img-05.png" />
+    <Content Include="themes\default\images\png-icons\img-06.png" />
+    <Content Include="themes\default\images\png-icons\img-07.png" />
+    <Content Include="themes\default\images\png-icons\img-08.png" />
+    <Content Include="themes\default\images\png-icons\img-09.png" />
+    <Content Include="themes\default\images\png-icons\img-10.png" />
+    <Content Include="themes\default\images\popular-news\img-01.jpg" />
+    <Content Include="themes\default\images\popular-news\img-02.jpg" />
+    <Content Include="themes\default\images\popular-news\img-03.jpg" />
+    <Content Include="themes\default\images\popular-news\img-04.jpg" />
+    <Content Include="themes\default\images\preloader.gif" />
+    <Content Include="themes\default\images\prettyPhoto\default\default_thumb.png" />
+    <Content Include="themes\default\images\prettyPhoto\default\loader.gif" />
+    <Content Include="themes\default\images\prettyPhoto\default\sprite.png" />
+    <Content Include="themes\default\images\prettyPhoto\default\sprite_next.png" />
+    <Content Include="themes\default\images\prettyPhoto\default\sprite_prev.png" />
+    <Content Include="themes\default\images\prettyPhoto\default\sprite_x.png" />
+    <Content Include="themes\default\images\prettyPhoto\default\sprite_y.png" />
+    <Content Include="themes\default\images\product-slider\slider-img-01.jpg" />
+    <Content Include="themes\default\images\product-slider\slider-img-02.jpg" />
+    <Content Include="themes\default\images\product-slider\slider-img-03.jpg" />
+    <Content Include="themes\default\images\product-slider\slider-img-04.jpg" />
+    <Content Include="themes\default\images\product-slider\thumnail-01.jpg" />
+    <Content Include="themes\default\images\product-slider\thumnail-02.jpg" />
+    <Content Include="themes\default\images\product-slider\thumnail-03.jpg" />
+    <Content Include="themes\default\images\product-slider\thumnail-04.jpg" />
+    <Content Include="themes\default\images\products\img-01.jpg" />
+    <Content Include="themes\default\images\products\img-02.jpg" />
+    <Content Include="themes\default\images\products\img-03.jpg" />
+    <Content Include="themes\default\images\products\img-04.jpg" />
+    <Content Include="themes\default\images\products\img-05.jpg" />
+    <Content Include="themes\default\images\products\img-06.jpg" />
+    <Content Include="themes\default\images\products\img-2-1.jpg" />
+    <Content Include="themes\default\images\products\img-2-2.jpg" />
+    <Content Include="themes\default\images\products\img-2-3.jpg" />
+    <Content Include="themes\default\images\products\img-2-4.jpg" />
+    <Content Include="themes\default\images\products\img-2-5.jpg" />
+    <Content Include="themes\default\images\products\img-2-6.jpg" />
+    <Content Include="themes\default\images\products\img-2-7.jpg" />
+    <Content Include="themes\default\images\products\img-2-8.jpg" />
+    <Content Include="themes\default\images\products\img-2-9.jpg" />
+    <Content Include="themes\default\images\red-bg.jpg" />
+    <Content Include="themes\default\images\result-team-logo\img-01.png" />
+    <Content Include="themes\default\images\result-team-logo\img-02.png" />
+    <Content Include="themes\default\images\reviewers\img-01.jpg" />
+    <Content Include="themes\default\images\reviewers\img-02.jpg" />
+    <Content Include="themes\default\images\reviewers\img-03.jpg" />
+    <Content Include="themes\default\images\shop-detail\add-cart-01.jpg" />
+    <Content Include="themes\default\images\shop-detail\add-cart-02.jpg" />
+    <Content Include="themes\default\images\shop-detail\add-cart-03.jpg" />
+    <Content Include="themes\default\images\signature.png" />
+    <Content Include="themes\default\images\small-flags\img-01.png" />
+    <Content Include="themes\default\images\small-flags\img-02.png" />
+    <Content Include="themes\default\images\small-flags\img-03.png" />
+    <Content Include="themes\default\images\small-flags\img-04.png" />
+    <Content Include="themes\default\images\small-flags\img-05.png" />
+    <Content Include="themes\default\images\team-detail\bloq-aurthor.jpg" />
+    <Content Include="themes\default\images\team-logos-small\img-01.png" />
+    <Content Include="themes\default\images\team-logos-small\img-02.png" />
+    <Content Include="themes\default\images\team-logos-small\img-03.png" />
+    <Content Include="themes\default\images\team-logos-small\img-04.png" />
+    <Content Include="themes\default\images\team-logos-small\img-05.png" />
+    <Content Include="themes\default\images\team-logos-small\img-06.png" />
+    <Content Include="themes\default\images\team-logos-small\img-07.png" />
+    <Content Include="themes\default\images\team-logos-small\img-08.png" />
+    <Content Include="themes\default\images\team-logos\img-01.png" />
+    <Content Include="themes\default\images\team-logos\img-02.png" />
+    <Content Include="themes\default\images\team-logos\img-03.png" />
+    <Content Include="themes\default\images\team-logos\img-04.png" />
+    <Content Include="themes\default\images\team\img-01.jpg" />
+    <Content Include="themes\default\images\team\img-02.jpg" />
+    <Content Include="themes\default\images\team\img-03.jpg" />
+    <Content Include="themes\default\images\team\img-04.jpg" />
+    <Content Include="themes\default\images\team\img-1-1.jpg" />
+    <Content Include="themes\default\images\team\img-1-2.jpg" />
+    <Content Include="themes\default\images\team\img-1-3.jpg" />
+    <Content Include="themes\default\images\team\img-1-4.jpg" />
+    <Content Include="themes\default\images\testimonial\img-01.jpg" />
+    <Content Include="themes\default\images\testimonial\img-02.jpg" />
+    <Content Include="themes\default\images\testimonial\img-03.jpg" />
+    <Content Include="themes\default\images\top-story-bg.jpg" />
+    <Content Include="themes\default\images\tower-img.jpg" />
+    <Content Include="themes\default\images\underconstraction-bg.jpg" />
+    <Content Include="themes\default\images\video-bg-2.jpg" />
+    <Content Include="themes\default\images\video-bg-3.jpg" />
+    <Content Include="themes\default\images\video-bg-big.jpg" />
+    <Content Include="themes\default\images\video-bg.jpg" />
+    <Content Include="themes\default\images\video-gallery\img-01.jpg" />
+    <Content Include="themes\default\images\video-gallery\img-02.jpg" />
+    <Content Include="themes\default\images\video-gallery\img-03.jpg" />
+    <Content Include="themes\default\images\video-gallery\img-04.jpg" />
+    <Content Include="themes\default\images\video-gallery\img-05.jpg" />
+    <Content Include="themes\default\images\video-slider\img-01.jpg" />
+    <Content Include="themes\default\images\video-slider\img-02.jpg" />
+    <Content Include="themes\default\images\video-slider\img-03.jpg" />
+    <Content Include="themes\default\images\video-slider\img-04.jpg" />
+    <Content Include="themes\default\images\video-slider\img-05.jpg" />
+    <Content Include="themes\default\js\appear.js" />
+    <Content Include="themes\default\js\bigslide.js" />
+    <Content Include="themes\default\js\classie.js" />
+    <Content Include="themes\default\js\contact-form.js" />
+    <Content Include="themes\default\js\countdown.js" />
+    <Content Include="themes\default\js\countTo.js" />
+    <Content Include="themes\default\js\datepicker.js" />
+    <Content Include="themes\default\js\gmap3.min.js" />
+    <Content Include="themes\default\js\main.js" />
+    <Content Include="themes\default\js\parallax.js" />
+    <Content Include="themes\default\js\prettyPhoto.js" />
+    <Content Include="themes\default\js\range-slider.js" />
+    <Content Include="themes\default\js\rating-star.js" />
+    <Content Include="themes\default\js\slick.js" />
+    <Content Include="themes\default\js\spinner.js" />
+    <Content Include="themes\default\js\vendor\bootstrap.min.js" />
+    <Content Include="themes\default\js\vendor\jquery.js" />
+    <Content Include="themes\default\js\vendor\modernizr.js" />
+    <Content Include="themes\default\js\vendor\npm.js" />
+    <Content Include="themes\default\js\waterwheelCarousel.js" />
+    <Content Include="themes\default\js\wow-min.js" />
+    <Content Include="themes\default\php\process.php" />
+    <Content Include="SZModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SZModel.Context.cs</LastGenOutput>
+      <DependentUpon>SZModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="SZModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SZModel.edmx</DependentUpon>
+      <LastGenOutput>SZModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="themes\default\style.css" />
+    <Content Include="themes\default\tile-wide.png" />
+    <Content Include="themes\default\tile.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -162,23 +546,36 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <EntityDeploy Include="SZModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SZModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="SZModel.edmx.diagram">
+      <DependentUpon>SZModel.edmx</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="themes\default\fonts\fontawesome-webfont.eot" />
+    <Content Include="themes\default\fonts\fontawesome-webfont.ttf" />
+    <Content Include="themes\default\fonts\fontawesome-webfont.woff" />
+    <Content Include="themes\default\fonts\fontawesome-webfont.woff2" />
+    <Content Include="themes\default\fonts\FontAwesome.otf" />
+    <Content Include="themes\default\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="themes\default\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="themes\default\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="themes\default\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="themes\default\fonts\icomoon.eot" />
+    <Content Include="themes\default\fonts\icomoon.ttf" />
+    <Content Include="themes\default\fonts\icomoon.woff" />
+    <Content Include="themes\default\images\Thumbs.db" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
