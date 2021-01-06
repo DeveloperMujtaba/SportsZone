@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+<title>JZ Sports Zone | Login</title>
+<body style="background-image:url('https://motionarray.imgix.net/preview-279485-UenCPR1wxc-high_0008.jpg'); background-repeat:no-repeat; background-size:cover">
+    <link href="~/themes/default/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/themes/default/login/style.css" rel="stylesheet" />
+    <h2 style="color:white">Welcome to JZ Sports Zone</h2>
+    <a style="font-size:24px; color:white; margin-top:-10px" href="/">⬅️ Go to Home </a>
+    <div class="container" id="container">
+        <div class="form-container sign-in-container">
+            <form action="#">
+                <h1>Sign in</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="social"><i class="fa fa-google-plus"></i></a>
+                    <a href="#" class="social"><i class="fa fa-linkedin"></i></a>
+                </div>
+                <span>or use your account</span>
+                <input type="email" placeholder="Email" />
+                <input type="password" placeholder="Password" />
+                <a href="#">Forgot your password?</a>
+                <button>Sign In</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button onclick="navigatetoregister()" class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>
+            Created with <i class="fa fa-heart"></i> by
+            <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
+            - Read how I created this and how you can join the challenge
+            <a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
+        </p>
+    </footer>
+    <script>
+        function navigatetoregister() {
+            window.location.href = '/account/register';
+        }
+    </script>
+    </body>
