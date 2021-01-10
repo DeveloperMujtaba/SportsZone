@@ -1,68 +1,68 @@
 ﻿@model  players
-<h4 class="mt-0 header-title mb-4">More Detail</h4>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">I'm</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="Email" name="Email" value="@Model[0].usertype" disabled>
+<form action="/account/SavePlayers" method="post" enctype="multipart/form-data" id="moreprflfrm">
+    <h4 class="mt-0 header-title mb-4">More Detail</h4>
+    <div class="form-group row" style="display:none">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Player Detail</label>
+        <div class="col-sm-3">
+            <input class="form-control" type="text" name="playerid" value="@Model.playerid">
+        </div>
+        <div class="col-sm-3">
+            <input class="form-control" type="text" name="userid" value="@Model.userid">
+        </div>
+        <div class="col-sm-3">
+            <input class="form-control" type="text" name="roleid" value="@Model.roleid">
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">Username</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="text" value="@Model[0].username" disabled>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="playername" value="@Model.playername">
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">Member Since</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="text" value="@Model[0].C_date.ToString()" disabled>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Age</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="number" name="age" value="@Model.age">
+        </div>
+        <label for="example-text-input" class="col-sm-2 col-form-label">Height</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="height" value="@Model.height">
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">Account Status</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="text" value="@Model[0].C_status.Value.ToString()" disabled>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Profil Photo [200x200]</label>
+        <div class="col-sm-5">
+            <input id="photouploaderp" class="form-control" type="file" name="photo1" value="">
+        </div>
+        <div class="col-sm-5">
+            <img id="fpreviewimgp" src="~/uploads/media/@Model.photo" style="width:100%" />
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="Email" name="Email" value="@Model[0].email" required>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Cover Photo [900x300]</label>
+        <div class="col-sm-6">
+            <input id="photouploaderc" class="form-control" type="file" name="photo2" value="">
+        </div>
+        <div class="col-sm-12">
+            <img id="fpreviewimgc" src="~/uploads/media/@Model.cover" style="width:100%"/>
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="Email" name="Email" value="@Model[0].email" required>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Bio</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="bio" value="@Model.bio">
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">Phone</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="text" name="Phone" value="@Model[0].phone" required>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Specialize In</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="bio" value="@ViewBag.GameName" disabled>
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">New Password</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="text" name="Phone" value="" placeholder="leave blank if you don't want to change" min-length="6">
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input class="form-control btn btn-outline-success" type="submit" value="Save" form="moreprflfrm">
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">Is Email Verified</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="text" value="@Model[0].isemail.Value.ToString()" disabled>
-    </div>
-</div>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">Is Phone Verified</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="text" value="@Model[0].isphone.Value.ToString()" disabled>
-    </div>
-</div>
-<div class="form-group row">
-    <label for="example-text-input" class="col-sm-2 col-form-label">Is Payment Verified</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="text" value="@Model[0].ispayment.Value.ToString()" disabled>
-    </div>
-</div>
+</form>

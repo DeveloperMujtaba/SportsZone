@@ -12,13 +12,34 @@ namespace SportsZone.Controllers
 
     public class AccountController : Controller
     {
+        private List<GamePositionsHolder> GamesPositions()
+        {
+            using (Entities context = new Entities())
+            {
+                List<games_positions> games = (from g in context.games_positions select g).ToList();
+                List<GamePositionsHolder> holder = new List<GamePositionsHolder>();
+                for (int i = 0; i < games.Count; i++)
+                {
+                    int id = games[i].gameid;
+                    GamePositionsHolder hl = new GamePositionsHolder
+                    {
+                        pid = games[i].positionid,
+                        gid = id,
+                        positionname = games[i].position,
+                        gamename = (from a in context.games where a.gameid == id select a.gamename).SingleOrDefault()
+                    };
+                    holder.Add(hl);
+                }
+                return holder;
+            }
+        } 
         Helpers.IsExist _IsExist = new Helpers.IsExist();
         Authenticate _auth = new Authenticate();
         // GET: Account
         [ActionName("register")]
         public ActionResult Register()
         {
-            return View();
+            return View(GamesPositions());
         }
         [HttpPost]
         public ActionResult Register(RegisterModel rm)
@@ -48,7 +69,13 @@ namespace SportsZone.Controllers
                         {
                             players _p = new players
                             {
-                                userid = (from u in context.users where u.email == rm.Email select u.userid).SingleOrDefault()
+                                userid = (from u in context.users where u.email == rm.Email select u.userid).SingleOrDefault(),
+                                roleid = rm.RoleId,
+                                photo="no-image.jpg",
+                                cover="no-cover.jpg",
+                                playername="",
+                                age=0,
+                                bio=""
                             };
                             context.players.Add(_p);
                             context.SaveChanges();
@@ -57,7 +84,14 @@ namespace SportsZone.Controllers
                         {
                             coachs _c = new coachs
                             {
-                                userid = (from u in context.users where u.email == rm.Email select u.userid).SingleOrDefault()
+                                userid = (from u in context.users where u.email == rm.Email select u.userid).SingleOrDefault(),
+                                name = rm.Username,
+                                age = 40,
+                                picture = "no-image.jpg",
+                                cover = "no-cover.jpg",
+                                positionid = rm.RoleId,
+                                bio="Hey, I am coach!"
+                                
                             };
                             context.coachs.Add(_c);
                             context.SaveChanges();
@@ -66,7 +100,9 @@ namespace SportsZone.Controllers
                         {
                             clubs _c = new clubs
                             {
-                                userid = (from u in context.users where u.email == rm.Email select u.userid).SingleOrDefault()
+                                userid = (from u in context.users where u.email == rm.Email select u.userid).SingleOrDefault(),
+                                logo = "no-image.jpg",
+                                cover = "no-cover.jpg"
                             };
                             context.clubs.Add(_c);
                             context.SaveChanges();
@@ -80,14 +116,13 @@ namespace SportsZone.Controllers
                 {
                     ViewBag.Message = ex.Message;
                     Console.WriteLine(ex);
-                    throw;
-                    //return View("register");
+                    return View("register", GamesPositions());
                 }
             }
             else
             {
-                ViewBag.Message = "input valid data!";
-                return View("register");
+                ViewBag.Message = "Input valid data!";
+                return View("register", GamesPositions());
             }
         }
         [ActionName("login")]
@@ -129,9 +164,15 @@ namespace SportsZone.Controllers
         [ActionName("me")]
         public ActionResult Me(string id)
         {
-            List<users> _u = new List<users>();
-            _u = (List<users>)Session["Data"];
-            return View("index", _u);
+            using (Entities context = new Entities())
+            {
+                List<users> u = new List<users>();
+                u = (List<users>)Session["Data"];
+                int uid = u[0].userid;
+                if (TempData["Message"] != null)
+                    ViewBag.Message = TempData["Message"].ToString();
+                return View("index", (from e in context.users where e.userid == uid select e).ToList());
+            }            
         }
         [Authorized]
         public ActionResult Index()
@@ -142,8 +183,28 @@ namespace SportsZone.Controllers
         [HttpPost]
         public ActionResult UpdateUser(users um)
         {
-
-            return View("me");
+            try
+            {
+                using (var context = new Entities())
+                {
+                    var update = context.users.Find(um.userid);
+                    if (um.passwd!=null && um.passwd.Length >= 6)
+                    {
+                        update.passwd = _auth.GenPassword(um.passwd);
+                    }
+                    update.email = um.email;
+                    update.phone = um.phone;
+                    context.Entry(update).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                    TempData["Message"] = "Changes have been saved!";
+                    return RedirectToAction("me");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("me");
+            }
         }
         [Authorized]
         [HttpGet]
@@ -157,6 +218,12 @@ namespace SportsZone.Controllers
                 {
                     List<players> p = (from _p in ctx.players where _p.userid == uid select _p).ToList();
                     players pp = p[0];
+                    int pid = pp.roleid;
+                    List<games_positions> gp = (from g in ctx.games_positions where g.positionid == pid select g).ToList();
+                    int gid = gp[0].gameid;
+                    string pname = gp[0].position;
+                    string gname = (from g in ctx.games where g.gameid == gid select g.gamename).SingleOrDefault();
+                    ViewBag.GameName = gid + " | " + pid + " | " + gname + " | " + pname;
                     return PartialView("~/Views/Shared/Partial/playerdetail.cshtml", pp);
                 }
             }
@@ -165,7 +232,14 @@ namespace SportsZone.Controllers
                 using (var ctx = new Entities())
                 {
                     List<coachs> p = (from _p in ctx.coachs where _p.userid == uid select _p).ToList();
-                    return PartialView("~/Views/Shared/Partial/coachdetail.cshtml", p);
+                    coachs pp = p[0];
+                    int? pid = pp.positionid;
+                    List<games_positions> gp = (from g in ctx.games_positions where g.positionid == pid select g).ToList();
+                    int gid = gp[0].gameid;
+                    string pname = gp[0].position;
+                    string gname = (from g in ctx.games where g.gameid == gid select g.gamename).SingleOrDefault();
+                    ViewBag.GameName = gid + " | " + pid + " | " + gname + " | " + pname;
+                    return PartialView("~/Views/Shared/Partial/coachdetail.cshtml", pp);
                 }
             }
             else
@@ -173,8 +247,145 @@ namespace SportsZone.Controllers
                 using (var ctx = new Entities())
                 {
                     List<clubs> p = (from _p in ctx.clubs where _p.userid == uid select _p).ToList();
-                    return PartialView("~/Views/Shared/Partial/clubdetail.cshtml", p);
+                    clubs pp = p[0];
+                    return PartialView("~/Views/Shared/Partial/clubdetail.cshtml", pp);
                 }
+            }
+        }
+        [Authorized]
+        [HttpPost]
+        public ActionResult SavePlayers(players pl, HttpPostedFileBase photo1, HttpPostedFileBase photo2)
+        {
+            try
+            {
+                using (var context = new Entities())
+                {
+                    var update = context.players.Find(pl.playerid);
+                    if (photo1 != null)
+                    {
+                        string pic = System.IO.Path.GetFileName(photo1.FileName);
+                        string newname = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss")+ "." + pic.Split('.')[1];
+                        string path = System.IO.Path.Combine(
+                        Server.MapPath("~/uploads/media"), newname);
+                        // file is uploaded
+                        photo1.SaveAs(path);
+                        update.photo = newname;
+                    }
+                    if (photo2 != null)
+                    {
+                        string pic = System.IO.Path.GetFileName(photo2.FileName);
+                        string newname = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
+                        string path = System.IO.Path.Combine(
+                        Server.MapPath("~/uploads/media"), newname);
+                        // file is uploaded
+                        photo2.SaveAs(path);
+                        update.cover = newname;
+                    }
+                    update.age = pl.age;
+                    update.bio = pl.bio;
+                    update.height = pl.height;
+                    update.playername = pl.playername;
+                    context.Entry(update).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                    TempData["Message"] = "Changes have been saved!";
+                    return RedirectToAction("me");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("me");
+            }
+        }
+        [Authorized]
+        [HttpPost]
+        public ActionResult SaveCoach(coachs pl, HttpPostedFileBase photo1, HttpPostedFileBase photo2)
+        {
+            try
+            {
+                using (var context = new Entities())
+                {
+                    var update = context.coachs.Find(pl.coachid);
+                    if (photo1 != null)
+                    {
+                        string pic = System.IO.Path.GetFileName(photo1.FileName);
+                        string newname = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
+                        string path = System.IO.Path.Combine(
+                        Server.MapPath("~/uploads/media"), newname);
+                        // file is uploaded
+                        photo1.SaveAs(path);
+                        update.picture = newname;
+                    }
+                    if (photo2 != null)
+                    {
+                        string pic = System.IO.Path.GetFileName(photo2.FileName);
+                        string newname = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
+                        string path = System.IO.Path.Combine(
+                        Server.MapPath("~/uploads/media"), newname);
+                        // file is uploaded
+                        photo2.SaveAs(path);
+                        update.cover = newname;
+                    }
+                    update.age = pl.age;
+                    update.bio = pl.bio;
+                    update.name = pl.name;
+                    context.Entry(update).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                    TempData["Message"] = "Changes have been saved!";
+                    return RedirectToAction("me");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("me");
+            }
+        }
+        [Authorized]
+        [HttpPost]
+        public ActionResult SaveClub(clubs pl, HttpPostedFileBase photo1, HttpPostedFileBase photo2)
+        {
+            try
+            {
+                using (var context = new Entities())
+                {
+                    var update = context.clubs.Find(pl.clubid);
+                    if (photo1 != null)
+                    {
+                        string pic = System.IO.Path.GetFileName(photo1.FileName);
+                        string newname = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
+                        string path = System.IO.Path.Combine(
+                        Server.MapPath("~/uploads/media"), newname);
+                        // file is uploaded
+                        photo1.SaveAs(path);
+                        update.logo = newname;
+                    }
+                    if (photo2 != null)
+                    {
+                        string pic = System.IO.Path.GetFileName(photo2.FileName);
+                        string newname = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
+                        string path = System.IO.Path.Combine(
+                        Server.MapPath("~/uploads/media"), newname);
+                        // file is uploaded
+                        photo2.SaveAs(path);
+                        update.cover = newname;
+                    }
+                    update.clubname = pl.clubname;
+                    update.city = pl.city;
+                    update.C_state = pl.C_state;
+                    update.C_address = pl.C_address;
+                    update.lat = pl.lat;
+                    update.@long = pl.@long;
+                    context.Entry(update).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                    TempData["Message"] = "Changes have been saved!";
+                    return RedirectToAction("me");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("me");
             }
         }
     }

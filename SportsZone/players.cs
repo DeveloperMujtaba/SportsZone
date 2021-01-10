@@ -29,13 +29,13 @@ namespace SportsZone
         public string cover { get; set; }
         public Nullable<double> height { get; set; }
         public string bio { get; set; }
-        public Nullable<int> roleid { get; set; }
+        public int roleid { get; set; }
     
+        public virtual games_positions games_positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<player_associations> player_associations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<player_associations_request> player_associations_request { get; set; }
-        public virtual player_role player_role { get; set; }
         public virtual users users { get; set; }
     }
 }

@@ -23,8 +23,8 @@ namespace SportsZone
         public Nullable<bool> parstatus { get; set; }
     
         public virtual clubs clubs { get; set; }
-        public virtual players players { get; set; }
         public virtual teams teams { get; set; }
         public virtual player_role player_role { get; set; }
+        public virtual players players { get; set; }
     }
 }

@@ -11,19 +11,13 @@
     <div class="container" id="container">
         <div class="form-container sign-in-container">
             <form action="/account/login" method="post" id="mainloginform">
-                @if (ViewBag.Message != null)
-                {
-                    <div style="text-align:center">
-                        <p style="color:red">@ViewBag.Message</p>
-                    </div>
-                }
                 <h1>Sign in</h1>
                 <div class="social-container">
                     <a href="#" class="social"><i class="fa fa-facebook"></i></a>
                     <a href="#" class="social"><i class="fa fa-google-plus"></i></a>
                     <a href="#" class="social"><i class="fa fa-linkedin"></i></a>
                 </div>
-                <span>or use your account</span>
+                <span>Please login to continue...</span>
                 <input type="email" placeholder="Email" name="Email" required />
                 <input type="password" placeholder="Password" name="Password" required />
                 <!--<a href="#">Forgot your password?</a>-->
@@ -40,6 +34,12 @@
             </div>
         </div>
     </div>
+    @if (ViewBag.Message != null)
+    {
+        <div style="text-align:center">
+            <p style="color:red">@ViewBag.Message</p>
+        </div>
+    }
     <footer>
         <p>
             Created with <i class="fa fa-heart"></i> by
@@ -53,4 +53,4 @@
             window.location.href = '/account/register';
         }
     </script>
-    </body>
+</body>

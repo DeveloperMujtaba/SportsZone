@@ -1,95 +1,72 @@
-﻿@model SportsZone.clubs
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>clubs</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.clubid)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.userid, "userid", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("userid", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.userid, "", new { @class = "text-danger" })
-            </div>
+﻿@model clubs
+<form action="/account/SaveClub" method="post" enctype="multipart/form-data" id="moreprflfrm">
+    <h4 class="mt-0 header-title mb-4">More Detail</h4>
+    <div class="form-group row" style="display:none">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Club Detail</label>
+        <div class="col-sm-5">
+            <input class="form-control" type="text" name="coachid" value="@Model.clubid">
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.clubname, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.clubname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.clubname, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.city, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.C_state, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.C_state, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.C_state, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.C_address, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.C_address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.C_address, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.lat, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.lat, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.lat, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.long, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.long, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.long, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.logo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.logo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.logo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.cover, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.cover, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.cover, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+        <div class="col-sm-5">
+            <input class="form-control" type="text" name="userid" value="@Model.userid">
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="clubname" value="@Model.clubname">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">City</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="city" value="@Model.city">
+        </div>
+        <label for="example-text-input" class="col-sm-2 col-form-label">State</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="C_state" value="@Model.C_state">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Address</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="C_address" value="@Model.C_address">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Lattitude</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="lat" value="@Model.lat">
+        </div>
+        <label for="example-text-input" class="col-sm-2 col-form-label">Logitude</label>
+        <div class="col-sm-4">
+            @{
+                string lang = Model.@long;
+             }
+            <input class="form-control" type="text" name="long" value="@lang">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Profil Photo [200x200]</label>
+        <div class="col-sm-5">
+            <input id="photouploaderp" class="form-control" type="file" name="photo1" value="">
+        </div>
+        <div class="col-sm-5">
+            <img id="fpreviewimgp" src="~/uploads/media/@Model.logo" style="width:100%" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label">Cover Photo [900x300]</label>
+        <div class="col-sm-6">
+            <input id="photouploaderc" class="form-control" type="file" name="photo2" value="">
+        </div>
+        <div class="col-sm-12">
+            <img id="fpreviewimgc" src="~/uploads/media/@Model.cover" style="width:100%" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="example-text-input" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input class="form-control btn btn-outline-success" type="submit" value="Save" form="moreprflfrm">
+        </div>
+    </div>
+</form>

@@ -19,6 +19,10 @@
                     </div>
                 </div>
             </div>
+            @if (ViewBag.Message != null)
+            {
+                <p style="text-align:center; color:red">@ViewBag.Message</p>
+            }
         </div>
         <!-- end page-title -->
         <div class="row">
@@ -27,6 +31,12 @@
                     <div class="card-body">
                         <form action="/account/UpdateUser" method="post" id="basicprflfrm">
                             <h4 class="mt-0 header-title mb-4">Basic Profile Detail</h4>
+                            <div class="form-group row" style="display:none">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">User ID</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="userid" value="@Model[0].userid">
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">I'm</label>
                                 <div class="col-sm-10">
@@ -58,12 +68,6 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="Email" name="Email" value="@Model[0].email" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Phone</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" type="text" name="Phone" value="@Model[0].phone" required>
@@ -72,7 +76,7 @@
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">New Password</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" type="text" name="Phone" value="" placeholder="leave blank if you don't want to change" min-length="6">
+                                    <input class="form-control" type="password" name="passwd" value="" placeholder="leave blank if you don't want to change" minlength="6" maxlength="15">
                                 </div>
                             </div>
                             <div class="form-group row">

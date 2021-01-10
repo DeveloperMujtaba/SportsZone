@@ -166,6 +166,7 @@
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\GamePositionsHolder.cs" />
     <Compile Include="players.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
@@ -539,6 +540,7 @@
     <Content Include="themes\default\js\vendor\npm.js" />
     <Content Include="themes\default\js\waterwheelCarousel.js" />
     <Content Include="themes\default\js\wow-min.js" />
+    <Content Include="themes\default\login\down-arrow.png" />
     <Content Include="themes\default\login\script.js" />
     <Content Include="themes\default\login\style.css" />
     <Content Include="themes\default\php\process.php" />
@@ -977,6 +979,8 @@
     <Content Include="themes\ud\plugins\x-editable\img\loading.gif" />
     <Content Include="themes\ud\plugins\x-editable\js\bootstrap-editable.js" />
     <Content Include="themes\ud\plugins\x-editable\js\bootstrap-editable.min.js" />
+    <Content Include="uploads\media\no-cover.jpg" />
+    <Content Include="uploads\media\no-image.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
