@@ -22,9 +22,9 @@ namespace SportsZone
         public System.DateTime C_date { get; set; }
         public Nullable<bool> parstatus { get; set; }
     
-        public virtual club club { get; set; }
-        public virtual player player { get; set; }
-        public virtual team team { get; set; }
+        public virtual clubs clubs { get; set; }
+        public virtual players players { get; set; }
+        public virtual teams teams { get; set; }
         public virtual player_role player_role { get; set; }
     }
 }

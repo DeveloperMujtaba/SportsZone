@@ -8,6 +8,15 @@
             Create an Account | JZ Sports Zone
         </title>
     </head>
+<style>
+    .custom-cls {
+        background-color: #eee;
+        border: none;
+        padding: 12px 15px;
+        margin: 8px 0;
+        width: 25%;
+    }
+</style>
     <body style="background-image:url('https://motionarray.imgix.net/preview-279485-UenCPR1wxc-high_0008.jpg'); background-repeat:no-repeat; background-size:cover">
         <link href="~/themes/default/css/font-awesome.min.css" rel="stylesheet" />
         <link href="~/themes/default/login/style.css" rel="stylesheet" />
@@ -15,7 +24,7 @@
         <a style="font-size:24px; color:white; margin-top:-10px" href="/">⬅️ Go to Home </a>
         <div class="container" id="container">
             <div class="form-container sign-up-container">
-                <form action="#">
+                <form action="/account/register" method="post" id="mainregform">
                     <h1>Create Account</h1>
                     <div class="social-container">
                         <a href="#" class="social"><i class="fa fa-facebook-f"></i></a>
@@ -23,12 +32,31 @@
                         <a href="#" class="social"><i class="fa fa-google-plus"></i></a>
                     </div>
                     <span>Use your email for registration</span>
-                    <input type="text" placeholder="Name" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    <button>Sign Up</button>
+                    <div class="row">
+                        <div class="custom-cls" style="display:inline-block">
+                            <input type="radio" id="player" name="Type" value="Player" checked>
+                            <label for="player">Player</label>
+                        </div>
+                        <div class="custom-cls" style="display:inline-block">
+                            <input type="radio" id="coach" name="Type" value="Coach">
+                            <label for="coach">Coach</label>
+                        </div>
+                        <div class="custom-cls" style="display:inline-block">
+                            <input type="radio" id="club" name="Type" value="Club">
+                            <label for="club">Club</label>
+                        </div>
+                    </div>
+                    <input type="email" placeholder="Email" name="Email" required/>
+                    <input type="text" placeholder="Username" name="Username" required/>
+                    <input type="password" placeholder="********" name="Password" required/>
+                    <input type="submit" value="Sign Up" form="mainregform">
                 </form>
             </div>
+            @if (ViewBag.Message != null) { 
+            <div style="text-align:center">
+                <p style="color:red">@ViewBag.Message</p>
+            </div>
+            }
             <div class="overlay-container">
                 <div class="overlay">
                     <div class="overlay-panel overlay-left">

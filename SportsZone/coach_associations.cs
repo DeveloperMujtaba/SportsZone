@@ -21,9 +21,9 @@ namespace SportsZone
         public int positionid { get; set; }
         public System.DateTime C_date { get; set; }
     
-        public virtual club club { get; set; }
-        public virtual team team { get; set; }
+        public virtual clubs clubs { get; set; }
+        public virtual teams teams { get; set; }
         public virtual games_positions games_positions { get; set; }
-        public virtual coach coach { get; set; }
+        public virtual coachs coachs { get; set; }
     }
 }

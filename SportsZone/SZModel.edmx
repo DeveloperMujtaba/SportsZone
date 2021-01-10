@@ -61,7 +61,7 @@
           <Property Name="age" Type="int" />
           <Property Name="picture" Type="nvarchar" MaxLength="500" />
           <Property Name="cover" Type="nvarchar" MaxLength="500" />
-          <Property Name="positionid" Type="int" Nullable="false" />
+          <Property Name="positionid" Type="int" />
           <Property Name="bio" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="feedback">
@@ -154,7 +154,7 @@
           <Property Name="cover" Type="nvarchar" MaxLength="500" />
           <Property Name="height" Type="float" />
           <Property Name="bio" Type="nvarchar" MaxLength="1000" />
-          <Property Name="roleid" Type="int" Nullable="false" />
+          <Property Name="roleid" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -290,7 +290,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="coach type">
-          <End Role="games_positions" Type="Self.games_positions" Multiplicity="1" />
+          <End Role="games_positions" Type="Self.games_positions" Multiplicity="0..1" />
           <End Role="coachs" Type="Self.coachs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="games_positions">
@@ -518,7 +518,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="user role in game">
-          <End Role="player_role" Type="Self.player_role" Multiplicity="1" />
+          <End Role="player_role" Type="Self.player_role" Multiplicity="0..1" />
           <End Role="players" Type="Self.players" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="player_role">
@@ -751,10 +751,10 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="clubid" Type="Int32" Nullable="false" />
           <Property Name="gameid" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="club" Relationship="Self.which_club_in_club_games" FromRole="club_games" ToRole="clubs" />
-          <NavigationProperty Name="game" Relationship="Self.which_game_in_club_games" FromRole="club_games" ToRole="games" />
+          <NavigationProperty Name="clubs" Relationship="Self.which_club_in_club_games" FromRole="club_games" ToRole="clubs" />
+          <NavigationProperty Name="games" Relationship="Self.which_game_in_club_games" FromRole="club_games" ToRole="games" />
         </EntityType>
-        <EntityType Name="club">
+        <EntityType Name="clubs">
           <Key>
             <PropertyRef Name="clubid" />
           </Key>
@@ -770,7 +770,7 @@
           <Property Name="cover" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="club_games" Relationship="Self.which_club_in_club_games" FromRole="clubs" ToRole="club_games" />
           <NavigationProperty Name="player_associations" Relationship="Self.a_player_associate_in_which_club" FromRole="clubs" ToRole="player_associations" />
-          <NavigationProperty Name="user" Relationship="Self.club_associated_with_user" FromRole="clubs" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="Self.club_associated_with_user" FromRole="clubs" ToRole="users" />
           <NavigationProperty Name="coach_associations" Relationship="Self.coach_associate_in_which_club" FromRole="clubs" ToRole="coach_associations" />
           <NavigationProperty Name="player_associations_request" Relationship="Self.its_shows_request_to_club__" FromRole="clubs" ToRole="player_associations_request" />
           <NavigationProperty Name="coach_associations_request" Relationship="Self.its_shows_request_to_club_of_coach" FromRole="clubs" ToRole="coach_associations_request" />
@@ -786,10 +786,10 @@
           <Property Name="teamid" Type="Int32" Nullable="false" />
           <Property Name="positionid" Type="Int32" Nullable="false" />
           <Property Name="C_date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="club" Relationship="Self.coach_associate_in_which_club" FromRole="coach_associations" ToRole="clubs" />
-          <NavigationProperty Name="team" Relationship="Self.coach_associate_in_which_team" FromRole="coach_associations" ToRole="teams" />
+          <NavigationProperty Name="clubs" Relationship="Self.coach_associate_in_which_club" FromRole="coach_associations" ToRole="clubs" />
+          <NavigationProperty Name="teams" Relationship="Self.coach_associate_in_which_team" FromRole="coach_associations" ToRole="teams" />
           <NavigationProperty Name="games_positions" Relationship="Self.coach_is_playing_which_role_of_game" FromRole="coach_associations" ToRole="games_positions" />
-          <NavigationProperty Name="coach" Relationship="Self.its_gives_the_coach_id" FromRole="coach_associations" ToRole="coachs" />
+          <NavigationProperty Name="coachs" Relationship="Self.its_gives_the_coach_id" FromRole="coach_associations" ToRole="coachs" />
         </EntityType>
         <EntityType Name="coach_associations_request">
           <Key>
@@ -802,12 +802,12 @@
           <Property Name="positionid" Type="Int32" Nullable="false" />
           <Property Name="C_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="carstatus" Type="Boolean" />
-          <NavigationProperty Name="club" Relationship="Self.its_shows_request_to_club_of_coach" FromRole="coach_associations_request" ToRole="clubs" />
-          <NavigationProperty Name="coach" Relationship="Self.its_shows_coach_request_id_of_coach" FromRole="coach_associations_request" ToRole="coachs" />
+          <NavigationProperty Name="clubs" Relationship="Self.its_shows_request_to_club_of_coach" FromRole="coach_associations_request" ToRole="clubs" />
+          <NavigationProperty Name="coachs" Relationship="Self.its_shows_coach_request_id_of_coach" FromRole="coach_associations_request" ToRole="coachs" />
           <NavigationProperty Name="games_positions" Relationship="Self.its_shows_request_of_coach_of_which_base" FromRole="coach_associations_request" ToRole="games_positions" />
-          <NavigationProperty Name="team" Relationship="Self.its_shows_request_of_teams_of_coach" FromRole="coach_associations_request" ToRole="teams" />
+          <NavigationProperty Name="teams" Relationship="Self.its_shows_request_of_teams_of_coach" FromRole="coach_associations_request" ToRole="teams" />
         </EntityType>
-        <EntityType Name="coach">
+        <EntityType Name="coachs">
           <Key>
             <PropertyRef Name="coachid" />
           </Key>
@@ -817,11 +817,11 @@
           <Property Name="age" Type="Int32" />
           <Property Name="picture" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="cover" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="positionid" Type="Int32" Nullable="false" />
+          <Property Name="positionid" Type="Int32" />
           <Property Name="bio" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="coach_associations" Relationship="Self.its_gives_the_coach_id" FromRole="coachs" ToRole="coach_associations" />
           <NavigationProperty Name="coach_associations_request" Relationship="Self.its_shows_coach_request_id_of_coach" FromRole="coachs" ToRole="coach_associations_request" />
-          <NavigationProperty Name="user" Relationship="Self.coach_associated_with_user" FromRole="coachs" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="Self.coach_associated_with_user" FromRole="coachs" ToRole="users" />
           <NavigationProperty Name="games_positions" Relationship="Self.coach_type" FromRole="coachs" ToRole="games_positions" />
         </EntityType>
         <EntityType Name="feedback">
@@ -834,10 +834,10 @@
           <Property Name="rating" Type="Int32" Nullable="false" />
           <Property Name="msg" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="C_date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="user" Relationship="Self.feedback_from_which_user" FromRole="feedback" ToRole="users" />
-          <NavigationProperty Name="user1" Relationship="Self.feedback_to_which_user" FromRole="feedback" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="Self.feedback_from_which_user" FromRole="feedback" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.feedback_to_which_user" FromRole="feedback" ToRole="users" />
         </EntityType>
-        <EntityType Name="game">
+        <EntityType Name="games">
           <Key>
             <PropertyRef Name="gameid" />
           </Key>
@@ -859,7 +859,7 @@
           <NavigationProperty Name="coach_associations" Relationship="Self.coach_is_playing_which_role_of_game" FromRole="games_positions" ToRole="coach_associations" />
           <NavigationProperty Name="coach_associations_request" Relationship="Self.its_shows_request_of_coach_of_which_base" FromRole="games_positions" ToRole="coach_associations_request" />
           <NavigationProperty Name="coachs" Relationship="Self.coach_type" FromRole="games_positions" ToRole="coachs" />
-          <NavigationProperty Name="game" Relationship="Self.game_positions_in_game_position" FromRole="games_positions" ToRole="games" />
+          <NavigationProperty Name="games" Relationship="Self.game_positions_in_game_position" FromRole="games_positions" ToRole="games" />
         </EntityType>
         <EntityType Name="match_result">
           <Key>
@@ -870,10 +870,10 @@
           <Property Name="teamid" Type="Int32" Nullable="false" />
           <Property Name="C_status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="points" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="team" Relationship="Self.loser_and_winner" FromRole="match_result" ToRole="teams" />
-          <NavigationProperty Name="match" Relationship="Self.which_match_which_team" FromRole="match_result" ToRole="matches" />
+          <NavigationProperty Name="teams" Relationship="Self.loser_and_winner" FromRole="match_result" ToRole="teams" />
+          <NavigationProperty Name="matches" Relationship="Self.which_match_which_team" FromRole="match_result" ToRole="matches" />
         </EntityType>
-        <EntityType Name="match">
+        <EntityType Name="matches">
           <Key>
             <PropertyRef Name="mid" />
           </Key>
@@ -894,10 +894,10 @@
           <Property Name="teamid" Type="Int32" Nullable="false" />
           <Property Name="roleid" Type="Int32" Nullable="false" />
           <Property Name="C_date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="club" Relationship="Self.a_player_associate_in_which_club" FromRole="player_associations" ToRole="clubs" />
-          <NavigationProperty Name="team" Relationship="Self.a_player_associate_in_which_team" FromRole="player_associations" ToRole="teams" />
+          <NavigationProperty Name="clubs" Relationship="Self.a_player_associate_in_which_club" FromRole="player_associations" ToRole="clubs" />
+          <NavigationProperty Name="teams" Relationship="Self.a_player_associate_in_which_team" FromRole="player_associations" ToRole="teams" />
           <NavigationProperty Name="player_role" Relationship="Self.a_player_is_playing_which_role_of_game" FromRole="player_associations" ToRole="player_role" />
-          <NavigationProperty Name="player" Relationship="Self.its_gives_the_player_id_" FromRole="player_associations" ToRole="players" />
+          <NavigationProperty Name="players" Relationship="Self.its_gives_the_player_id_" FromRole="player_associations" ToRole="players" />
         </EntityType>
         <EntityType Name="player_associations_request">
           <Key>
@@ -910,9 +910,9 @@
           <Property Name="roleid" Type="Int32" Nullable="false" />
           <Property Name="C_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="parstatus" Type="Boolean" />
-          <NavigationProperty Name="club" Relationship="Self.its_shows_request_to_club__" FromRole="player_associations_request" ToRole="clubs" />
-          <NavigationProperty Name="player" Relationship="Self.its_shows_player_request_id_" FromRole="player_associations_request" ToRole="players" />
-          <NavigationProperty Name="team" Relationship="Self.its_shows_request_of_teams" FromRole="player_associations_request" ToRole="teams" />
+          <NavigationProperty Name="clubs" Relationship="Self.its_shows_request_to_club__" FromRole="player_associations_request" ToRole="clubs" />
+          <NavigationProperty Name="players" Relationship="Self.its_shows_player_request_id_" FromRole="player_associations_request" ToRole="players" />
+          <NavigationProperty Name="teams" Relationship="Self.its_shows_request_of_teams" FromRole="player_associations_request" ToRole="teams" />
           <NavigationProperty Name="player_role" Relationship="Self.its_shows_request_of_which_role_base" FromRole="player_associations_request" ToRole="player_role" />
         </EntityType>
         <EntityType Name="player_role">
@@ -922,12 +922,12 @@
           <Property Name="roleid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="gameid" Type="Int32" Nullable="false" />
           <Property Name="rolename" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="game" Relationship="Self.user_of_which_game_role" FromRole="player_role" ToRole="games" />
+          <NavigationProperty Name="games" Relationship="Self.user_of_which_game_role" FromRole="player_role" ToRole="games" />
           <NavigationProperty Name="player_associations" Relationship="Self.a_player_is_playing_which_role_of_game" FromRole="player_role" ToRole="player_associations" />
           <NavigationProperty Name="player_associations_request" Relationship="Self.its_shows_request_of_which_role_base" FromRole="player_role" ToRole="player_associations_request" />
           <NavigationProperty Name="players" Relationship="Self.user_role_in_game" FromRole="player_role" ToRole="players" />
         </EntityType>
-        <EntityType Name="player">
+        <EntityType Name="players">
           <Key>
             <PropertyRef Name="playerid" />
           </Key>
@@ -939,13 +939,13 @@
           <Property Name="cover" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="height" Type="Double" />
           <Property Name="bio" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="roleid" Type="Int32" Nullable="false" />
+          <Property Name="roleid" Type="Int32" />
           <NavigationProperty Name="player_associations" Relationship="Self.its_gives_the_player_id_" FromRole="players" ToRole="player_associations" />
           <NavigationProperty Name="player_associations_request" Relationship="Self.its_shows_player_request_id_" FromRole="players" ToRole="player_associations_request" />
           <NavigationProperty Name="player_role" Relationship="Self.user_role_in_game" FromRole="players" ToRole="player_role" />
-          <NavigationProperty Name="user" Relationship="Self.player_user_rel" FromRole="players" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="Self.player_user_rel" FromRole="players" ToRole="users" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
@@ -955,7 +955,7 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="team">
+        <EntityType Name="teams">
           <Key>
             <PropertyRef Name="teamid" />
           </Key>
@@ -965,15 +965,15 @@
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="logo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="cover" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="club" Relationship="Self.team_of_which_club" FromRole="teams" ToRole="clubs" />
+          <NavigationProperty Name="clubs" Relationship="Self.team_of_which_club" FromRole="teams" ToRole="clubs" />
           <NavigationProperty Name="coach_associations" Relationship="Self.coach_associate_in_which_team" FromRole="teams" ToRole="coach_associations" />
           <NavigationProperty Name="coach_associations_request" Relationship="Self.its_shows_request_of_teams_of_coach" FromRole="teams" ToRole="coach_associations_request" />
-          <NavigationProperty Name="game" Relationship="Self.team_of_which_game" FromRole="teams" ToRole="games" />
+          <NavigationProperty Name="games" Relationship="Self.team_of_which_game" FromRole="teams" ToRole="games" />
           <NavigationProperty Name="match_result" Relationship="Self.loser_and_winner" FromRole="teams" ToRole="match_result" />
           <NavigationProperty Name="player_associations" Relationship="Self.a_player_associate_in_which_team" FromRole="teams" ToRole="player_associations" />
           <NavigationProperty Name="player_associations_request" Relationship="Self.its_shows_request_of_teams" FromRole="teams" ToRole="player_associations_request" />
         </EntityType>
-        <EntityType Name="user">
+        <EntityType Name="users">
           <Key>
             <PropertyRef Name="userid" />
           </Key>
@@ -990,12 +990,12 @@
           <Property Name="ispayment" Type="Boolean" />
           <NavigationProperty Name="clubs" Relationship="Self.club_associated_with_user" FromRole="users" ToRole="clubs" />
           <NavigationProperty Name="coachs" Relationship="Self.coach_associated_with_user" FromRole="users" ToRole="coachs" />
-          <NavigationProperty Name="feedbacks" Relationship="Self.feedback_from_which_user" FromRole="users" ToRole="feedback" />
-          <NavigationProperty Name="feedbacks1" Relationship="Self.feedback_to_which_user" FromRole="users" ToRole="feedback" />
+          <NavigationProperty Name="feedback" Relationship="Self.feedback_from_which_user" FromRole="users" ToRole="feedback" />
+          <NavigationProperty Name="feedback1" Relationship="Self.feedback_to_which_user" FromRole="users" ToRole="feedback" />
           <NavigationProperty Name="players" Relationship="Self.player_user_rel" FromRole="users" ToRole="players" />
         </EntityType>
         <Association Name="which_club_in_club_games">
-          <End Role="clubs" Type="Self.club" Multiplicity="1" />
+          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
           <End Role="club_games" Type="Self.club_games" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clubs">
@@ -1007,7 +1007,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="which_game_in_club_games">
-          <End Role="games" Type="Self.game" Multiplicity="1" />
+          <End Role="games" Type="Self.games" Multiplicity="1" />
           <End Role="club_games" Type="Self.club_games" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="games">
@@ -1019,7 +1019,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="a_player_associate_in_which_club">
-          <End Role="clubs" Type="Self.club" Multiplicity="1" />
+          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
           <End Role="player_associations" Type="Self.player_associations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clubs">
@@ -1031,8 +1031,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="club_associated_with_user">
-          <End Role="users" Type="Self.user" Multiplicity="1" />
-          <End Role="clubs" Type="Self.club" Multiplicity="*" />
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="clubs" Type="Self.clubs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userid" />
@@ -1043,7 +1043,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="coach_associate_in_which_club">
-          <End Role="clubs" Type="Self.club" Multiplicity="1" />
+          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
           <End Role="coach_associations" Type="Self.coach_associations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clubs">
@@ -1055,7 +1055,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="its_shows_request_to_club__">
-          <End Role="clubs" Type="Self.club" Multiplicity="1" />
+          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
           <End Role="player_associations_request" Type="Self.player_associations_request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clubs">
@@ -1067,7 +1067,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="its_shows_request_to_club_of_coach">
-          <End Role="clubs" Type="Self.club" Multiplicity="1" />
+          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
           <End Role="coach_associations_request" Type="Self.coach_associations_request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clubs">
@@ -1079,8 +1079,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="team_of_which_club">
-          <End Role="clubs" Type="Self.club" Multiplicity="1" />
-          <End Role="teams" Type="Self.team" Multiplicity="*" />
+          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
+          <End Role="teams" Type="Self.teams" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clubs">
               <PropertyRef Name="clubid" />
@@ -1091,7 +1091,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="coach_associate_in_which_team">
-          <End Role="teams" Type="Self.team" Multiplicity="1" />
+          <End Role="teams" Type="Self.teams" Multiplicity="1" />
           <End Role="coach_associations" Type="Self.coach_associations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="teams">
@@ -1115,7 +1115,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="its_gives_the_coach_id">
-          <End Role="coachs" Type="Self.coach" Multiplicity="1" />
+          <End Role="coachs" Type="Self.coachs" Multiplicity="1" />
           <End Role="coach_associations" Type="Self.coach_associations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="coachs">
@@ -1127,7 +1127,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="its_shows_coach_request_id_of_coach">
-          <End Role="coachs" Type="Self.coach" Multiplicity="1" />
+          <End Role="coachs" Type="Self.coachs" Multiplicity="1" />
           <End Role="coach_associations_request" Type="Self.coach_associations_request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="coachs">
@@ -1151,7 +1151,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="its_shows_request_of_teams_of_coach">
-          <End Role="teams" Type="Self.team" Multiplicity="1" />
+          <End Role="teams" Type="Self.teams" Multiplicity="1" />
           <End Role="coach_associations_request" Type="Self.coach_associations_request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="teams">
@@ -1163,8 +1163,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="coach_associated_with_user">
-          <End Role="users" Type="Self.user" Multiplicity="1" />
-          <End Role="coachs" Type="Self.coach" Multiplicity="*" />
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="coachs" Type="Self.coachs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userid" />
@@ -1175,8 +1175,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="coach_type">
-          <End Role="games_positions" Type="Self.games_positions" Multiplicity="1" />
-          <End Role="coachs" Type="Self.coach" Multiplicity="*" />
+          <End Role="games_positions" Type="Self.games_positions" Multiplicity="0..1" />
+          <End Role="coachs" Type="Self.coachs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="games_positions">
               <PropertyRef Name="positionid" />
@@ -1187,7 +1187,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="feedback_from_which_user">
-          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="1" />
           <End Role="feedback" Type="Self.feedback" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1199,7 +1199,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="feedback_to_which_user">
-          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="1" />
           <End Role="feedback" Type="Self.feedback" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1211,7 +1211,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="game_positions_in_game_position">
-          <End Role="games" Type="Self.game" Multiplicity="1" />
+          <End Role="games" Type="Self.games" Multiplicity="1" />
           <End Role="games_positions" Type="Self.games_positions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="games">
@@ -1223,8 +1223,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="team_of_which_game">
-          <End Role="games" Type="Self.game" Multiplicity="1" />
-          <End Role="teams" Type="Self.team" Multiplicity="*" />
+          <End Role="games" Type="Self.games" Multiplicity="1" />
+          <End Role="teams" Type="Self.teams" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="games">
               <PropertyRef Name="gameid" />
@@ -1235,7 +1235,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="user_of_which_game_role">
-          <End Role="games" Type="Self.game" Multiplicity="1" />
+          <End Role="games" Type="Self.games" Multiplicity="1" />
           <End Role="player_role" Type="Self.player_role" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="games">
@@ -1247,7 +1247,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="loser_and_winner">
-          <End Role="teams" Type="Self.team" Multiplicity="1" />
+          <End Role="teams" Type="Self.teams" Multiplicity="1" />
           <End Role="match_result" Type="Self.match_result" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="teams">
@@ -1259,7 +1259,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="which_match_which_team">
-          <End Role="matches" Type="Self.match" Multiplicity="1" />
+          <End Role="matches" Type="Self.matches" Multiplicity="1" />
           <End Role="match_result" Type="Self.match_result" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="matches">
@@ -1271,7 +1271,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="a_player_associate_in_which_team">
-          <End Role="teams" Type="Self.team" Multiplicity="1" />
+          <End Role="teams" Type="Self.teams" Multiplicity="1" />
           <End Role="player_associations" Type="Self.player_associations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="teams">
@@ -1295,7 +1295,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="its_gives_the_player_id_">
-          <End Role="players" Type="Self.player" Multiplicity="1" />
+          <End Role="players" Type="Self.players" Multiplicity="1" />
           <End Role="player_associations" Type="Self.player_associations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="players">
@@ -1307,7 +1307,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="its_shows_player_request_id_">
-          <End Role="players" Type="Self.player" Multiplicity="1" />
+          <End Role="players" Type="Self.players" Multiplicity="1" />
           <End Role="player_associations_request" Type="Self.player_associations_request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="players">
@@ -1319,7 +1319,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="its_shows_request_of_teams">
-          <End Role="teams" Type="Self.team" Multiplicity="1" />
+          <End Role="teams" Type="Self.teams" Multiplicity="1" />
           <End Role="player_associations_request" Type="Self.player_associations_request" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="teams">
@@ -1343,8 +1343,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="user_role_in_game">
-          <End Role="player_role" Type="Self.player_role" Multiplicity="1" />
-          <End Role="players" Type="Self.player" Multiplicity="*" />
+          <End Role="player_role" Type="Self.player_role" Multiplicity="0..1" />
+          <End Role="players" Type="Self.players" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="player_role">
               <PropertyRef Name="roleid" />
@@ -1355,8 +1355,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="player_user_rel">
-          <End Role="users" Type="Self.user" Multiplicity="1" />
-          <End Role="players" Type="Self.player" Multiplicity="*" />
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="players" Type="Self.players" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userid" />
@@ -1366,24 +1366,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="sportszoneEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="club_games" EntityType="Self.club_games" />
-          <EntitySet Name="clubs" EntityType="Self.club" />
+          <EntitySet Name="clubs" EntityType="Self.clubs" />
           <EntitySet Name="coach_associations" EntityType="Self.coach_associations" />
           <EntitySet Name="coach_associations_request" EntityType="Self.coach_associations_request" />
-          <EntitySet Name="coachs" EntityType="Self.coach" />
-          <EntitySet Name="feedbacks" EntityType="Self.feedback" />
-          <EntitySet Name="games" EntityType="Self.game" />
+          <EntitySet Name="coachs" EntityType="Self.coachs" />
+          <EntitySet Name="feedback" EntityType="Self.feedback" />
+          <EntitySet Name="games" EntityType="Self.games" />
           <EntitySet Name="games_positions" EntityType="Self.games_positions" />
           <EntitySet Name="match_result" EntityType="Self.match_result" />
-          <EntitySet Name="matches" EntityType="Self.match" />
+          <EntitySet Name="matches" EntityType="Self.matches" />
           <EntitySet Name="player_associations" EntityType="Self.player_associations" />
           <EntitySet Name="player_associations_request" EntityType="Self.player_associations_request" />
           <EntitySet Name="player_role" EntityType="Self.player_role" />
-          <EntitySet Name="players" EntityType="Self.player" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="teams" EntityType="Self.team" />
-          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="players" EntityType="Self.players" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="teams" EntityType="Self.teams" />
+          <EntitySet Name="users" EntityType="Self.users" />
           <AssociationSet Name="which_club_in_club_games" Association="Self.which_club_in_club_games">
             <End Role="clubs" EntitySet="clubs" />
             <End Role="club_games" EntitySet="club_games" />
@@ -1450,11 +1450,11 @@
           </AssociationSet>
           <AssociationSet Name="feedback_from_which_user" Association="Self.feedback_from_which_user">
             <End Role="users" EntitySet="users" />
-            <End Role="feedback" EntitySet="feedbacks" />
+            <End Role="feedback" EntitySet="feedback" />
           </AssociationSet>
           <AssociationSet Name="feedback_to_which_user" Association="Self.feedback_to_which_user">
             <End Role="users" EntitySet="users" />
-            <End Role="feedback" EntitySet="feedbacks" />
+            <End Role="feedback" EntitySet="feedback" />
           </AssociationSet>
           <AssociationSet Name="game_positions_in_game_position" Association="Self.game_positions_in_game_position">
             <End Role="games" EntitySet="games" />
@@ -1555,7 +1555,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="sportszoneModelStoreContainer" CdmEntityContainer="sportszoneEntities">
+        <EntityContainerMapping StorageEntityContainer="sportszoneModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="club_games">
             <EntityTypeMapping TypeName="sportszoneModel.club_games">
               <MappingFragment StoreEntitySet="club_games">
@@ -1566,7 +1566,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="clubs">
-            <EntityTypeMapping TypeName="sportszoneModel.club">
+            <EntityTypeMapping TypeName="sportszoneModel.clubs">
               <MappingFragment StoreEntitySet="clubs">
                 <ScalarProperty Name="clubid" ColumnName="clubid" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
@@ -1607,7 +1607,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="coachs">
-            <EntityTypeMapping TypeName="sportszoneModel.coach">
+            <EntityTypeMapping TypeName="sportszoneModel.coachs">
               <MappingFragment StoreEntitySet="coachs">
                 <ScalarProperty Name="coachid" ColumnName="coachid" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
@@ -1620,7 +1620,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="feedbacks">
+          <EntitySetMapping Name="feedback">
             <EntityTypeMapping TypeName="sportszoneModel.feedback">
               <MappingFragment StoreEntitySet="feedback">
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -1633,7 +1633,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="games">
-            <EntityTypeMapping TypeName="sportszoneModel.game">
+            <EntityTypeMapping TypeName="sportszoneModel.games">
               <MappingFragment StoreEntitySet="games">
                 <ScalarProperty Name="gameid" ColumnName="gameid" />
                 <ScalarProperty Name="gamename" ColumnName="gamename" />
@@ -1662,7 +1662,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="matches">
-            <EntityTypeMapping TypeName="sportszoneModel.match">
+            <EntityTypeMapping TypeName="sportszoneModel.matches">
               <MappingFragment StoreEntitySet="matches">
                 <ScalarProperty Name="mid" ColumnName="mid" />
                 <ScalarProperty Name="teamid1" ColumnName="teamid1" />
@@ -1707,7 +1707,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="players">
-            <EntityTypeMapping TypeName="sportszoneModel.player">
+            <EntityTypeMapping TypeName="sportszoneModel.players">
               <MappingFragment StoreEntitySet="players">
                 <ScalarProperty Name="playerid" ColumnName="playerid" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
@@ -1722,7 +1722,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="sportszoneModel.sysdiagram">
+            <EntityTypeMapping TypeName="sportszoneModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -1733,7 +1733,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="teams">
-            <EntityTypeMapping TypeName="sportszoneModel.team">
+            <EntityTypeMapping TypeName="sportszoneModel.teams">
               <MappingFragment StoreEntitySet="teams">
                 <ScalarProperty Name="teamid" ColumnName="teamid" />
                 <ScalarProperty Name="clubid" ColumnName="clubid" />
@@ -1745,7 +1745,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="sportszoneModel.user">
+            <EntityTypeMapping TypeName="sportszoneModel.users">
               <MappingFragment StoreEntitySet="users">
                 <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="username" ColumnName="username" />
@@ -1799,7 +1799,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

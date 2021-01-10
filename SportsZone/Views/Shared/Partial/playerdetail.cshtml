@@ -1,0 +1,68 @@
+﻿@model  players
+<h4 class="mt-0 header-title mb-4">More Detail</h4>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">I'm</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="Email" name="Email" value="@Model[0].usertype" disabled>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">Username</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" value="@Model[0].username" disabled>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">Member Since</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" value="@Model[0].C_date.ToString()" disabled>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">Account Status</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" value="@Model[0].C_status.Value.ToString()" disabled>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="Email" name="Email" value="@Model[0].email" required>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="Email" name="Email" value="@Model[0].email" required>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">Phone</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" name="Phone" value="@Model[0].phone" required>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">New Password</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" name="Phone" value="" placeholder="leave blank if you don't want to change" min-length="6">
+    </div>
+</div>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">Is Email Verified</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" value="@Model[0].isemail.Value.ToString()" disabled>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">Is Phone Verified</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" value="@Model[0].isphone.Value.ToString()" disabled>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="example-text-input" class="col-sm-2 col-form-label">Is Payment Verified</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" value="@Model[0].ispayment.Value.ToString()" disabled>
+    </div>
+</div>

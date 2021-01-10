@@ -128,13 +128,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="club.cs">
+    <Compile Include="clubs.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="club_games.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="coach.cs">
+    <Compile Include="coachs.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="coach_associations.cs">
@@ -148,7 +148,7 @@
     <Compile Include="feedback.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="game.cs">
+    <Compile Include="games.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="games_positions.cs">
@@ -157,14 +157,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="match.cs">
+    <Compile Include="Helpers\Authority\Authorized.cs" />
+    <Compile Include="Helpers\IsExist.cs" />
+    <Compile Include="matches.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="match_result.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="player.cs">
+    <Compile Include="players.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="player_associations.cs">
@@ -190,7 +192,7 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
+    <Compile Include="sysdiagrams.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SZModel.Context.cs">
@@ -208,14 +210,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SZModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="team.cs">
+    <Compile Include="teams.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="user.cs">
+    <Compile Include="users.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SZModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SZModel.edmx</DependentUpon>
+      <LastGenOutput>SZModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SZModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SZModel.edmx</DependentUpon>
+      <LastGenOutput>SZModel.cs</LastGenOutput>
+    </Content>
     <Content Include="themes\default\browserconfig.xml" />
     <Content Include="themes\default\css\animate.css" />
     <Content Include="themes\default\css\bootstrap\bootstrap.min.css" />
@@ -530,19 +542,441 @@
     <Content Include="themes\default\login\script.js" />
     <Content Include="themes\default\login\style.css" />
     <Content Include="themes\default\php\process.php" />
-    <Content Include="SZModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SZModel.Context.cs</LastGenOutput>
-      <DependentUpon>SZModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="SZModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SZModel.edmx</DependentUpon>
-      <LastGenOutput>SZModel.cs</LastGenOutput>
-    </Content>
     <Content Include="themes\default\style.css" />
     <Content Include="themes\default\tile-wide.png" />
     <Content Include="themes\default\tile.png" />
+    <Content Include="themes\ud\css\bootstrap.min.css" />
+    <Content Include="themes\ud\css\icons.css" />
+    <Content Include="themes\ud\css\metismenu.min.css" />
+    <Content Include="themes\ud\css\style.css" />
+    <Content Include="themes\ud\css\typicons.css" />
+    <Content Include="themes\ud\fonts\dripicons-v2.svg" />
+    <Content Include="themes\ud\fonts\fa-brands-400.svg" />
+    <Content Include="themes\ud\fonts\fa-regular-400.svg" />
+    <Content Include="themes\ud\fonts\fa-solid-900.svg" />
+    <Content Include="themes\ud\fonts\ionicons.svg" />
+    <Content Include="themes\ud\fonts\materialdesignicons-webfont.svg" />
+    <Content Include="themes\ud\fonts\outlined-iconset.svg" />
+    <Content Include="themes\ud\fonts\themify.svg" />
+    <Content Include="themes\ud\fonts\typicons.svg" />
+    <Content Include="themes\ud\images\bg-1.png" />
+    <Content Include="themes\ud\images\bg-2.png" />
+    <Content Include="themes\ud\images\coming-soon-img.png" />
+    <Content Include="themes\ud\images\error.png" />
+    <Content Include="themes\ud\images\favicon.ico" />
+    <Content Include="themes\ud\images\flags\french_flag.jpg" />
+    <Content Include="themes\ud\images\flags\germany_flag.jpg" />
+    <Content Include="themes\ud\images\flags\italy_flag.jpg" />
+    <Content Include="themes\ud\images\flags\russia_flag.jpg" />
+    <Content Include="themes\ud\images\flags\spain_flag.jpg" />
+    <Content Include="themes\ud\images\flags\us_flag.jpg" />
+    <Content Include="themes\ud\images\logo-dark.png" />
+    <Content Include="themes\ud\images\logo-light.png" />
+    <Content Include="themes\ud\images\logo-sm.png" />
+    <Content Include="themes\ud\images\maintenance-img.png" />
+    <Content Include="themes\ud\images\small\img-1.jpg" />
+    <Content Include="themes\ud\images\small\img-2.jpg" />
+    <Content Include="themes\ud\images\small\img-3.jpg" />
+    <Content Include="themes\ud\images\small\img-4.jpg" />
+    <Content Include="themes\ud\images\small\img-5.jpg" />
+    <Content Include="themes\ud\images\small\img-6.jpg" />
+    <Content Include="themes\ud\images\small\img-7.jpg" />
+    <Content Include="themes\ud\images\users\user-1.jpg" />
+    <Content Include="themes\ud\images\users\user-10.jpg" />
+    <Content Include="themes\ud\images\users\user-2.jpg" />
+    <Content Include="themes\ud\images\users\user-3.jpg" />
+    <Content Include="themes\ud\images\users\user-4.jpg" />
+    <Content Include="themes\ud\images\users\user-5.jpg" />
+    <Content Include="themes\ud\images\users\user-6.jpg" />
+    <Content Include="themes\ud\images\users\user-7.jpg" />
+    <Content Include="themes\ud\images\users\user-8.jpg" />
+    <Content Include="themes\ud\images\users\user-9.jpg" />
+    <Content Include="themes\ud\js\app.js" />
+    <Content Include="themes\ud\js\bootstrap.bundle.min.js" />
+    <Content Include="themes\ud\js\jquery.min.js" />
+    <Content Include="themes\ud\js\jquery.slimscroll.js" />
+    <Content Include="themes\ud\js\metismenu.min.js" />
+    <Content Include="themes\ud\js\waves.min.js" />
+    <Content Include="themes\ud\pages\alertify-init.js" />
+    <Content Include="themes\ud\pages\apexchart.init.js" />
+    <Content Include="themes\ud\pages\c3-chart-init.js" />
+    <Content Include="themes\ud\pages\calendar-init.js" />
+    <Content Include="themes\ud\pages\chartist.init.js" />
+    <Content Include="themes\ud\pages\chartjs.init.js" />
+    <Content Include="themes\ud\pages\countdown.int.js" />
+    <Content Include="themes\ud\pages\dashboard.init.js" />
+    <Content Include="themes\ud\pages\datatables.init.js" />
+    <Content Include="themes\ud\pages\echart.int.js" />
+    <Content Include="themes\ud\pages\flot.init.js" />
+    <Content Include="themes\ud\pages\form-advanced.init.js" />
+    <Content Include="themes\ud\pages\form-editors.int.js" />
+    <Content Include="themes\ud\pages\form-validation.init.js" />
+    <Content Include="themes\ud\pages\form-wizard.init.js" />
+    <Content Include="themes\ud\pages\gmaps.js" />
+    <Content Include="themes\ud\pages\jvectormap.init.js" />
+    <Content Include="themes\ud\pages\lightbox.js" />
+    <Content Include="themes\ud\pages\morris.init.js" />
+    <Content Include="themes\ud\pages\nestable-init.js" />
+    <Content Include="themes\ud\pages\peity.init.js" />
+    <Content Include="themes\ud\pages\rangeslider-init.js" />
+    <Content Include="themes\ud\pages\rangeslider.init.js" />
+    <Content Include="themes\ud\pages\rating-init.js" />
+    <Content Include="themes\ud\pages\sparklines.init.js" />
+    <Content Include="themes\ud\pages\sweet-alert.init.js" />
+    <Content Include="themes\ud\pages\table-editable.int.js" />
+    <Content Include="themes\ud\pages\table-responsive.init.js" />
+    <Content Include="themes\ud\pages\xeditable.js" />
+    <Content Include="themes\ud\plugins\alertify\css\alertify.css" />
+    <Content Include="themes\ud\plugins\alertify\js\alertify.js" />
+    <Content Include="themes\ud\plugins\alertify\js\ngAlertify.js" />
+    <Content Include="themes\ud\plugins\apexchart\apexcharts.min.js" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha-horizontal.png" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha.png" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\hue-horizontal.png" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\hue.png" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\saturation.png" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.min.js" />
+    <Content Include="themes\ud\plugins\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
+    <Content Include="themes\ud\plugins\bootstrap-datepicker\js\bootstrap-datepicker.min.js" />
+    <Content Include="themes\ud\plugins\bootstrap-inputmask\bootstrap-inputmask.min.js" />
+    <Content Include="themes\ud\plugins\bootstrap-maxlength\bootstrap-maxlength.js" />
+    <Content Include="themes\ud\plugins\bootstrap-maxlength\bootstrap-maxlength.min.js" />
+    <Content Include="themes\ud\plugins\bootstrap-maxlength\src\bootstrap-maxlength.js" />
+    <Content Include="themes\ud\plugins\bootstrap-rating\bootstrap-rating.css" />
+    <Content Include="themes\ud\plugins\bootstrap-rating\bootstrap-rating.min.js" />
+    <Content Include="themes\ud\plugins\bootstrap-touchspin\css\jquery.bootstrap-touchspin.min.css" />
+    <Content Include="themes\ud\plugins\bootstrap-touchspin\js\jquery.bootstrap-touchspin.min.js" />
+    <Content Include="themes\ud\plugins\c3\c3.css" />
+    <Content Include="themes\ud\plugins\c3\c3.js" />
+    <Content Include="themes\ud\plugins\c3\c3.min.css" />
+    <Content Include="themes\ud\plugins\c3\c3.min.js" />
+    <Content Include="themes\ud\plugins\chartist\css\chartist.css" />
+    <Content Include="themes\ud\plugins\chartist\css\chartist.min.css" />
+    <Content Include="themes\ud\plugins\chartist\js\chartist-plugin-tooltip.min.js" />
+    <Content Include="themes\ud\plugins\chartist\js\chartist.min.js" />
+    <Content Include="themes\ud\plugins\chartjs\chart.min.js" />
+    <Content Include="themes\ud\plugins\countdown\jquery.countdown.min.js" />
+    <Content Include="themes\ud\plugins\d3\d3.js" />
+    <Content Include="themes\ud\plugins\d3\d3.min.js" />
+    <Content Include="themes\ud\plugins\datatables\buttons.bootstrap4.min.css" />
+    <Content Include="themes\ud\plugins\datatables\buttons.bootstrap4.min.js" />
+    <Content Include="themes\ud\plugins\datatables\buttons.colVis.min.js" />
+    <Content Include="themes\ud\plugins\datatables\buttons.html5.min.js" />
+    <Content Include="themes\ud\plugins\datatables\buttons.print.min.js" />
+    <Content Include="themes\ud\plugins\datatables\dataTables.bootstrap4.min.css" />
+    <Content Include="themes\ud\plugins\datatables\dataTables.bootstrap4.min.js" />
+    <Content Include="themes\ud\plugins\datatables\dataTables.buttons.min.js" />
+    <Content Include="themes\ud\plugins\datatables\dataTables.responsive.min.js" />
+    <Content Include="themes\ud\plugins\datatables\jquery.dataTables.min.js" />
+    <Content Include="themes\ud\plugins\datatables\jszip.min.js" />
+    <Content Include="themes\ud\plugins\datatables\pdfmake.min.js" />
+    <Content Include="themes\ud\plugins\datatables\responsive.bootstrap4.min.css" />
+    <Content Include="themes\ud\plugins\datatables\responsive.bootstrap4.min.js" />
+    <Content Include="themes\ud\plugins\datatables\vfs_fonts.js" />
+    <Content Include="themes\ud\plugins\dropzone\dist\basic.css" />
+    <Content Include="themes\ud\plugins\dropzone\dist\dropzone-amd-module.js" />
+    <Content Include="themes\ud\plugins\dropzone\dist\dropzone.css" />
+    <Content Include="themes\ud\plugins\dropzone\dist\dropzone.js" />
+    <Content Include="themes\ud\plugins\dropzone\dist\min\basic.min.css" />
+    <Content Include="themes\ud\plugins\dropzone\dist\min\dropzone-amd-module.min.js" />
+    <Content Include="themes\ud\plugins\dropzone\dist\min\dropzone.min.css" />
+    <Content Include="themes\ud\plugins\dropzone\dist\min\dropzone.min.js" />
+    <Content Include="themes\ud\plugins\flot-chart\curvedLines.js" />
+    <Content Include="themes\ud\plugins\flot-chart\jquery.flot.crosshair.js" />
+    <Content Include="themes\ud\plugins\flot-chart\jquery.flot.min.js" />
+    <Content Include="themes\ud\plugins\flot-chart\jquery.flot.orderBars.min.js" />
+    <Content Include="themes\ud\plugins\flot-chart\jquery.flot.pie.js" />
+    <Content Include="themes\ud\plugins\flot-chart\jquery.flot.resize.js" />
+    <Content Include="themes\ud\plugins\flot-chart\jquery.flot.selection.js" />
+    <Content Include="themes\ud\plugins\flot-chart\jquery.flot.stack.js" />
+    <Content Include="themes\ud\plugins\flot-chart\jquery.flot.time.js" />
+    <Content Include="themes\ud\plugins\flot-chart\jquery.flot.tooltip.min.js" />
+    <Content Include="themes\ud\plugins\fullcalendar\css\fullcalendar.min.css" />
+    <Content Include="themes\ud\plugins\fullcalendar\js\fullcalendar.min.js" />
+    <Content Include="themes\ud\plugins\gmaps\gmaps.js" />
+    <Content Include="themes\ud\plugins\gmaps\gmaps.min.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.controls.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.core.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.events.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.geofences.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.geometry.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.layers.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.map_types.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.markers.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.native_extensions.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.overlays.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.routes.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.static.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.streetview.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.styles.js" />
+    <Content Include="themes\ud\plugins\gmaps\lib\gmaps.utils.js" />
+    <Content Include="themes\ud\plugins\ion-rangeslider\css\ion.rangeSlider.css" />
+    <Content Include="themes\ud\plugins\ion-rangeslider\css\ion.rangeSlider.min.css" />
+    <Content Include="themes\ud\plugins\ion-rangeslider\js\ion.rangeSlider.js" />
+    <Content Include="themes\ud\plugins\ion-rangeslider\js\ion.rangeSlider.min.js" />
+    <Content Include="themes\ud\plugins\jquery-knob\excanvas.js" />
+    <Content Include="themes\ud\plugins\jquery-knob\jquery.knob.js" />
+    <Content Include="themes\ud\plugins\jquery-ui\jquery-ui.min.css" />
+    <Content Include="themes\ud\plugins\jquery-ui\jquery-ui.min.js" />
+    <Content Include="themes\ud\plugins\jvectormap\gdp-data.js" />
+    <Content Include="themes\ud\plugins\jvectormap\jquery-jvectormap-2.0.2.css" />
+    <Content Include="themes\ud\plugins\jvectormap\jquery-jvectormap-2.0.2.min.js" />
+    <Content Include="themes\ud\plugins\jvectormap\jquery-jvectormap-europe-mill-en.js" />
+    <Content Include="themes\ud\plugins\jvectormap\jquery-jvectormap-uk-mill-en.js" />
+    <Content Include="themes\ud\plugins\jvectormap\jquery-jvectormap-us-aea-en.js" />
+    <Content Include="themes\ud\plugins\jvectormap\jquery-jvectormap-us-il-chicago-mill-en.js" />
+    <Content Include="themes\ud\plugins\jvectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="themes\ud\plugins\magnific-popup\jquery.magnific-popup.js" />
+    <Content Include="themes\ud\plugins\magnific-popup\jquery.magnific-popup.min.js" />
+    <Content Include="themes\ud\plugins\magnific-popup\magnific-popup.css" />
+    <Content Include="themes\ud\plugins\moment\moment.js" />
+    <Content Include="themes\ud\plugins\morris\morris.css" />
+    <Content Include="themes\ud\plugins\morris\morris.js" />
+    <Content Include="themes\ud\plugins\morris\morris.min.js" />
+    <Content Include="themes\ud\plugins\nestable\jquery.nestable.css" />
+    <Content Include="themes\ud\plugins\nestable\jquery.nestable.js" />
+    <Content Include="themes\ud\plugins\parsleyjs\parsley.min.js" />
+    <Content Include="themes\ud\plugins\peity\jquery.peity.min.js" />
+    <Content Include="themes\ud\plugins\raphael\raphael.min.js" />
+    <Content Include="themes\ud\plugins\RWD-Table-Patterns\dist\css\rwd-table.css" />
+    <Content Include="themes\ud\plugins\RWD-Table-Patterns\dist\css\rwd-table.min.css" />
+    <Content Include="themes\ud\plugins\RWD-Table-Patterns\dist\js\rwd-table.js" />
+    <Content Include="themes\ud\plugins\RWD-Table-Patterns\dist\js\rwd-table.min.js" />
+    <Content Include="themes\ud\plugins\RWD-Table-Patterns\src\js\rwd-table.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ar-AR.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ar-AR.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-bg-BG.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-bg-BG.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ca-ES.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ca-ES.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-cs-CZ.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-cs-CZ.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-da-DK.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-da-DK.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-de-DE.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-de-DE.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-el-GR.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-el-GR.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-es-ES.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-es-ES.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-es-EU.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-es-EU.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-fa-IR.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-fa-IR.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-fi-FI.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-fi-FI.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-fr-FR.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-fr-FR.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-gl-ES.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-gl-ES.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-he-IL.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-he-IL.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-hr-HR.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-hr-HR.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-hu-HU.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-hu-HU.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-id-ID.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-id-ID.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-it-IT.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-it-IT.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ja-JP.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ja-JP.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ko-KR.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ko-KR.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-lt-LT.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-lt-LT.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-lt-LV.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-lt-LV.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-mn-MN.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-mn-MN.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-nb-NO.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-nb-NO.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-nl-NL.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-nl-NL.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-pl-PL.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-pl-PL.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-pt-BR.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-pt-BR.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-pt-PT.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-pt-PT.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ro-RO.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ro-RO.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ru-RU.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ru-RU.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-sk-SK.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-sk-SK.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-sl-SI.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-sl-SI.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-sr-RS-Latin.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-sr-RS-Latin.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-sr-RS.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-sr-RS.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-sv-SE.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-sv-SE.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ta-IN.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-ta-IN.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-th-TH.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-th-TH.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-tr-TR.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-tr-TR.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-uk-UA.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-uk-UA.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-vi-VN.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-vi-VN.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-zh-CN.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-zh-CN.min.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-zh-TW.js" />
+    <Content Include="themes\ud\plugins\summernote\lang\summernote-zh-TW.min.js" />
+    <Content Include="themes\ud\plugins\summernote\summernote-bs4.css" />
+    <Content Include="themes\ud\plugins\summernote\summernote-bs4.min.js" />
+    <Content Include="themes\ud\plugins\sweet-alert2\sweetalert2.all.js" />
+    <Content Include="themes\ud\plugins\sweet-alert2\sweetalert2.all.min.js" />
+    <Content Include="themes\ud\plugins\sweet-alert2\sweetalert2.css" />
+    <Content Include="themes\ud\plugins\sweet-alert2\sweetalert2.js" />
+    <Content Include="themes\ud\plugins\sweet-alert2\sweetalert2.min.css" />
+    <Content Include="themes\ud\plugins\sweet-alert2\sweetalert2.min.js" />
+    <Content Include="themes\ud\plugins\tiny-editable\mindmup-editabletable.js" />
+    <Content Include="themes\ud\plugins\tiny-editable\numeric-input-example.js" />
+    <Content Include="themes\ud\plugins\tinymce\jquery.tinymce.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\license.txt" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\codesample\css\prism.css" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\codesample\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\example\dialog.html" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\example\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\example_dependency\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\imagetools\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\layer\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\media\moxieplayer.swf" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\config\bolt\atomic.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\config\bolt\bootstrap-atomic.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\config\bolt\bootstrap-browser.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\config\bolt\bootstrap-demo.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\config\bolt\bootstrap-prod.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\config\bolt\browser.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\config\bolt\demo.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\config\bolt\prod.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\config\dent\depend.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\scratch\compile\bootstrap.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\scratch\compile\theme.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\scratch\inline\theme.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\scratch\inline\theme.raw.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\demo\css\demo.css" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\demo\html\demo.html" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\demo\js\tinymce\inlite\Demo.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\alien\Arr.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\alien\Bookmark.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\alien\Unlink.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\alien\Uuid.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\core\Actions.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\core\Convert.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\core\ElementMatcher.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\core\Layout.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\core\Matcher.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\core\Measure.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\core\PredicateId.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\core\SelectionMatcher.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\core\SkinLoader.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\core\UrlType.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\file\Conversions.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\file\Picker.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\Theme.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\ui\Buttons.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\ui\Forms.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\ui\Panel.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\main\js\tinymce\inlite\ui\Toolbar.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\atomic\alien\ArrTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\atomic\alien\UuidTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\atomic\core\ConvertTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\atomic\core\MatcherTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\atomic\core\UrlTypeTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\alien\BookmarkTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\alien\UnlinkTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\core\ActionsTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\core\ElementMatcher.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\core\LayoutTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\core\MeasureTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\core\PredicateIdTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\core\SelectionMatcherTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\file\ConversionsTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\file\SelectionMatcher.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\js\browser\ThemeTest.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\theme.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\themes\modern\theme.min.js" />
+    <Content Include="themes\ud\plugins\tinymce\tinymce.min.js" />
+    <Content Include="themes\ud\plugins\x-editable\css\bootstrap-editable.css" />
+    <Content Include="themes\ud\plugins\x-editable\img\clear.png" />
+    <Content Include="themes\ud\plugins\x-editable\img\loading.gif" />
+    <Content Include="themes\ud\plugins\x-editable\js\bootstrap-editable.js" />
+    <Content Include="themes\ud\plugins\x-editable\js\bootstrap-editable.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -557,13 +991,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <EntityDeploy Include="SZModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SZModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="SZModel.edmx.diagram">
-      <DependentUpon>SZModel.edmx</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -585,6 +1012,114 @@
     <None Include="packages.config" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="themes\ud\css\icons.css.map" />
+    <Content Include="themes\ud\css\style.css.map" />
+    <Content Include="themes\ud\css\typicons.css.map" />
+    <Content Include="themes\ud\fonts\dripicons-v2.eot" />
+    <Content Include="themes\ud\fonts\dripicons-v2.ttf" />
+    <Content Include="themes\ud\fonts\dripicons-v2.woff" />
+    <Content Include="themes\ud\fonts\fa-brands-400.eot" />
+    <Content Include="themes\ud\fonts\fa-brands-400.ttf" />
+    <Content Include="themes\ud\fonts\fa-brands-400.woff" />
+    <Content Include="themes\ud\fonts\fa-brands-400.woff2" />
+    <Content Include="themes\ud\fonts\fa-regular-400.eot" />
+    <Content Include="themes\ud\fonts\fa-regular-400.ttf" />
+    <Content Include="themes\ud\fonts\fa-regular-400.woff" />
+    <Content Include="themes\ud\fonts\fa-regular-400.woff2" />
+    <Content Include="themes\ud\fonts\fa-solid-900.eot" />
+    <Content Include="themes\ud\fonts\fa-solid-900.ttf" />
+    <Content Include="themes\ud\fonts\fa-solid-900.woff" />
+    <Content Include="themes\ud\fonts\fa-solid-900.woff2" />
+    <Content Include="themes\ud\fonts\ionicons.eot" />
+    <Content Include="themes\ud\fonts\ionicons.ttf" />
+    <Content Include="themes\ud\fonts\ionicons.woff" />
+    <Content Include="themes\ud\fonts\ionicons.woff2" />
+    <Content Include="themes\ud\fonts\materialdesignicons-webfont.eot" />
+    <Content Include="themes\ud\fonts\materialdesignicons-webfont.ttf" />
+    <Content Include="themes\ud\fonts\materialdesignicons-webfont.woff" />
+    <Content Include="themes\ud\fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="themes\ud\fonts\outlined-iconset.eot" />
+    <Content Include="themes\ud\fonts\outlined-iconset.ttf" />
+    <Content Include="themes\ud\fonts\outlined-iconset.woff" />
+    <Content Include="themes\ud\fonts\themify.eot" />
+    <Content Include="themes\ud\fonts\themify.ttf" />
+    <Content Include="themes\ud\fonts\themify.woff" />
+    <Content Include="themes\ud\fonts\typicons.eot" />
+    <Content Include="themes\ud\fonts\typicons.scss" />
+    <Content Include="themes\ud\fonts\typicons.ttf" />
+    <Content Include="themes\ud\fonts\typicons.woff" />
+    <Content Include="themes\ud\icons\_dripicons-2.scss" />
+    <Content Include="themes\ud\icons\_fontawesome.scss" />
+    <Content Include="themes\ud\icons\_ionicons.scss" />
+    <Content Include="themes\ud\icons\_materialdesignicons.scss" />
+    <Content Include="themes\ud\icons\_outline.scss" />
+    <Content Include="themes\ud\icons\_themify-icons.scss" />
+    <Content Include="themes\ud\icons\_typicons.scss" />
+    <Content Include="themes\ud\scss\icons.scss" />
+    <Content Include="themes\ud\scss\style.scss" />
+    <Content Include="themes\ud\scss\_alertify.scss" />
+    <Content Include="themes\ud\scss\_alerts.scss" />
+    <Content Include="themes\ud\scss\_badge.scss" />
+    <Content Include="themes\ud\scss\_bootstrap-custom.scss" />
+    <Content Include="themes\ud\scss\_buttons.scss" />
+    <Content Include="themes\ud\scss\_calendar.scss" />
+    <Content Include="themes\ud\scss\_cards.scss" />
+    <Content Include="themes\ud\scss\_charts.scss" />
+    <Content Include="themes\ud\scss\_demo-only.scss" />
+    <Content Include="themes\ud\scss\_email.scss" />
+    <Content Include="themes\ud\scss\_faq.scss" />
+    <Content Include="themes\ud\scss\_form-advanced.scss" />
+    <Content Include="themes\ud\scss\_form-editor.scss" />
+    <Content Include="themes\ud\scss\_form-elements.scss" />
+    <Content Include="themes\ud\scss\_form-upload.scss" />
+    <Content Include="themes\ud\scss\_form-validation.scss" />
+    <Content Include="themes\ud\scss\_general.scss" />
+    <Content Include="themes\ud\scss\_helper.scss" />
+    <Content Include="themes\ud\scss\_maps.scss" />
+    <Content Include="themes\ud\scss\_menu.scss" />
+    <Content Include="themes\ud\scss\_nestable.scss" />
+    <Content Include="themes\ud\scss\_pages.scss" />
+    <Content Include="themes\ud\scss\_pagination.scss" />
+    <Content Include="themes\ud\scss\_popover-tooltips.scss" />
+    <Content Include="themes\ud\scss\_pricing.scss" />
+    <Content Include="themes\ud\scss\_progressbar.scss" />
+    <Content Include="themes\ud\scss\_range-slider.scss" />
+    <Content Include="themes\ud\scss\_summernote.scss" />
+    <Content Include="themes\ud\scss\_sweet-alert.scss" />
+    <Content Include="themes\ud\scss\_tables.scss" />
+    <Content Include="themes\ud\scss\_timeline.scss" />
+    <Content Include="themes\ud\scss\_variables.scss" />
+    <Content Include="themes\ud\scss\_waves.scss" />
+    <Content Include="themes\ud\scss\_widgets.scss" />
+    <Content Include="Views\Shared\_LayoutDashboard.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css.map" />
+    <Content Include="themes\ud\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css.map" />
+    <Content Include="themes\ud\plugins\datatables\json\scroller-demo.json" />
+    <Content Include="themes\ud\plugins\dropzone\dist\readme.md" />
+    <Content Include="themes\ud\plugins\gmaps\gmaps.min.js.map" />
+    <Content Include="themes\ud\plugins\RWD-Table-Patterns\src\less\rwd-table.less" />
+    <Content Include="themes\ud\plugins\summernote\font\summernote.eot" />
+    <Content Include="themes\ud\plugins\summernote\font\summernote.ttf" />
+    <Content Include="themes\ud\plugins\summernote\font\summernote.woff" />
+    <Content Include="themes\ud\plugins\tinymce\langs\readme.md" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="themes\ud\plugins\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="themes\ud\plugins\tinymce\themes\inlite\src\test\.eslintrc" />
+    <EntityDeploy Include="SZModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SZModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="SZModel.edmx.diagram">
+      <DependentUpon>SZModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Views\Shared\Partial\playerdetail.cshtml" />
+    <Content Include="Views\Shared\Partial\coachdetail.cshtml" />
+    <Content Include="Views\Shared\Partial\clubdetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

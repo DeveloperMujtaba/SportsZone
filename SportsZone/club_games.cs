@@ -18,7 +18,7 @@ namespace SportsZone
         public int clubid { get; set; }
         public int gameid { get; set; }
     
-        public virtual club club { get; set; }
-        public virtual game game { get; set; }
+        public virtual clubs clubs { get; set; }
+        public virtual games games { get; set; }
     }
 }

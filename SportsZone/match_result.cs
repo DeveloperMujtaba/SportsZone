@@ -20,7 +20,7 @@ namespace SportsZone
         public string C_status { get; set; }
         public int points { get; set; }
     
-        public virtual team team { get; set; }
-        public virtual match match { get; set; }
+        public virtual teams teams { get; set; }
+        public virtual matches matches { get; set; }
     }
 }

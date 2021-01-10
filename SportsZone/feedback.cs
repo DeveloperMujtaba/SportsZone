@@ -21,7 +21,7 @@ namespace SportsZone
         public string msg { get; set; }
         public System.DateTime C_date { get; set; }
     
-        public virtual user user { get; set; }
-        public virtual user user1 { get; set; }
+        public virtual users users { get; set; }
+        public virtual users users1 { get; set; }
     }
 }

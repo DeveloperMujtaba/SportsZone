@@ -19,7 +19,7 @@ namespace SportsZone
         {
             this.coach_associations = new HashSet<coach_associations>();
             this.coach_associations_request = new HashSet<coach_associations_request>();
-            this.coachs = new HashSet<coach>();
+            this.coachs = new HashSet<coachs>();
         }
     
         public int positionid { get; set; }
@@ -31,7 +31,7 @@ namespace SportsZone
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<coach_associations_request> coach_associations_request { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<coach> coachs { get; set; }
-        public virtual game game { get; set; }
+        public virtual ICollection<coachs> coachs { get; set; }
+        public virtual games games { get; set; }
     }
 }

@@ -64,7 +64,30 @@ namespace SportsZone
                 .Include(
                 "~/themes/default/js/vendor/modernizr.js"
                 ));
-           // BundleTable.EnableOptimizations = true;
+            bundles.Add(new ScriptBundle("~/bundles/dashboard/js").NonOrdering()
+            .Include(
+                    "~/themes/ud/js/jquery.min.js",
+                    "~/themes/ud/js/bootstrap.bundle.min.js",
+                    "~/themes/ud/js/metismenu.min.js",
+                    "~/themes/ud/js/jquery.slimscroll.js",
+                    "~/themes/ud/js/waves.min.js",
+                    "~/themes/ud/plugins/apexchart/apexcharts.min.js",
+                    "~/themes/ud/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js",
+                    "~/themes/ud/plugins/morris/morris.min.js",
+                    "~/themes/ud/plugins/raphael/raphael.min.js",
+                    "~/themes/ud/pages/dashboard.init.js",
+                    "~/themes/ud/js/app.js"
+                ));
+            bundles.Add(new StyleBundle("~/bundles/dashboard/css").NonOrdering()
+            .Include(
+                "~/themes/ud/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css",
+                "~/themes/ud/plugins/morris/morris.css",
+                "~/themes/ud/css/bootstrap.min.css",
+                "~/themes/ud/css/metismenu.min.css",
+                "~/themes/ud/css/icons.css",
+                "~/themes/ud/css/style.css"
+                ));
+            //BundleTable.EnableOptimizations = true;
         }
     }
 }

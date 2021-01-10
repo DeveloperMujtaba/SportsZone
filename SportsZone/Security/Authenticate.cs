@@ -31,8 +31,8 @@ namespace SportsZone.Security
         /// <param name="Phone"> User Phone to which against user was registered</param>
         /// <param name="Password">User Password</param>
         /// <returns></returns>
-        //-- PreVerify the user from a public metho for less outside interaction //-- please don't modify the access specifiers of this function, else it will become a sequrity hole.
-        private bool Verify( string email, string password)
+        //-- PreVerify the user from a public method for less outside interaction //-- please don't modify the access specifiers of this function, else it will become a sequrity hole.
+        internal bool Verify( string email, string password)
         {
             string HC_Password = password + HC_InputString;
             return BCrypt.Verify(HC_Password, GetHash(email));
@@ -40,7 +40,7 @@ namespace SportsZone.Security
         //-- return hash agais a phone number //-- please don't modify the access specifiers of this function, else it will become a sequrity hole.
         private string GetHash(string email)
         {
-            using (var context = new sportszoneEntities())
+            using (var context = new Entities())
             {
                 string hash = context
                     .users

@@ -15,9 +15,9 @@ namespace SportsZone
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class sportszoneEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public sportszoneEntities()
+        public Entities()
             : base("name=sportszoneEntities")
         {
         }
@@ -28,22 +28,22 @@ namespace SportsZone
         }
     
         public virtual DbSet<club_games> club_games { get; set; }
-        public virtual DbSet<club> clubs { get; set; }
+        public virtual DbSet<clubs> clubs { get; set; }
         public virtual DbSet<coach_associations> coach_associations { get; set; }
         public virtual DbSet<coach_associations_request> coach_associations_request { get; set; }
-        public virtual DbSet<coach> coachs { get; set; }
-        public virtual DbSet<feedback> feedbacks { get; set; }
-        public virtual DbSet<game> games { get; set; }
+        public virtual DbSet<coachs> coachs { get; set; }
+        public virtual DbSet<feedback> feedback { get; set; }
+        public virtual DbSet<games> games { get; set; }
         public virtual DbSet<games_positions> games_positions { get; set; }
         public virtual DbSet<match_result> match_result { get; set; }
-        public virtual DbSet<match> matches { get; set; }
+        public virtual DbSet<matches> matches { get; set; }
         public virtual DbSet<player_associations> player_associations { get; set; }
         public virtual DbSet<player_associations_request> player_associations_request { get; set; }
         public virtual DbSet<player_role> player_role { get; set; }
-        public virtual DbSet<player> players { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<team> teams { get; set; }
-        public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<players> players { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<teams> teams { get; set; }
+        public virtual DbSet<users> users { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
