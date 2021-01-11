@@ -219,3 +219,9 @@ lat='29.8566495',
 long='72.2643113',
 logo='no-image.jpg',
 cover='no-cover.jpg'
+
+
+select * from games
+select * from games_positions
+
+

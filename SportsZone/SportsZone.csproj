@@ -1124,6 +1124,9 @@
     <Content Include="Views\Shared\Partial\playerdetail.cshtml" />
     <Content Include="Views\Shared\Partial\coachdetail.cshtml" />
     <Content Include="Views\Shared\Partial\clubdetail.cshtml" />
+    <Content Include="Views\Home\Pricing.cshtml" />
+    <Content Include="Views\Home\Players.cshtml" />
+    <Content Include="Views\Home\PlayerDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
