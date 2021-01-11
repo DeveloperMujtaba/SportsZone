@@ -1127,6 +1127,13 @@
     <Content Include="Views\Home\Pricing.cshtml" />
     <Content Include="Views\Home\Players.cshtml" />
     <Content Include="Views\Home\PlayerDetail.cshtml" />
+    <Content Include="Views\Home\Coachs.cshtml" />
+    <Content Include="Views\Home\CoachDetail.cshtml" />
+    <Content Include="Views\Home\Clubs.cshtml" />
+    <Content Include="Views\Home\ClubDetail.cshtml" />
+    <Content Include="Views\Home\Teams.cshtml" />
+    <Content Include="Views\Home\TeamDetail.cshtml" />
+    <Content Include="Views\Home\Matchs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

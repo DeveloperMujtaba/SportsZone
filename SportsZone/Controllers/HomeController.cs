@@ -36,13 +36,31 @@ namespace SportsZone.Controllers
         {
             if (id == null)
                 return View();
-            else return View();
+            else return View("playerdetail");
         }
-        public ActionResult Coachs()
+        [ActionName("coachs")]
+        public ActionResult Coachs(string id)
         {
-            return View();
+            if (id == null)
+                return View();
+            else return View("coachdetail");
         }
-        public ActionResult Clubs()
+        [ActionName("clubs")]
+        public ActionResult Clubs(string id)
+        {
+            if (id == null)
+                return View();
+            else return View("clubdetail");
+        }
+        [ActionName("teams")]
+        public ActionResult Teams(string id)
+        {
+            if (id == null)
+                return View();
+            else return View("teamdetail");
+        }
+        [ActionName("matchs")]
+        public ActionResult Matchs()
         {
             return View();
         }
