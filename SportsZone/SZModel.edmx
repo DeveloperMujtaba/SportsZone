@@ -5,14 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="sportszoneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="club_games">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="clubid" Type="int" Nullable="false" />
-          <Property Name="gameid" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="clubs">
           <Key>
             <PropertyRef Name="clubid" />
@@ -27,6 +19,8 @@
           <Property Name="long" Type="nvarchar" MaxLength="500" />
           <Property Name="logo" Type="nvarchar" MaxLength="500" />
           <Property Name="cover" Type="nvarchar" MaxLength="500" />
+          <Property Name="cg" Type="nvarchar" MaxLength="1000" />
+          <Property Name="info" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="coach_associations">
           <Key>
@@ -529,30 +523,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="which club in club games">
-          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
-          <End Role="club_games" Type="Self.club_games" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="clubs">
-              <PropertyRef Name="clubid" />
-            </Principal>
-            <Dependent Role="club_games">
-              <PropertyRef Name="clubid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="which game in club games">
-          <End Role="games" Type="Self.games" Multiplicity="1" />
-          <End Role="club_games" Type="Self.club_games" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="games">
-              <PropertyRef Name="gameid" />
-            </Principal>
-            <Dependent Role="club_games">
-              <PropertyRef Name="gameid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="which match which team">
           <End Role="matches" Type="Self.matches" Multiplicity="1" />
           <End Role="match_result" Type="Self.match_result" Multiplicity="*" />
@@ -597,7 +567,6 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="sportszoneModelStoreContainer">
-          <EntitySet Name="club_games" EntityType="Self.club_games" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="clubs" EntityType="Self.clubs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="coach_associations" EntityType="Self.coach_associations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="coach_associations_request" EntityType="Self.coach_associations_request" Schema="dbo" store:Type="Tables" />
@@ -726,14 +695,6 @@
             <End Role="games_positions" EntitySet="games_positions" />
             <End Role="players" EntitySet="players" />
           </AssociationSet>
-          <AssociationSet Name="which club in club games" Association="Self.which club in club games">
-            <End Role="clubs" EntitySet="clubs" />
-            <End Role="club_games" EntitySet="club_games" />
-          </AssociationSet>
-          <AssociationSet Name="which game in club games" Association="Self.which game in club games">
-            <End Role="games" EntitySet="games" />
-            <End Role="club_games" EntitySet="club_games" />
-          </AssociationSet>
           <AssociationSet Name="which match which team" Association="Self.which match which team">
             <End Role="matches" EntitySet="matches" />
             <End Role="match_result" EntitySet="match_result" />
@@ -743,16 +704,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="sportszoneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="club_games">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="clubid" Type="Int32" Nullable="false" />
-          <Property Name="gameid" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="clubs" Relationship="Self.which_club_in_club_games" FromRole="club_games" ToRole="clubs" />
-          <NavigationProperty Name="games" Relationship="Self.which_game_in_club_games" FromRole="club_games" ToRole="games" />
-        </EntityType>
         <EntityType Name="clubs">
           <Key>
             <PropertyRef Name="clubid" />
@@ -767,13 +718,14 @@
           <Property Name="long" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="logo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="cover" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="club_games" Relationship="Self.which_club_in_club_games" FromRole="clubs" ToRole="club_games" />
           <NavigationProperty Name="player_associations" Relationship="Self.a_player_associate_in_which_club" FromRole="clubs" ToRole="player_associations" />
           <NavigationProperty Name="users" Relationship="Self.club_associated_with_user" FromRole="clubs" ToRole="users" />
           <NavigationProperty Name="coach_associations" Relationship="Self.coach_associate_in_which_club" FromRole="clubs" ToRole="coach_associations" />
           <NavigationProperty Name="player_associations_request" Relationship="Self.its_shows_request_to_club__" FromRole="clubs" ToRole="player_associations_request" />
           <NavigationProperty Name="coach_associations_request" Relationship="Self.its_shows_request_to_club_of_coach" FromRole="clubs" ToRole="coach_associations_request" />
           <NavigationProperty Name="teams" Relationship="Self.team_of_which_club" FromRole="clubs" ToRole="teams" />
+          <Property Name="cg" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="coach_associations">
           <Key>
@@ -843,7 +795,6 @@
           <Property Name="gameid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="gamename" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="other" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="club_games" Relationship="Self.which_game_in_club_games" FromRole="games" ToRole="club_games" />
           <NavigationProperty Name="games_positions" Relationship="Self.game_positions_in_game_position" FromRole="games" ToRole="games_positions" />
           <NavigationProperty Name="teams" Relationship="Self.team_of_which_game" FromRole="games" ToRole="teams" />
           <NavigationProperty Name="player_role" Relationship="Self.user_of_which_game_role" FromRole="games" ToRole="player_role" />
@@ -975,30 +926,6 @@
           <NavigationProperty Name="feedback1" Relationship="Self.feedback_to_which_user" FromRole="users" ToRole="feedback" />
           <NavigationProperty Name="players" Relationship="sportszoneModel.player_user_rel" FromRole="users" ToRole="players" />
         </EntityType>
-        <Association Name="which_club_in_club_games">
-          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
-          <End Role="club_games" Type="Self.club_games" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="clubs">
-              <PropertyRef Name="clubid" />
-            </Principal>
-            <Dependent Role="club_games">
-              <PropertyRef Name="clubid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="which_game_in_club_games">
-          <End Role="games" Type="Self.games" Multiplicity="1" />
-          <End Role="club_games" Type="Self.club_games" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="games">
-              <PropertyRef Name="gameid" />
-            </Principal>
-            <Dependent Role="club_games">
-              <PropertyRef Name="gameid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="a_player_associate_in_which_club">
           <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
           <End Role="player_associations" Type="Self.player_associations" Multiplicity="*" />
@@ -1300,7 +1227,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="club_games" EntityType="Self.club_games" />
           <EntitySet Name="clubs" EntityType="Self.clubs" />
           <EntitySet Name="coach_associations" EntityType="Self.coach_associations" />
           <EntitySet Name="coach_associations_request" EntityType="Self.coach_associations_request" />
@@ -1316,14 +1242,6 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="teams" EntityType="Self.teams" />
           <EntitySet Name="users" EntityType="Self.users" />
-          <AssociationSet Name="which_club_in_club_games" Association="Self.which_club_in_club_games">
-            <End Role="clubs" EntitySet="clubs" />
-            <End Role="club_games" EntitySet="club_games" />
-          </AssociationSet>
-          <AssociationSet Name="which_game_in_club_games" Association="Self.which_game_in_club_games">
-            <End Role="games" EntitySet="games" />
-            <End Role="club_games" EntitySet="club_games" />
-          </AssociationSet>
           <AssociationSet Name="a_player_associate_in_which_club" Association="Self.a_player_associate_in_which_club">
             <End Role="clubs" EntitySet="clubs" />
             <End Role="player_associations" EntitySet="player_associations" />
@@ -1555,18 +1473,11 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="sportszoneModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="club_games">
-            <EntityTypeMapping TypeName="sportszoneModel.club_games">
-              <MappingFragment StoreEntitySet="club_games">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="clubid" ColumnName="clubid" />
-                <ScalarProperty Name="gameid" ColumnName="gameid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="clubs">
             <EntityTypeMapping TypeName="sportszoneModel.clubs">
               <MappingFragment StoreEntitySet="clubs">
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="cg" ColumnName="cg" />
                 <ScalarProperty Name="clubid" ColumnName="clubid" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="clubname" ColumnName="clubname" />

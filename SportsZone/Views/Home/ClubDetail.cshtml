@@ -1,8 +1,225 @@
-﻿
+﻿@model List<clubs>
 @{
     ViewBag.Title = "ClubDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<title>@Model[0].clubname | JZ Sports Zone | Club</title>
+<div class="page-heading-breadcrumbs">
+    <div class="container">
+        <h2>@Model[0].clubname</h2>
+        <ul class="breadcrumbs">
+            <li><a href="/">Home</a></li>
+            <li><a href="/clubs">Clubs</a></li>
+            <li>@Model[0].clubname</li>
+        </ul>
+    </div>
+</div>
+<!-- Page Heading & Breadcrumbs  -->
+<!-- Page Heading banner -->
+<div style="height:400px; background-image:url(/uploads/media/@Model[0].cover); background-position:center; background-size:contain" class="overlay-dark theme-padding parallax-window">
+</div>
+<!-- Page Heading banner -->
+<!-- Main Content -->
+<main class="main-content">
 
-<h2>ClubDetail</h2>
+    <!-- Team Detail -->
+    <div class="team-detail-holder white-bg">
+        <div class="container">
 
+            <!-- Club Detail -->
+            <div class="row">
+                <!-- Team without Hover -->
+                <div class="col-lg-3 col-md-3 col-sm-5">
+                    <div class="team-column without-hover">
+                        <img src="~/uploads/media/@Model[0].logo" alt="@Model[0].clubname" style="height:416px; width:269px">
+                        <span class="player-number">C-@Model[0].clubid</span>
+                        <div class="team-detail">
+                            <h5>@Model[0].clubname</h5>
+                            <span class="desination">Defender</span>
+                            <div class="detail-inner">
+                                <ul>
+                                    <li>City</li>
+                                    <li>State</li>
+                                    <li>Address</li>
+                                    <li>Direction</li>
+                                    <li>Fallow us on</li>
+                                </ul>
+                                <ul>
+                                    <li>@Model[0].city</li>
+                                    <li>@Model[0].C_state</li>
+                                    <li>@Model[0].C_address</li>
+                                    <li>
+                                        <ul>
+                                            <li><a class="location-marker" href="https://maps.google.com/maps"><i class="fa fa-location-arrow"></i></a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="social-icons">
+                                            <li><a class="facebook" href="https://facebook.com"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a class="twitter" href="https://twitter.com"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a class="youtube" href="https://youtube.com"><i class="fa fa-youtube-play"></i></a></li>
+                                            <li><a class="pinterest" href="https://pinterest.com"><i class="fa fa-pinterest-p"></i></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team without Hover -->
+                <!-- Detail -->
+                <div class="col-lg-9 col-md-9 col-sm-7">
+
+                    <!-- Team Detail Content -->
+                    <div class="team-detail-content theme-padding-bottom">
+                        <h2>Detailed Overview</h2>
+                        <p id="clubbio"></p>
+                    </div>
+                </div>
+                <!-- Detail -->
+
+            </div>
+            <!-- Club Detail  -->
+            <!-- Top Teams -->
+            <div class="row" style="margin-bottom:10px">
+                <div class="col-lg-9 col-sm-12 pull-right top-palyer">
+                    @{ List<teams> tms = (List<teams>)ViewBag.Teams; }
+                    <h2>Top Teams & Games (@tms.Count)</h2>
+                    <div class="row">
+                        @foreach (var t in tms)
+                        {
+                            <!-- Team Column -->
+                            <div class="col-sm-4 col-xs-6 r-full-width">
+                                <div class="team-column">
+                                    <img src="~/uploads/media/@t.logo" alt="@t.name" style="height:416px; width:269px">
+                                    <span class="player-number">T-@t.teamid</span>
+                                    <div class="team-detail">
+                                        <h5><a href="/teams/@t.teamid">@t.name.Split('♦')[0]</a></h5>
+                                        <span class="desination">@t.name.Split('♦')[1]</span>
+                                        <div class="detail-inner">
+                                            <ul>
+                                                <li>Total Players</li>
+                                                <li>Total Coachs</li>
+                                                <li>Fallow us on</li>
+                                            </ul>
+                                            <ul>
+                                                <li>@t.name.Split('♦')[2]</li>
+                                                <li>@t.name.Split('♦')[3]</li>
+                                                <li>
+                                                    <ul class="social-icons">
+                                                        <li><a class="facebook" href="https://facebook.com"><i class="fa fa-facebook"></i></a></li>
+                                                        <li><a class="twitter" href="https://twitter.com"><i class="fa fa-twitter"></i></a></li>
+                                                        <li><a class="youtube" href="https://youtube.com"><i class="fa fa-youtube-play"></i></a></li>
+                                                        <li><a class="pinterest" href="https://pinterest.com"><i class="fa fa-pinterest-p"></i></a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Team Column -->
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- Top Teams -->
+            <!-- Top Coachs -->
+            <div class="row" style="margin-bottom:10px">
+                <div class="col-lg-9 col-sm-12 pull-right top-palyer">
+                    @{ List<coachs> chs = (List<coachs>)ViewBag.Coachs; }
+                    <h2>Our Top Coachs (@chs.Count)</h2>
+                    <div class="row">
+                        @foreach (var t in chs)
+                        {
+                            <!-- Team Column -->
+                            <div class="col-sm-4 col-xs-6 r-full-width">
+                                <div class="team-column">
+                                    <img src="~/uploads/media/@t.picture" alt="@t.name">
+                                    <span class="player-number">H-@t.coachid</span>
+                                    <div class="team-detail">
+                                        <h5><a href="/coachs/@t.name.Split('♦')[1]">@t.name.Split('♦')[0]</a></h5>
+                                        <span class="desination">@t.name.Split('♦')[2]</span>
+                                        <div class="detail-inner">
+                                            <ul>
+                                                <li>Age</li>
+                                                <li>Follow us on</li>
+                                            </ul>
+                                            <ul>
+                                                <li>@t.age</li>
+                                                <li>
+                                                    <ul class="social-icons">
+                                                        <li><a class="facebook" href="https://facebook.com"><i class="fa fa-facebook"></i></a></li>
+                                                        <li><a class="twitter" href="https://twitter.com"><i class="fa fa-twitter"></i></a></li>
+                                                        <li><a class="youtube" href="https://youtube.com"><i class="fa fa-youtube-play"></i></a></li>
+                                                        <li><a class="pinterest" href="https://pinterest.com"><i class="fa fa-pinterest-p"></i></a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Team Column -->
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- Top Top Coachs -->
+            <!-- Top Player -->
+            <div class="row" style="margin-bottom:10px">
+                <div class="col-lg-9 col-sm-12 pull-right top-palyer">
+                    @{ List<players> plyr = (List<players>)ViewBag.Players; }
+                    <h2>Our Top Players (@plyr.Count)</h2>
+                    <div class="row">
+                        @foreach (var t in plyr)
+                        {
+                            <!-- Team Column -->
+                            <div class="col-sm-4 col-xs-6 r-full-width">
+                                <div class="team-column">
+                                    <img src="~/uploads/media/@t.photo" alt="@t.playername" style="height:416px; width:269px">
+                                    <span class="player-number">P-@t.playerid</span>
+                                    <div class="team-detail">
+                                        <h5>@t.playername.Split('♦')[0]</h5>
+                                        <span class="desination">@t.playername.Split('♦')[1]</span>
+                                        <div class="detail-inner">
+                                            <ul>
+                                                <li>Age</li>
+                                                <li>Height</li>
+                                                <li>Follow us on</li>
+                                            </ul>
+                                            <ul>
+                                                <li>@t.age</li>
+                                                <li>@t.height</li>
+                                                <li>
+                                                    <ul class="social-icons">
+                                                        <li><a class="facebook" href="https://facebook.com"><i class="fa fa-facebook"></i></a></li>
+                                                        <li><a class="twitter" href="https://twitter.com"><i class="fa fa-twitter"></i></a></li>
+                                                        <li><a class="youtube" href="https://youtube.com"><i class="fa fa-youtube-play"></i></a></li>
+                                                        <li><a class="pinterest" href="https://pinterest.com"><i class="fa fa-pinterest-p"></i></a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Team Column -->
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- Top Top Coachs -->
+
+        </div>
+    </div>
+    <!-- Team Detail -->
+
+</main>
+<!-- Main Content -->
+@section scripts{
+<script>
+    var dt = `@Model[0].info`;
+    $("#clubbio").text(dt);
+</script> 
+    }

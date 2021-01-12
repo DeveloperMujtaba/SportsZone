@@ -17,7 +17,6 @@ namespace SportsZone
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public games()
         {
-            this.club_games = new HashSet<club_games>();
             this.games_positions = new HashSet<games_positions>();
             this.teams = new HashSet<teams>();
             this.player_role = new HashSet<player_role>();
@@ -27,8 +26,6 @@ namespace SportsZone
         public string gamename { get; set; }
         public string other { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<club_games> club_games { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<games_positions> games_positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

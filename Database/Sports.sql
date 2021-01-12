@@ -33,16 +33,18 @@ lat nvarchar(500) default '',
 long nvarchar(500) default '',
 logo nvarchar(500) default '',
 cover nvarchar(500) default '',
+cg nvarchar(1000),
+info nvarchar(max)
 );
 go
-create table club_games
-(
-id int primary key identity(1,1) not null,
-clubid int not null,
-constraint "which club in club games" foreign key(clubid) references clubs(clubid),
-gameid int not null,
-constraint "which game in club games" foreign key(gameid) references games(gameid),
-);
+--create table club_games
+--(
+--id int primary key identity(1,1) not null,
+--clubid int not null,
+--constraint "which club in club games" foreign key(clubid) references clubs(clubid),
+--gameid int not null,
+--constraint "which game in club games" foreign key(gameid) references games(gameid),
+--);
 go
 create table games_positions
 (
@@ -184,44 +186,14 @@ points int not null,
 constraint "which match which team" foreign key (mid) references matches(mid),
 constraint "loser and winner" foreign key(teamid) references teams(teamid),
 );
-
-insert into games values('Cricket','')
-insert into games values('Football','')
-insert into games values('Hockey','')
-insert into games_positions values(1,'WicketKeeper')
-insert into games_positions values(1,'Batsman')
-insert into games_positions values(1,'Bowler')
-insert into games_positions values(3,'Goalkeeper')
-insert into games_positions values(3,'Full-Backs')
-insert into games_positions values(3,'Centre-Backs')
-insert into games_positions values(4,'Forwards')
-insert into games_positions values(4,'Defense')
-insert into games_positions values(4,'Goaltender/Goalie')
-select * from games_positions
-select * from users
 select * from players
-insert into players values(11, 'Mujtaba Khan', 23, '', '', 5.8, 'This is mujtaba, batsman', 2)
-select * from games_positions where positionid=2
-
-update players set photo='no-image.jpg'
-update players set cover='no-cover.jpg'
-
-select * from coachs
-select * from games
-select * from games_positions
+select * from users
 select * from clubs
-update clubs set
-clubname='Test Champions Club',
-city='Mailsi',
-_state='Punjab',
-_address='Mailsi Vehari Road Ahmad Pur',
-lat='29.8566495',
-long='72.2643113',
-logo='no-image.jpg',
-cover='no-cover.jpg'
 
-
-select * from games
-select * from games_positions
-
-
+update players set bio='
+Although I do not like to answer my own question, but here is what solved my problem:
+After I found this link about Complex Types I tried several implementations, and after some headache I ended up with this.
+The List values get stored as a string on the table directly, so its not required to perform several joins in order to get the list entries. Implementors only have to implement the conversation for each list entry to a persistable string (see the Code example).
+Most of the code is handled in the Baseclass (PersistableScalarCollection). You only have to derive from it per datatype (int, string, etc) and implement the method to serialize/deserialize the value.
+Its important column, you cannot search for values in the Collection (at least on the database). In this case you may skip this implementation or denormalize the data for searching.
+'

@@ -131,9 +131,6 @@
     <Compile Include="clubs.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="club_games.cs">
-      <DependentUpon>SZModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="coachs.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
@@ -166,6 +163,7 @@
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ClubsSearch.cs" />
     <Compile Include="Models\GamePositionsHolder.cs" />
     <Compile Include="players.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
@@ -413,6 +411,7 @@
     <Content Include="themes\default\images\mobile.png" />
     <Content Include="themes\default\images\news-post\img-01.jpg" />
     <Content Include="themes\default\images\news-post\img-02.jpg" />
+    <Content Include="themes\default\images\our-logo.png" />
     <Content Include="themes\default\images\parallax-bg\img-01.jpg" />
     <Content Include="themes\default\images\parallax-bg\img-02.jpg" />
     <Content Include="themes\default\images\parallax-bg\img-03.jpg" />
@@ -1134,6 +1133,7 @@
     <Content Include="Views\Home\Teams.cshtml" />
     <Content Include="Views\Home\TeamDetail.cshtml" />
     <Content Include="Views\Home\Matchs.cshtml" />
+    <Content Include="Views\Home\error404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

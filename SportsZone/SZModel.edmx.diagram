@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="ddf2eeac8a5541cfbf6e0a92ab9c33fb" Name="Diagram1">
-        <EntityTypeShape EntityType="sportszoneModel.club_games" Width="1.5" PointX="5.25" PointY="16.375" IsExpanded="true" />
         <EntityTypeShape EntityType="sportszoneModel.clubs" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
         <EntityTypeShape EntityType="sportszoneModel.coach_associations" Width="1.5" PointX="8.25" PointY="15.875" IsExpanded="true" />
         <EntityTypeShape EntityType="sportszoneModel.coach_associations_request" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
@@ -21,8 +20,6 @@
         <EntityTypeShape EntityType="sportszoneModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="sportszoneModel.teams" Width="1.5" PointX="8.25" PointY="19.625" IsExpanded="true" />
         <EntityTypeShape EntityType="sportszoneModel.users" Width="1.5" PointX="0.75" PointY="17" IsExpanded="true" />
-        <AssociationConnector Association="sportszoneModel.which_club_in_club_games" ManuallyRouted="false" />
-        <AssociationConnector Association="sportszoneModel.which_game_in_club_games" ManuallyRouted="false" />
         <AssociationConnector Association="sportszoneModel.a_player_associate_in_which_club" ManuallyRouted="false" />
         <AssociationConnector Association="sportszoneModel.club_associated_with_user" ManuallyRouted="false" />
         <AssociationConnector Association="sportszoneModel.coach_associate_in_which_club" ManuallyRouted="false" />

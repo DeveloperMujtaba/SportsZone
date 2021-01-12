@@ -1,8 +1,175 @@
-﻿
+﻿@model players
 @{
     ViewBag.Title = "PlayerDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<title>@Model.playername | @Model.games_positions.position | JZ Sports Zone</title>
+<div class="page-heading-breadcrumbs">
+    <div class="container">
+        <h2>@Model.playername</h2>
+        <ul class="breadcrumbs">
+            <li><a href="/">Home</a></li>
+            <li><a href="/players">Players</a></li>
+            <li>@Model.playername</li>
+        </ul>
+    </div>
+</div>
+<!-- Page Heading & Breadcrumbs  -->
+<!-- Page Heading banner -->
+<div style="height:400px; background-image:url(/uploads/media/@Model.cover); background-position:center; background-size:contain" class="overlay-dark theme-padding parallax-window">
+</div>
+<main class="main-content theme-padding">
 
-<h2>PlayerDetail</h2>
+    <!-- Team Detail -->
+    <div class="team-detail-holder white-bg">
+        <div class="container">
 
+            <!-- Club Detail -->
+            <div class="row">
+                <!-- Team without Hover -->
+                <div class="col-lg-3 col-md-3 col-sm-5">
+                    <div class="team-column without-hover">
+                        <img src="~/uploads/media/@Model.photo" alt="@Model.playername" style="height:416px; width:269px">
+                        <span class="player-number">P-@Model.playerid</span>
+                        <div class="team-detail">
+                            <h5>@Model.playername</h5>
+                            <span class="desination">Defender</span>
+                            <div class="detail-inner">
+                                <ul>
+                                    <li>Age</li>
+                                    <li>Height</li>
+                                    <li>Player ID</li>
+                                    <li>Position</li>
+                                    <li>Follow</li>
+                                </ul>
+                                <ul>
+                                    <li>@Model.age</li>
+                                    <li>@Model.height</li>
+                                    <li>JZ-P-@Model.playerid</li>
+                                    <li>@Model.games_positions.position</li>
+                                    <li>
+                                        <ul class="social-icons">
+                                            <li><a class="facebook" href="https://facebook.com"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a class="twitter" href="https://twitter.com"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a class="youtube" href="https://youtube.com"><i class="fa fa-youtube-play"></i></a></li>
+                                            <li><a class="pinterest" href="https://pinterest.com"><i class="fa fa-pinterest-p"></i></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team without Hover -->
+                <!-- Detail -->
+                <div class="col-lg-9 col-md-9 col-sm-7">
+
+                    <!-- Team Detail Content -->
+                    <div class="team-detail-content theme-padding-bottom">
+                        <h2>Detailed Overview</h2>
+                        <p id="playerbio"></p>
+                    </div>
+                </div>
+                <!-- Detail -->
+
+            </div>
+            <!-- Club Detail  -->
+            <!-- Top Teams -->
+            <div class="row" style="margin-bottom:10px">
+                <div class="col-lg-9 col-sm-12 pull-right top-palyer">
+                    <h2>Membership Detail</h2>
+                    <div class="row">
+                        @{
+                            if (ViewBag.PlayerAssociations == null)
+                            {
+                                <h3>Not yet associated with any club and team!</h3>
+                            }
+                            else
+                            {
+                                List<player_associations> pas = (List<player_associations>)ViewBag.PlayerAssociations;
+                                <!-- Team Column -->
+                                <div class="col-sm-4 col-xs-6 r-full-width">
+                                    <h3>With Club</h3>
+                                    <div class="team-column">
+                                        <img src="~/uploads/media/@pas[0].clubs.logo" alt="@pas[0].clubs.clubname" style="height:416px; width:269px">
+                                        <span class="player-number">C-@pas[0].clubs.clubid</span>
+                                        <div class="team-detail">
+                                            <h5>>@pas[0].clubs.clubname</h5>
+                                            <span class="desination">@pas[0].clubs.city</span>
+                                            <div class="detail-inner">
+                                                <ul>
+                                                    <li>City</li>
+                                                    <li>State</li>
+                                                    <li>-</li>
+                                                    <li>-</li>
+                                                    <li>Fallow us on</li>
+                                                </ul>
+                                                <ul>
+                                                    <li>@pas[0].clubs.city</li>
+                                                    <li>@pas[0].clubs.C_state</li>
+                                                    <li>-</li>
+                                                    <li>-</li>
+                                                    <li>
+                                                        <ul class="social-icons">
+                                                            <li><a class="facebook" href="https://facebook.com"><i class="fa fa-facebook"></i></a></li>
+                                                            <li><a class="twitter" href="https://twitter.com"><i class="fa fa-twitter"></i></a></li>
+                                                            <li><a class="youtube" href="https://youtube.com"><i class="fa fa-youtube-play"></i></a></li>
+                                                            <li><a class="pinterest" href="https://pinterest.com"><i class="fa fa-pinterest-p"></i></a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-xs-6 r-full-width">
+                                    <h3>With Team</h3>
+                                    <div class="team-column">
+                                        <img src="~/uploads/media/@pas[0].teams.logo" alt="@pas[0].teams.name" style="height:416px; width:269px">
+                                        <span class="player-number">T-@pas[0].teams.teamid</span>
+                                        <div class="team-detail">
+                                            <h5>@pas[0].teams.name</h5>
+                                            <span class="desination">@pas[0].teams.games.gamename</span>
+                                            <div class="detail-inner">
+                                                <ul>
+                                                    <li>Game</li>
+                                                    <li>-</li>
+                                                    <li>-</li>
+                                                    <li>-</li>
+                                                    <li>Fallow us on</li>
+                                                </ul>
+                                                <ul>
+                                                    <li>@pas[0].teams.games.gamename</li>
+                                                    <li>-</li>
+                                                    <li>-</li>
+                                                    <li>-</li>
+                                                    <li>
+                                                        <ul class="social-icons">
+                                                            <li><a class="facebook" href="https://facebook.com"><i class="fa fa-facebook"></i></a></li>
+                                                            <li><a class="twitter" href="https://twitter.com"><i class="fa fa-twitter"></i></a></li>
+                                                            <li><a class="youtube" href="https://youtube.com"><i class="fa fa-youtube-play"></i></a></li>
+                                                            <li><a class="pinterest" href="https://pinterest.com"><i class="fa fa-pinterest-p"></i></a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Team Detail -->
+
+</main>
+@section scripts{
+    <script>
+    var dt = `@Model.bio`;
+    $("#playerbio").text(dt);
+    </script>
+}

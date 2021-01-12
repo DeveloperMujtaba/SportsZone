@@ -27,7 +27,6 @@ namespace SportsZone
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<club_games> club_games { get; set; }
         public virtual DbSet<clubs> clubs { get; set; }
         public virtual DbSet<coach_associations> coach_associations { get; set; }
         public virtual DbSet<coach_associations_request> coach_associations_request { get; set; }

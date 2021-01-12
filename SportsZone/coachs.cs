@@ -27,7 +27,7 @@ namespace SportsZone
         public Nullable<int> age { get; set; }
         public string picture { get; set; }
         public string cover { get; set; }
-        public int positionid { get; set; }
+        public Nullable<int> positionid { get; set; }
         public string bio { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
