@@ -1,22 +1,27 @@
-﻿<head>
+﻿@model teams
+<head>
     <title>Star Cricket | Teams - Sports Zone</title>
 </head>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{ 
+    List<players> players = (List<players>)ViewBag.Players;
+}
+<title>@Model.name | Team | JZ Sport Zone</title>
 <div class="page-heading-breadcrumbs">
     <div class="container">
-        <h2>Star Cricket | Team</h2>
+        <h2>@Model.name | Team</h2>
         <ul class="breadcrumbs">
             <li><a href="/">Home</a></li>
-            <li><a href="/teams">Team</a></li>
-            <li>Star Cricket</li>
+            <li>Teams</li>
+            <li>@Model.name</li>
         </ul>
     </div>
 </div>
 <!-- Page Heading & Breadcrumbs  -->
 <!-- Page Heading banner -->
-<div style="height:400px; background-image:url(/themes/default/images/inner-banner/img-01.jpg); background-position:center; background-size:contain" class="overlay-dark theme-padding parallax-window">
+<div style="height:400px; background-image:url(/uploads/media/@Model.cover); background-position:center; background-size:contain" class="overlay-dark theme-padding parallax-window">
 </div>
 <!-- Page Heading banner -->
 <!-- Main Content -->
@@ -33,23 +38,22 @@
                 <div class="col-lg-3 col-md-3 col-sm-5">
                     <div class="team-column without-hover">
                         <img src="~/themes/default/images/team/img-01.jpg" alt="">
-                        <span class="player-number">T-1</span>
+                        <span class="player-number">T-@Model.teamid</span>
                         <div class="team-detail">
-                            <h5>Star Cricket</h5>
-                            <span>Details</span>
+                            <h5>@Model.name</h5>
                             <div class="detail-inner">
                                 <ul>
-                                    <li>Club</li>
-                                    <li>Game</li>
                                     <li>Players</li>
-                                    <li>Coach</li>
+                                    <li>Game</li>
+                                    <li>-</li>
+                                    <li>-</li>
                                     <li>Fallow us on</li>
                                 </ul>
                                 <ul>
-                                    <li>Al Rafeh</li>
-                                    <li>Cricket</li>
-                                    <li>16</li>
-                                    <li>Javaid Mian Dad</li>
+                                    <li>@players.Count</li>
+                                    <li>@Model.games.gamename</li>
+                                    <li>-</li>
+                                    <li>-</li>
                                     <li>
                                         <ul class="social-icons">
                                             <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
@@ -67,561 +71,56 @@
                 <!-- Detail -->
                 <div class="col-lg-9 col-sm-12 pull-right top-palyer">
                     <div class="row">
-
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-01.jpg" alt="">
-                                <span class="player-number">P-1</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Zia ur Rehman</a></h5>
-                                    <span class="desination">Bowler</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
+                        @if (players.Count == 0)
+                        {
+                    <h3>No players in this team!</h3>
+                        }
+                        else
+                        {
+                            for (int i = 0; i < players.Count; i++)
+                            {
+                    <!-- Team Column -->
+                    <div class="col-sm-4 col-xs-6 r-full-width">
+                        <div class="team-column">
+                            <img src="~/uploads/media/@players[i].photo" alt="@players[0].playername">
+                            <span class="player-number">P-@players[i].playerid</span>
+                            <div class="team-detail">
+                                <h5><a href="/players/@players[0].users.username">@players[i].playername</a></h5>
+                                <span class="desination">@players[i].games_positions.position</span>
+                                <div class="detail-inner">
+                                    <ul>
+                                        <li>Age</li>
+                                        <li>Height</li>
+                                        <li>Player ID</li>
+                                        <li>Player ID</li>
+                                        <li>Follow</li>
+                                    </ul>
+                                    <ul>
+                                        <li>@players[i].age</li>
+                                        <li>@players[i].height</li>
+                                        <li>SP-@players[i].playerid</li>
+                                        <li>-</li>
+                                        <li>
+                                            <ul class="social-icons">
+                                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
+                                                <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        <!-- Team Column -->
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-02.jpg" alt="">
-                                <span class="player-number">P-2</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Ghulam Mujtaba</a></h5>
-                                    <span class="desination">Batsman</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-03.jpg" alt="">
-                                <span class="player-number">P-3</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Zeeshan Khan</a></h5>
-                                    <span class="desination">Wicketkeeper</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-
                     </div>
-                    <div class="row">
-
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-01.jpg" alt="">
-                                <span class="player-number">P-1</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Zia ur Rehman</a></h5>
-                                    <span class="desination">Bowler</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-02.jpg" alt="">
-                                <span class="player-number">P-2</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Ghulam Mujtaba</a></h5>
-                                    <span class="desination">Batsman</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-03.jpg" alt="">
-                                <span class="player-number">P-3</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Zeeshan Khan</a></h5>
-                                    <span class="desination">Wicketkeeper</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-
-                    </div>
-                    <div class="row">
-
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-01.jpg" alt="">
-                                <span class="player-number">P-1</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Zia ur Rehman</a></h5>
-                                    <span class="desination">Bowler</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-02.jpg" alt="">
-                                <span class="player-number">P-2</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Ghulam Mujtaba</a></h5>
-                                    <span class="desination">Batsman</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-03.jpg" alt="">
-                                <span class="player-number">P-3</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Zeeshan Khan</a></h5>
-                                    <span class="desination">Wicketkeeper</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-
-                    </div>
-                    <div class="row">
-
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-01.jpg" alt="">
-                                <span class="player-number">P-1</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Zia ur Rehman</a></h5>
-                                    <span class="desination">Bowler</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-02.jpg" alt="">
-                                <span class="player-number">P-2</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Ghulam Mujtaba</a></h5>
-                                    <span class="desination">Batsman</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-03.jpg" alt="">
-                                <span class="player-number">P-3</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Zeeshan Khan</a></h5>
-                                    <span class="desination">Wicketkeeper</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-
-                    </div>
-                    <div class="row">
-
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-01.jpg" alt="">
-                                <span class="player-number">P-1</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Zia ur Rehman</a></h5>
-                                    <span class="desination">Bowler</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-02.jpg" alt="">
-                                <span class="player-number">P-2</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Ghulam Mujtaba</a></h5>
-                                    <span class="desination">Batsman</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-                        <!-- Team Column -->
-                        <div class="col-sm-4 col-xs-6 r-full-width">
-                            <div class="team-column">
-                                <img src="~/themes/default/images/team/img-03.jpg" alt="">
-                                <span class="player-number">P-3</span>
-                                <div class="team-detail">
-                                    <h5><a href="#">Zeeshan Khan</a></h5>
-                                    <span class="desination">Wicketkeeper</span>
-                                    <div class="detail-inner">
-                                        <ul>
-                                            <li>Born</li>
-                                            <li>Position</li>
-                                            <li>Squad number</li>
-                                            <li>Previous Club</li>
-                                            <li>Fallow us on</li>
-                                        </ul>
-                                        <ul>
-                                            <li>August 31, 1988</li>
-                                            <li>Goalkeeper</li>
-                                            <li>13</li>
-                                            <li>Atletico Nacional</li>
-                                            <li>
-                                                <ul class="social-icons">
-                                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                    <li><a class="youtube" href="#"><i class="fa fa-youtube-play"></i></a></li>
-                                                    <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Team Column -->
-
+                    <!-- Team Column -->
+                            }
+                        }
                     </div>
                 </div>
                 <!-- Detail -->
 
             </div>
-            <!-- Row Holder  -->
-            <!-- Top Palyer -->
-            <div class="row">
-
-            </div>
-            <!-- Top Palyer -->
-
         </div>
     </div>
     <!-- Team Detail -->

@@ -94,7 +94,7 @@
                                         <img src="~/uploads/media/@pas[0].clubs.logo" alt="@pas[0].clubs.clubname" style="height:416px; width:269px">
                                         <span class="player-number">C-@pas[0].clubs.clubid</span>
                                         <div class="team-detail">
-                                            <h5>>@pas[0].clubs.clubname</h5>
+                                            <h5><a href="/clubs/@pas[0].clubs.users.username"></a>@pas[0].clubs.clubname</h5>
                                             <span class="desination">@pas[0].clubs.city</span>
                                             <div class="detail-inner">
                                                 <ul>
@@ -128,7 +128,7 @@
                                         <img src="~/uploads/media/@pas[0].teams.logo" alt="@pas[0].teams.name" style="height:416px; width:269px">
                                         <span class="player-number">T-@pas[0].teams.teamid</span>
                                         <div class="team-detail">
-                                            <h5>@pas[0].teams.name</h5>
+                                            <h5><a href="/teams/@pas[0].teams.teamid">@pas[0].teams.name</a></h5>
                                             <span class="desination">@pas[0].teams.games.gamename</span>
                                             <div class="detail-inner">
                                                 <ul>
@@ -136,7 +136,7 @@
                                                     <li>-</li>
                                                     <li>-</li>
                                                     <li>-</li>
-                                                    <li>Fallow us on</li>
+                                                    <li>Follow us on</li>
                                                 </ul>
                                                 <ul>
                                                     <li>@pas[0].teams.games.gamename</li>

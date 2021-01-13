@@ -76,6 +76,7 @@ namespace SportsZone.Controllers
                                                             select pl)
                                                             .Include("teams")
                                                             .Include("clubs")
+                                                            .Include("clubs.users")
                                                             .ToList();
                             if (pa.Count == 0) ViewBag.PlayerAssociations = null;
                             else ViewBag.PlayerAssociations = pa;
@@ -98,11 +99,69 @@ namespace SportsZone.Controllers
             }
         }
         [ActionName("coachs")]
-        public ActionResult Coachs(string id)
+        public ActionResult Coachs(string id, string name)
         {
             if (id == null)
-                return View();
-            else return View("coachdetail");
+            {
+                try
+                {
+                    using (var context = new Entities())
+                    {
+                        List<coachs> coachs = (from p in context.coachs
+                                                where p.name == null || DbFunctions.Like(p.name, "%" + name + "%")
+                                                select p)
+                                                .Include("users")
+                                                .Include("games_positions")
+                                                .ToList();
+                        return View("coachs", coachs);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View("error404");
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var context = new Entities())
+                    {
+                        List<coachs> coach = (from p in context.coachs
+                                                where p.users.username == id
+                                                select p)
+                                                .Include("users")
+                                                .Include("games_positions")
+                                                .ToList();
+                        if (coach.Count == 1)
+                        {
+                            List<coach_associations> ca = (from pl in context.coach_associations
+                                                            where pl.coachs.users.username == id
+                                                            select pl)
+                                                            .Include("teams")
+                                                            .Include("clubs")
+                                                            .ToList();
+                            if (ca.Count == 0) ViewBag.CoachAssociations = null;
+                            else ViewBag.CoachAssociations = ca;
+                            return View("coachdetail", coach[0]);
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Coach not found!";
+                            return View("error404");
+                        }
+
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View("error404");
+                }
+            }
         }
         [ActionName("clubs")]
         public ActionResult Clubs(string id, string city, int? game)
@@ -250,9 +309,38 @@ namespace SportsZone.Controllers
         [ActionName("teams")]
         public ActionResult Teams(int? id)
         {
+
             if (id == null)
                 return RedirectToAction("index");
-            else return View("teamdetail");
+            else
+            {
+                using (var context = new Entities())
+                {
+                    List<teams> team = (from t in context.teams
+                                         where t.teamid == id
+                                         select t)
+                                         .Include("games")
+                                         .ToList();
+                    if (team.Count > 0)
+                    {
+                        List<players> pl = (from p in context.player_associations
+                                            where p.teamid == id
+                                            select p.players)
+                                                        .Include("players.users")
+                                                        .Include("players.games_positions")
+                                                        .ToList();
+                        if (pl.Count > 0) return ViewBag.Players = pl;
+                        else ViewBag.Players = null;
+                        return View("teamdetail", team[0]);
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Team Not Found!";
+                        return View("error404");
+                    }
+                }
+                    
+            }
         }
         [ActionName("matchs")]
         public ActionResult Matchs()
