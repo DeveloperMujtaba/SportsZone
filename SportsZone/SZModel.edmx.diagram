@@ -12,8 +12,6 @@
         <EntityTypeShape EntityType="sportszoneModel.feedback" Width="1.5" PointX="3" PointY="24.375" IsExpanded="true" />
         <EntityTypeShape EntityType="sportszoneModel.games" Width="1.5" PointX="1.5" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="sportszoneModel.games_positions" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="sportszoneModel.match_result" Width="1.5" PointX="10.5" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="sportszoneModel.matches" Width="1.5" PointX="8.25" PointY="24.25" IsExpanded="true" />
         <EntityTypeShape EntityType="sportszoneModel.player_associations" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
         <EntityTypeShape EntityType="sportszoneModel.player_associations_request" Width="1.5" PointX="8.25" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="sportszoneModel.player_role" Width="1.5" PointX="3.75" PointY="27.875" IsExpanded="true" />
@@ -39,8 +37,6 @@
         <AssociationConnector Association="sportszoneModel.game_positions_in_game_position" ManuallyRouted="false" />
         <AssociationConnector Association="sportszoneModel.team_of_which_game" ManuallyRouted="false" />
         <AssociationConnector Association="sportszoneModel.user_of_which_game_role" ManuallyRouted="false" />
-        <AssociationConnector Association="sportszoneModel.loser_and_winner" ManuallyRouted="false" />
-        <AssociationConnector Association="sportszoneModel.which_match_which_team" ManuallyRouted="false" />
         <AssociationConnector Association="sportszoneModel.a_player_associate_in_which_team" ManuallyRouted="false" />
         <AssociationConnector Association="sportszoneModel.a_player_is_playing_which_role_of_game" ManuallyRouted="false" />
         <AssociationConnector Association="sportszoneModel.its_shows_request_of_teams" ManuallyRouted="false" />
@@ -50,6 +46,10 @@
         <AssociationConnector Association="sportszoneModel.its_gives_the_player_id_" />
         <AssociationConnector Association="sportszoneModel.its_shows_player_request_id_" />
         <AssociationConnector Association="sportszoneModel.player_user_rel" />
+        <EntityTypeShape EntityType="sportszoneModel.match_result" Width="1.5" PointX="10" PointY="24.25" />
+        <EntityTypeShape EntityType="sportszoneModel.matches" Width="1.5" PointX="7.625" PointY="24.125" />
+        <AssociationConnector Association="sportszoneModel.loser_and_winner" />
+        <AssociationConnector Association="sportszoneModel.which_match_which_team" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

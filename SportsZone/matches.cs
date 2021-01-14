@@ -21,10 +21,12 @@ namespace SportsZone
         }
     
         public int mid { get; set; }
-        public int teamid1 { get; set; }
-        public int teamid2 { get; set; }
+        public int club1 { get; set; }
+        public int club2 { get; set; }
+        public int gameid { get; set; }
         public string loc { get; set; }
         public System.DateTime C_date { get; set; }
+        public Nullable<bool> C_status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_result> match_result { get; set; }

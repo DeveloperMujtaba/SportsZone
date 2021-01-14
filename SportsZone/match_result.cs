@@ -16,11 +16,11 @@ namespace SportsZone
     {
         public int rid { get; set; }
         public int mid { get; set; }
-        public int teamid { get; set; }
-        public string C_status { get; set; }
+        public int clubid { get; set; }
         public int points { get; set; }
+        public string C_status { get; set; }
     
-        public virtual teams teams { get; set; }
+        public virtual clubs clubs { get; set; }
         public virtual matches matches { get; set; }
     }
 }

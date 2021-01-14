@@ -91,19 +91,21 @@
           </Key>
           <Property Name="rid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="mid" Type="int" Nullable="false" />
-          <Property Name="teamid" Type="int" Nullable="false" />
-          <Property Name="_status" Type="char" MaxLength="1" />
+          <Property Name="clubid" Type="int" Nullable="false" />
           <Property Name="points" Type="int" Nullable="false" />
+          <Property Name="_status" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="matches">
           <Key>
             <PropertyRef Name="mid" />
           </Key>
           <Property Name="mid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="teamid1" Type="int" Nullable="false" />
-          <Property Name="teamid2" Type="int" Nullable="false" />
+          <Property Name="club1" Type="int" Nullable="false" />
+          <Property Name="club2" Type="int" Nullable="false" />
+          <Property Name="gameid" Type="int" Nullable="false" />
           <Property Name="loc" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="_date" Type="datetime" Nullable="false" />
+          <Property Name="_status" Type="bit" />
         </EntityType>
         <EntityType Name="player_associations">
           <Key>
@@ -452,14 +454,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="loser and winner">
-          <End Role="teams" Type="Self.teams" Multiplicity="1" />
+          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
           <End Role="match_result" Type="Self.match_result" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="teams">
-              <PropertyRef Name="teamid" />
+            <Principal Role="clubs">
+              <PropertyRef Name="clubid" />
             </Principal>
             <Dependent Role="match_result">
-              <PropertyRef Name="teamid" />
+              <PropertyRef Name="clubid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -672,7 +674,7 @@
             <End Role="coach_associations_request" EntitySet="coach_associations_request" />
           </AssociationSet>
           <AssociationSet Name="loser and winner" Association="Self.loser and winner">
-            <End Role="teams" EntitySet="teams" />
+            <End Role="clubs" EntitySet="clubs" />
             <End Role="match_result" EntitySet="match_result" />
           </AssociationSet>
           <AssociationSet Name="player user rel" Association="Self.player user rel">
@@ -726,6 +728,7 @@
           <NavigationProperty Name="teams" Relationship="Self.team_of_which_club" FromRole="clubs" ToRole="teams" />
           <Property Name="cg" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="match_result" Relationship="sportszoneModel.loser_and_winner" FromRole="clubs" ToRole="match_result" />
         </EntityType>
         <EntityType Name="coach_associations">
           <Key>
@@ -812,29 +815,6 @@
           <NavigationProperty Name="games" Relationship="Self.game_positions_in_game_position" FromRole="games_positions" ToRole="games" />
           <NavigationProperty Name="players" Relationship="sportszoneModel.user_role_in_game" FromRole="games_positions" ToRole="players" />
         </EntityType>
-        <EntityType Name="match_result">
-          <Key>
-            <PropertyRef Name="rid" />
-          </Key>
-          <Property Name="rid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="mid" Type="Int32" Nullable="false" />
-          <Property Name="teamid" Type="Int32" Nullable="false" />
-          <Property Name="C_status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="points" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="teams" Relationship="Self.loser_and_winner" FromRole="match_result" ToRole="teams" />
-          <NavigationProperty Name="matches" Relationship="Self.which_match_which_team" FromRole="match_result" ToRole="matches" />
-        </EntityType>
-        <EntityType Name="matches">
-          <Key>
-            <PropertyRef Name="mid" />
-          </Key>
-          <Property Name="mid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="teamid1" Type="Int32" Nullable="false" />
-          <Property Name="teamid2" Type="Int32" Nullable="false" />
-          <Property Name="loc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="C_date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="match_result" Relationship="Self.which_match_which_team" FromRole="matches" ToRole="match_result" />
-        </EntityType>
         <EntityType Name="player_associations">
           <Key>
             <PropertyRef Name="paid" />
@@ -901,7 +881,6 @@
           <NavigationProperty Name="coach_associations" Relationship="Self.coach_associate_in_which_team" FromRole="teams" ToRole="coach_associations" />
           <NavigationProperty Name="coach_associations_request" Relationship="Self.its_shows_request_of_teams_of_coach" FromRole="teams" ToRole="coach_associations_request" />
           <NavigationProperty Name="games" Relationship="Self.team_of_which_game" FromRole="teams" ToRole="games" />
-          <NavigationProperty Name="match_result" Relationship="Self.loser_and_winner" FromRole="teams" ToRole="match_result" />
           <NavigationProperty Name="player_associations" Relationship="Self.a_player_associate_in_which_team" FromRole="teams" ToRole="player_associations" />
           <NavigationProperty Name="player_associations_request" Relationship="Self.its_shows_request_of_teams" FromRole="teams" ToRole="player_associations_request" />
         </EntityType>
@@ -1154,30 +1133,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="loser_and_winner">
-          <End Role="teams" Type="Self.teams" Multiplicity="1" />
-          <End Role="match_result" Type="Self.match_result" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="teams">
-              <PropertyRef Name="teamid" />
-            </Principal>
-            <Dependent Role="match_result">
-              <PropertyRef Name="teamid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="which_match_which_team">
-          <End Role="matches" Type="Self.matches" Multiplicity="1" />
-          <End Role="match_result" Type="Self.match_result" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="matches">
-              <PropertyRef Name="mid" />
-            </Principal>
-            <Dependent Role="match_result">
-              <PropertyRef Name="mid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="a_player_associate_in_which_team">
           <End Role="teams" Type="Self.teams" Multiplicity="1" />
           <End Role="player_associations" Type="Self.player_associations" Multiplicity="*" />
@@ -1234,8 +1189,6 @@
           <EntitySet Name="feedback" EntityType="Self.feedback" />
           <EntitySet Name="games" EntityType="Self.games" />
           <EntitySet Name="games_positions" EntityType="Self.games_positions" />
-          <EntitySet Name="match_result" EntityType="Self.match_result" />
-          <EntitySet Name="matches" EntityType="Self.matches" />
           <EntitySet Name="player_associations" EntityType="Self.player_associations" />
           <EntitySet Name="player_associations_request" EntityType="Self.player_associations_request" />
           <EntitySet Name="player_role" EntityType="Self.player_role" />
@@ -1318,14 +1271,6 @@
             <End Role="games" EntitySet="games" />
             <End Role="player_role" EntitySet="player_role" />
           </AssociationSet>
-          <AssociationSet Name="loser_and_winner" Association="Self.loser_and_winner">
-            <End Role="teams" EntitySet="teams" />
-            <End Role="match_result" EntitySet="match_result" />
-          </AssociationSet>
-          <AssociationSet Name="which_match_which_team" Association="Self.which_match_which_team">
-            <End Role="matches" EntitySet="matches" />
-            <End Role="match_result" EntitySet="match_result" />
-          </AssociationSet>
           <AssociationSet Name="a_player_associate_in_which_team" Association="Self.a_player_associate_in_which_team">
             <End Role="teams" EntitySet="teams" />
             <End Role="player_associations" EntitySet="player_associations" />
@@ -1388,6 +1333,16 @@
           <AssociationSet Name="player_user_rel" Association="sportszoneModel.player_user_rel">
             <End Role="users" EntitySet="users" />
             <End Role="players" EntitySet="players" />
+          </AssociationSet>
+          <EntitySet Name="match_result" EntityType="sportszoneModel.match_result" />
+          <EntitySet Name="matches" EntityType="sportszoneModel.matches" />
+          <AssociationSet Name="loser_and_winner" Association="sportszoneModel.loser_and_winner">
+            <End Role="clubs" EntitySet="clubs" />
+            <End Role="match_result" EntitySet="match_result" />
+          </AssociationSet>
+          <AssociationSet Name="which_match_which_team" Association="sportszoneModel.which_match_which_team">
+            <End Role="matches" EntitySet="matches" />
+            <End Role="match_result" EntitySet="match_result" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -1464,6 +1419,55 @@
             </Principal>
             <Dependent Role="players">
               <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="match_result">
+          <Key>
+            <PropertyRef Name="rid" />
+          </Key>
+          <Property Name="rid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mid" Type="Int32" Nullable="false" />
+          <Property Name="clubid" Type="Int32" Nullable="false" />
+          <Property Name="points" Type="Int32" Nullable="false" />
+          <Property Name="C_status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="clubs" Relationship="sportszoneModel.loser_and_winner" FromRole="match_result" ToRole="clubs" />
+          <NavigationProperty Name="matches" Relationship="sportszoneModel.which_match_which_team" FromRole="match_result" ToRole="matches" />
+        </EntityType>
+        <EntityType Name="matches">
+          <Key>
+            <PropertyRef Name="mid" />
+          </Key>
+          <Property Name="mid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="club1" Type="Int32" Nullable="false" />
+          <Property Name="club2" Type="Int32" Nullable="false" />
+          <Property Name="gameid" Type="Int32" Nullable="false" />
+          <Property Name="loc" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="C_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="C_status" Type="Boolean" />
+          <NavigationProperty Name="match_result" Relationship="sportszoneModel.which_match_which_team" FromRole="matches" ToRole="match_result" />
+        </EntityType>
+        <Association Name="loser_and_winner">
+          <End Type="sportszoneModel.clubs" Role="clubs" Multiplicity="1" />
+          <End Type="sportszoneModel.match_result" Role="match_result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clubs">
+              <PropertyRef Name="clubid" />
+            </Principal>
+            <Dependent Role="match_result">
+              <PropertyRef Name="clubid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="which_match_which_team">
+          <End Type="sportszoneModel.matches" Role="matches" Multiplicity="1" />
+          <End Type="sportszoneModel.match_result" Role="match_result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="matches">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="match_result">
+              <PropertyRef Name="mid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1557,28 +1561,6 @@
                 <ScalarProperty Name="positionid" ColumnName="positionid" />
                 <ScalarProperty Name="gameid" ColumnName="gameid" />
                 <ScalarProperty Name="position" ColumnName="position" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="match_result">
-            <EntityTypeMapping TypeName="sportszoneModel.match_result">
-              <MappingFragment StoreEntitySet="match_result">
-                <ScalarProperty Name="rid" ColumnName="rid" />
-                <ScalarProperty Name="mid" ColumnName="mid" />
-                <ScalarProperty Name="teamid" ColumnName="teamid" />
-                <ScalarProperty Name="C_status" ColumnName="_status" />
-                <ScalarProperty Name="points" ColumnName="points" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="matches">
-            <EntityTypeMapping TypeName="sportszoneModel.matches">
-              <MappingFragment StoreEntitySet="matches">
-                <ScalarProperty Name="mid" ColumnName="mid" />
-                <ScalarProperty Name="teamid1" ColumnName="teamid1" />
-                <ScalarProperty Name="teamid2" ColumnName="teamid2" />
-                <ScalarProperty Name="loc" ColumnName="loc" />
-                <ScalarProperty Name="C_date" ColumnName="_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1692,6 +1674,30 @@
                 <ScalarProperty Name="playername" ColumnName="playername" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="playerid" ColumnName="playerid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="match_result">
+            <EntityTypeMapping TypeName="sportszoneModel.match_result">
+              <MappingFragment StoreEntitySet="match_result">
+                <ScalarProperty Name="C_status" ColumnName="_status" />
+                <ScalarProperty Name="points" ColumnName="points" />
+                <ScalarProperty Name="clubid" ColumnName="clubid" />
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="rid" ColumnName="rid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="matches">
+            <EntityTypeMapping TypeName="sportszoneModel.matches">
+              <MappingFragment StoreEntitySet="matches">
+                <ScalarProperty Name="C_status" ColumnName="_status" />
+                <ScalarProperty Name="C_date" ColumnName="_date" />
+                <ScalarProperty Name="loc" ColumnName="loc" />
+                <ScalarProperty Name="gameid" ColumnName="gameid" />
+                <ScalarProperty Name="club2" ColumnName="club2" />
+                <ScalarProperty Name="club1" ColumnName="club1" />
+                <ScalarProperty Name="mid" ColumnName="mid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -37,15 +37,6 @@ cg nvarchar(1000),
 info nvarchar(max)
 );
 go
---create table club_games
---(
---id int primary key identity(1,1) not null,
---clubid int not null,
---constraint "which club in club games" foreign key(clubid) references clubs(clubid),
---gameid int not null,
---constraint "which game in club games" foreign key(gameid) references games(gameid),
---);
-go
 create table games_positions
 (
 positionid int primary key identity(1,1) not null,
@@ -164,36 +155,25 @@ _date datetime not null,
 constraint "feedback to which user" foreign key (_to) references users(userid),
 constraint "feedback from which user" foreign key (_from) references users(userid),
 );
-
--- go
 go
 create table matches
 (
 mid int primary key identity(1,1) not null,
-teamid1 int not null,
-teamid2 int not null,
+club1 int not null,
+club2 int not null,
+gameid int not null,
 loc nvarchar(500) not null,
-_date datetime not null
+_date datetime not null,
+_status bit
 );
 go
 create table match_result
 (
 rid int primary key identity(1,1) not null,
 mid int not null,
-teamid int not null,
-_status char default 'L', --Lose=L, Draw=D, Win=W 
+clubid int not null,
 points int not null,
+_status char default 'L', --Lose=L, Draw=D, Win=W 
 constraint "which match which team" foreign key (mid) references matches(mid),
-constraint "loser and winner" foreign key(teamid) references teams(teamid),
+constraint "loser and winner" foreign key(clubid) references clubs(clubid),
 );
-select * from players
-select * from users
-select * from clubs
-
-update players set bio='
-Although I do not like to answer my own question, but here is what solved my problem:
-After I found this link about Complex Types I tried several implementations, and after some headache I ended up with this.
-The List values get stored as a string on the table directly, so its not required to perform several joins in order to get the list entries. Implementors only have to implement the conversation for each list entry to a persistable string (see the Code example).
-Most of the code is handled in the Baseclass (PersistableScalarCollection). You only have to derive from it per datatype (int, string, etc) and implement the method to serialize/deserialize the value.
-Its important column, you cannot search for values in the Collection (at least on the database). In this case you may skip this implementation or denormalize the data for searching.
-'

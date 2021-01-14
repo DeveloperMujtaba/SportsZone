@@ -141,7 +141,12 @@
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AssociationsController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
+    <Compile Include="Controllers\GlobalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MiscController.cs" />
+    <Compile Include="Controllers\PlayerActivitiesController.cs" />
     <Compile Include="feedback.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
@@ -155,6 +160,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Authority\Authorized.cs" />
+    <Compile Include="Helpers\Authority\OnlyForPlayer.cs" />
     <Compile Include="Helpers\IsExist.cs" />
     <Compile Include="matches.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
@@ -997,6 +1003,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Associations\" />
+    <Folder Include="Views\Feedback\" />
+    <Folder Include="Views\Misc\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="themes\default\fonts\fontawesome-webfont.eot" />
@@ -1134,6 +1143,11 @@
     <Content Include="Views\Home\TeamDetail.cshtml" />
     <Content Include="Views\Home\Matchs.cshtml" />
     <Content Include="Views\Home\error404.cshtml" />
+    <Content Include="Views\Shared\Partial\feedback\fbform.cshtml" />
+    <Content Include="Views\Shared\Partial\feedback\fbcontainer.cshtml" />
+    <Content Include="Views\Shared\Partial\feedback\fderr.cshtml" />
+    <Content Include="Views\PlayerActivities\Index.cshtml" />
+    <Content Include="Views\Global\Error401.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
