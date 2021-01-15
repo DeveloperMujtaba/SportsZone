@@ -12,7 +12,7 @@ namespace SportsZone.Helpers.Authority
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             HttpSessionStateBase session = filterContext.HttpContext.Session;
-            List<users> u = (List<users>)session["IsloggedIn"];
+            List<users> u = (List<users>)session["Data"];
             if (session != null && u[0].usertype != "Player")
             {
                 filterContext.Result = new RedirectToRouteResult(

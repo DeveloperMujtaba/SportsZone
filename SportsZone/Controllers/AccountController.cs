@@ -388,5 +388,10 @@ namespace SportsZone.Controllers
                 return RedirectToAction("me");
             }
         }
+        public ActionResult logout()
+        {
+            Session.RemoveAll();
+            return RedirectToAction("index","home", new { state="logged-out" });
+        }
     }
 }

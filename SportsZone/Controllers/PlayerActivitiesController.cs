@@ -1,4 +1,5 @@
-﻿using SportsZone.Helpers.Authority;
+﻿using Newtonsoft.Json;
+using SportsZone.Helpers.Authority;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -31,14 +32,14 @@ namespace SportsZone.Controllers
                                                 .Include("clubs")
                                                 .Include("clubs.users")
                                                 .Include("teams")
-                                                .Include("games_positions")
+                                                .Include("player_role")
                                                 .ToList();
                 if (TempData["Message"] != null) ViewBag.Message = TempData["Message"];
                 return View("Enrollments", pa);
             }
         }
         [HttpPost]
-        public ActionResult RemoveEnrollment(string paid, string playerid)
+        public JsonResult RemoveEnrollment(string paid, string playerid)
         {
             try
             {
@@ -53,19 +54,19 @@ namespace SportsZone.Controllers
                         var delas = context.player_associations.Find(pasid);
                         context.Entry(delas).State = EntityState.Deleted;
                         context.SaveChanges();
-                        TempData["Message"] = "You have been removed from the club!";
-                        return RedirectToAction("my-enrollments");
+                        //TempData["Message"] = "You have been removed from the club!";
+                        return Json(new { Msg = "You have been removed from the club!" });
                     }
                     else
                     {
-                        return RedirectToAction("error-401","global");
+                        return Json(new { Msg = "You don't have permissions to do that!" });
                     }
                 }
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("my-enrollments");
+                //TempData["Message"] = ex.Message;
+                return Json(new { Msg = "You don't have permissions to do that!" + ex.Message });
             }
         }
         [ActionName("enrollment-requests")]
@@ -79,10 +80,9 @@ namespace SportsZone.Controllers
                                                         where p.players.users.userid == uid
                                                         select p)
                                                 .Include("players")
-                                                .Include("clubs")
                                                 .Include("clubs.users")
                                                 .Include("teams")
-                                                .Include("games_positions")
+                                                .Include("player_role")
                                                 .ToList();
                 if (TempData["Message"] != null) ViewBag.Message = TempData["Message"];
                 return View("EnrollmentRequests", pa);
@@ -127,34 +127,66 @@ namespace SportsZone.Controllers
                 return RedirectToAction("enrollment-requests");
             }
         }
+        [ActionName("create-enrollment-request")]
         public ActionResult CreateEnrollmentRequest()
         {
-            List<users> ul = (List<users>)Session["Data"];
-            int userid = ul[0].userid;
-            int playerid;
             using (var context = new Entities())
             {
-                playerid = (from pi in context.players
-                                where pi.userid == userid
-                                select pi.playerid).SingleOrDefault();
+                var clubs = (from c in context.clubs
+                             select c).ToList();
+                if (TempData["Message"] != null) ViewBag.Message = TempData["Message"];
+                return View("CreateEnrollmentRequest", clubs);
             }
-            if (TempData["Message"] != null) ViewBag.Message = TempData["Message"];
-            return View("CreateEnrollmentRequest", playerid);
         }
         [HttpPost]
-        public ActionResult CreateEnrollmentRequest(player_associations_request par)
+        public ActionResult CreateEnrollmentRequest(string clubid, string teamid)
         {
-            if (ModelState.IsValid)
+            try
             {
+                List<users> ul = (List<users>)Session["Data"];
+                int userid = ul[0].userid;
                 using (var context = new Entities())
                 {
+                    var player = (from pi in context.players
+                                  where pi.userid == userid
+                                  select pi).ToList();
+                    player_associations_request par = new player_associations_request
+                    {
+                        playerid = player[0].playerid,
+                        clubid = int.Parse(clubid),
+                        teamid = int.Parse(teamid),
+                        roleid = player[0].roleid,
+                        C_date = DateTime.Now,
+                        parstatus = true
+                    };
                     context.player_associations_request.Add(par);
                     context.SaveChanges();
                     TempData["Message"] = "New enrollment requests has been made!";
+                    return RedirectToAction("enrollment-requests");
                 }
             }
-            else TempData["Message"] = "Please input valid data!";
-            return RedirectToAction("enrollment-requests");
+            catch (Exception ex)
+            {
+                TempData["Message"] = "Please input valid data! " + ex.Message;
+                return RedirectToAction("create-enrollment-request");
+            }
+
+            
+        }
+        [ActionName("reviews")]
+        public ActionResult Reviews()
+        {
+            using (var context = new Entities())
+            {
+                List<users> ul = (List<users>)Session["Data"];
+                int userid = ul[0].userid;
+                var rvs = (from r in context.feedback
+                           where r.C_from==userid
+                           select r)
+                           .Include("users1")
+                           .ToList();
+                return View("reviews", rvs);
+            }
         }
     }
 }

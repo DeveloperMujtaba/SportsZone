@@ -1148,6 +1148,10 @@
     <Content Include="Views\Shared\Partial\feedback\fderr.cshtml" />
     <Content Include="Views\PlayerActivities\Index.cshtml" />
     <Content Include="Views\Global\Error401.cshtml" />
+    <Content Include="Views\PlayerActivities\Enrollments.cshtml" />
+    <Content Include="Views\PlayerActivities\EnrollmentRequests.cshtml" />
+    <Content Include="Views\PlayerActivities\CreateEnrollmentRequest.cshtml" />
+    <Content Include="Views\PlayerActivities\Reviews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

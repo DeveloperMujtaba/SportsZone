@@ -29,6 +29,11 @@ namespace SportsZone
                 url: "player-activities/{action}/{id}",
                 defaults: new { controller = "playeractivities", action = "index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "misc-routes",
+                url: "misc/{action}",
+                defaults: new { controller = "misc", action = "index" }
+                );
             //global authorization error route
             routes.MapRoute(
                 name: "global-error-routes",
