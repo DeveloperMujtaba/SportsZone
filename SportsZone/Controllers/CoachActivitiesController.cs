@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using SportsZone.Helpers.Authority;
+﻿using SportsZone.Helpers.Authority;
+using SportsZone.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,8 +10,8 @@ using System.Web.Mvc;
 namespace SportsZone.Controllers
 {
     [Authorized]
-    [OnlyForPlayer]
-    public class PlayerActivitiesController : Controller
+    [OnlyForCoach]
+    public class CoachActivitiesController : Controller
     {
         // GET: PlayerActivities
         public ActionResult Index()
@@ -25,12 +25,11 @@ namespace SportsZone.Controllers
             int uid = ul[0].userid;
             using (var context = new Entities())
             {
-                List<player_associations> pa = (from p in context.player_associations
-                                                where p.players.users.userid == uid
+                List<coach_associations> pa = (from p in context.coach_associations
+                                               where p.coachs.users.userid == uid
                                                 select p)
-                                                .Include("players")
+                                                .Include("coachs")
                                                 .Include("clubs")
-                                                .Include("clubs.users")
                                                 .Include("teams")
                                                 .Include("games_positions")
                                                 .ToList();
@@ -39,23 +38,23 @@ namespace SportsZone.Controllers
             }
         }
         [HttpPost]
-        public JsonResult RemoveEnrollment(string paid, string playerid)
+        public JsonResult RemoveEnrollment(string caid, string coachid)
         {
             try
             {
-                int pid = int.Parse(playerid);
-                int pasid = int.Parse(paid);
+                int cid = int.Parse(coachid);
+                int casid = int.Parse(caid);
                 List<users> ul = (List<users>)Session["Data"];
                 using (var context = new Entities())
                 {
-                    int? userid = (from u in context.players where u.playerid == pid select u.userid).SingleOrDefault();
+                    int? userid = (from u in context.coachs where u.coachid == cid select u.userid).SingleOrDefault();
                     if (userid != null && userid == ul[0].userid)
                     {
-                        var delas = context.player_associations.Find(pasid);
+                        var delas = context.coach_associations.Find(casid);
                         context.Entry(delas).State = EntityState.Deleted;
                         context.SaveChanges();
                         //TempData["Message"] = "You have been removed from the club!";
-                        return Json(new { Msg = "You have been removed from the club!" });
+                        return Json(new { Msg = "You have been removed from the club and team!" });
                     }
                     else
                     {
@@ -72,39 +71,39 @@ namespace SportsZone.Controllers
         [ActionName("enrollment-requests")]
         public ActionResult EnrollmentRequests()
         {
-                List<users> ul = (List<users>)Session["Data"];
-                int uid = ul[0].userid;
+            List<users> ul = (List<users>)Session["Data"];
+            int uid = ul[0].userid;
             using (var context = new Entities())
             {
-                List<player_associations_request> pa = (from p in context.player_associations_request
-                                                        where p.players.users.userid == uid
+                List<coach_associations_request> ca = (from p in context.coach_associations_request
+                                                        where p.coachs.users.userid == uid
                                                         select p)
-                                                .Include("players")
+                                                .Include("coachs")
                                                 .Include("clubs.users")
                                                 .Include("teams")
                                                 .Include("games_positions")
                                                 .ToList();
                 if (TempData["Message"] != null) ViewBag.Message = TempData["Message"];
-                return View("EnrollmentRequests", pa);
+                return View("EnrollmentRequests", ca);
             }
         }
         [HttpPost]
-        public ActionResult WithDrawEnrollmentRequest(string parid, string playerid)
+        public ActionResult WithDrawEnrollmentRequest(string carid, string coachid)
         {
             try
             {
-                int pid = int.Parse(playerid);
-                int pasid = int.Parse(parid);
+                int cid = int.Parse(coachid);
+                int casid = int.Parse(carid);
                 List<users> ul = (List<users>)Session["Data"];
                 using (var context = new Entities())
                 {
-                    int? userid = (from u in context.players where u.playerid == pid select u.userid).SingleOrDefault();
+                    int? userid = (from u in context.coachs where u.coachid == cid select u.userid).SingleOrDefault();
                     if (userid != null && userid == ul[0].userid)
                     {
-                        var delas = context.player_associations_request.Find(pasid);
-                        if (delas.parstatus == true)
+                        var delas = context.coach_associations_request.Find(casid);
+                        if (delas.carstatus == true)
                         {
-                            delas.parstatus = false;
+                            delas.carstatus = false;
                             context.Entry(delas).State = EntityState.Modified;
                             context.SaveChanges();
                             TempData["Message"] = "Your request has been withdrawn!";
@@ -147,19 +146,20 @@ namespace SportsZone.Controllers
                 int userid = ul[0].userid;
                 using (var context = new Entities())
                 {
-                    var player = (from pi in context.players
+                    var coach = (from pi in context.coachs
                                   where pi.userid == userid
                                   select pi).ToList();
-                    player_associations_request par = new player_associations_request
+                    int poid = coach[0].positionid ?? 1;
+                    coach_associations_request par = new coach_associations_request
                     {
-                        playerid = player[0].playerid,
+                        coachid = coach[0].coachid,
                         clubid = int.Parse(clubid),
                         teamid = int.Parse(teamid),
-                        roleid = player[0].roleid,
+                        positionid = poid,
                         C_date = DateTime.Now,
-                        parstatus = true
+                        carstatus = true
                     };
-                    context.player_associations_request.Add(par);
+                    context.coach_associations_request.Add(par);
                     context.SaveChanges();
                     TempData["Message"] = "New enrollment requests has been made!";
                     return RedirectToAction("enrollment-requests");
@@ -171,7 +171,7 @@ namespace SportsZone.Controllers
                 return RedirectToAction("create-enrollment-request");
             }
 
-            
+
         }
         [ActionName("reviews")]
         public ActionResult Reviews()
@@ -181,12 +181,50 @@ namespace SportsZone.Controllers
                 List<users> ul = (List<users>)Session["Data"];
                 int userid = ul[0].userid;
                 var rvs = (from r in context.feedback
-                           where r.C_from==userid
+                           where r.C_from == userid
                            select r)
                            .Include("users1")
                            .ToList();
                 return View("reviews", rvs);
             }
+        }
+        [ActionName("your-players")]
+        public ActionResult YourPlayers()
+        {
+            List<users> ul = (List<users>)Session["Data"];
+            int userid = ul[0].userid;
+            using (var context = new Entities())
+            {
+                var casteam = (from c in context.coach_associations
+                              where c.coachs.users.userid == userid
+                              select c)
+                              .ToList();
+                List<CustomPlayers> pl = new List<CustomPlayers>();
+                for (int i = 0; i < casteam.Count; i++)
+                {
+                    int tid = casteam[i].teamid;
+                    var ply = (from p in context.player_associations
+                               where p.teamid == tid
+                               select p)
+                               .Include("players")
+                               .Include("players.users")
+                               .ToList();
+                    for (int j = 0; j < ply.Count; j++)
+                    {
+                        CustomPlayers p = new CustomPlayers
+                        {
+                            pid = ply[j].playerid,
+                            email = ply[j].players.users.email,
+                            name=ply[j].players.playername,
+                            phone=ply[j].players.users.phone,
+                            role=ply[j].games_positions.position
+                        };
+                        pl.Add(p);
+                    }
+                }
+                return View("YourPlayers", pl);
+            }
+                
         }
     }
 }

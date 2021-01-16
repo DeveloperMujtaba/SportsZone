@@ -97,7 +97,7 @@ _date datetime not null,
 constraint "its gives the player id " foreign key(playerid) references players(playerid),
 constraint "a player associate in which club" foreign key(clubid) references clubs(clubid),
 constraint "a player associate in which team" foreign key(teamid) references teams(teamid),
-constraint "a player is playing which role of game" foreign key(roleid) references player_role(roleid),
+constraint "a player is playing which role of game" foreign key(roleid) references games_positions(positionid),
 );
 go
 create table coach_associations
@@ -125,7 +125,7 @@ _date datetime not null,
 constraint "its shows player request id " foreign key(playerid) references players(playerid),
 constraint "its shows request to club  " foreign key(clubid) references clubs(clubid),
 constraint "its shows request of teams" foreign key(teamid) references teams(teamid),
-constraint "its shows request of which role base" foreign key(roleid) references player_role(roleid),
+constraint "its shows request of which role base" foreign key(roleid) references games_positions(positionid),
 parstatus bit default 0
 );
 go
@@ -164,7 +164,11 @@ club2 int not null,
 gameid int not null,
 loc nvarchar(500) not null,
 _date datetime not null,
-_status bit
+_status bit,
+constraint "requester club" foreign key(club1) references clubs(clubid),
+constraint "target club" foreign key(club2) references clubs(clubid),
+constraint "which game to schedaule" foreign key(gameid) references games(gameid),
+ov nvarchar(500)
 );
 go
 create table match_result
@@ -177,3 +181,6 @@ _status char default 'L', --Lose=L, Draw=D, Win=W
 constraint "which match which team" foreign key (mid) references matches(mid),
 constraint "loser and winner" foreign key(clubid) references clubs(clubid),
 );
+
+select * from matches
+select * from match_result

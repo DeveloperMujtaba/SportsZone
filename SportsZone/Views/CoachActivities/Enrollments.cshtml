@@ -1,24 +1,24 @@
-﻿@model List<player_associations_request>
+﻿@model List<coach_associations>
 @{
     ViewBag.Title = "Enrollments";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
-<title>Your Enrollment Requests | JZ Sports Zone</title>
+<title>Your Enrollment With Clubs | JZ Sports Zone</title>
 <div class="content">
     <div class="container-fluid">
         <div class="page-title-box">
             <div class="row align-items-center ">
                 <div class="col-md-8">
                     <div class="page-title-box">
-                        <h4 class="page-title">Your Enrollments Requests</h4>
+                        <h4 class="page-title">Your Enrollments</h4>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a href="javascript:void(0);">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="javascript:void(0);">Player Activities</a>
+                                <a href="javascript:void(0);">Coach Activities</a>
                             </li>
-                            <li class="breadcrumb-item active">Enrollment Requests</li>
+                            <li class="breadcrumb-item active">Enrollments</li>
                         </ol>
                     </div>
                 </div>
@@ -38,19 +38,19 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="mt-0 header-title">Your Enrollment Requests in Clubs and Teams</h4>
+                        <h4 class="mt-0 header-title">Your Enrollments in Clubs and Teams</h4>
                         <p class="sub-title">
-                            Your enrollment request will turn into enrollments once you're approved by club to be enrolled with.
-                            The request status will be marked close when a club approve/reject it and if you withdraw it.
-                            You must have to withdraw the request before it marked as close!
+                            Your enrollment all across the clubs and teams on JZ sports zone.
                         </p>
-
-                        <div id="alert-msg" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <p id="errmsg"></p>
-                        </div>
+                        @if (ViewBag.Message != null)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                @ViewBag.Message
+                            </div>
+                        }
                         <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
@@ -59,7 +59,6 @@
                                     <th>Team</th>
                                     <th>Role</th>
                                     <th>Since</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -74,30 +73,20 @@
                                         <td>-</td>
                                         <td>-</td>
                                         <td>-</td>
-                                        <td>-</td>
                                     </tr>
                                 }
                                 else
                                 {
                                     for (int i = 0; i < Model.Count; i++)
                                     {
-                                    <tr>
-                                        <td>@Model[i].parid</td>
-                                        <td>@Model[i].clubs.clubname</td>
-                                        <td>@Model[i].teams.name</td>
-                                        <td>@Model[i].games_positions.position</td>
-                                        <td>@Model[i].C_date</td>
-                                        @if (Model[i].parstatus == true)
-                                        {
-                                            <td><span class="badge badge-success">Open</span></td>
-                                            <td><a title="Withdraw this request!" id="@Model[i].parid-@Model[i].playerid" onclick="withdrawrequest(this.id)" class="btn btn-outline-danger"><i class="fa fa-thumbs-down"></i>Withdraw Request</a></td>
-                                        }
-                                        else
-                                        {
-                                            <td><span class="badge badge-danger">Closed</span></td>
-                                            <td><a disabled="" title="This request can't be withdrwan, because it's already closed!" id="@Model[i].parid-@Model[i].playerid" class="btn btn-outline-dark"><i class="fa fa-thumbs-down"></i>Withdraw Request</a></td>
-                                        }
-                                    </tr>
+                                        <tr>
+                                            <td>@Model[i].cid</td>
+                                            <td>@Model[i].clubs.clubname</td>
+                                            <td>@Model[i].teams.name</td>
+                                            <td>@Model[i].games_positions.position</td>
+                                            <td>@Model[i].C_date</td>
+                                            <td><a id="@Model[i].cid-@Model[i].coachid" onclick="leaveteam(this.id)" class="btn btn-outline-danger"><i class="fa fa-cross"></i>Leave Team</a></td>
+                                        </tr>
                                     }
                                 }
                             </tbody>
@@ -115,13 +104,13 @@
 @section scripts
     {
     <script>
-        function withdrawrequest(id) {
-            var url = "/player-activities/withdrawenrollmentrequest";
+        function leaveteam(id) {
+            var url = "/coach-activities/removeenrollment";
             var paid = id.split("-")[0];
             var pid = id.split("-")[1];
             var data = new FormData();
-            data.append("parid", paid);
-            data.append("playerid", pid);
+            data.append("caid", paid);
+            data.append("coachid", pid);
             $.ajax({
                 url: url,
                 type: "POST",
@@ -140,4 +129,3 @@
         }
     </script>
 }
-

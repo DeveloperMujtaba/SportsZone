@@ -29,6 +29,19 @@ namespace SportsZone
                 url: "player-activities/{action}/{id}",
                 defaults: new { controller = "playeractivities", action = "index", id = UrlParameter.Optional }
             );
+            //coach activities
+            routes.MapRoute(
+                name: "coach-activities-routes",
+                url: "coach-activities/{action}/{id}",
+                defaults: new { controller = "coachactivities", action = "index", id = UrlParameter.Optional }
+            );
+            //club routes
+            routes.MapRoute(
+                name: "club-activities-routes",
+                url: "club-activities/{action}/{id}",
+                defaults: new { controller = "club", action = "index", id = UrlParameter.Optional }
+            );
+            //misc routes
             routes.MapRoute(
                 name: "misc-routes",
                 url: "misc/{action}",

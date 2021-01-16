@@ -27,8 +27,12 @@ namespace SportsZone
         public string loc { get; set; }
         public System.DateTime C_date { get; set; }
         public Nullable<bool> C_status { get; set; }
+        public string ov { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<match_result> match_result { get; set; }
+        public virtual clubs clubs { get; set; }
+        public virtual clubs clubs1 { get; set; }
+        public virtual games games { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace SportsZone
             this.games_positions = new HashSet<games_positions>();
             this.teams = new HashSet<teams>();
             this.player_role = new HashSet<player_role>();
+            this.matches = new HashSet<matches>();
         }
     
         public int gameid { get; set; }
@@ -32,5 +33,7 @@ namespace SportsZone
         public virtual ICollection<teams> teams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<player_role> player_role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<matches> matches { get; set; }
     }
 }

@@ -353,21 +353,19 @@ namespace SportsZone.Controllers
                     if (photo1 != null)
                     {
                         string pic = System.IO.Path.GetFileName(photo1.FileName);
-                        string newname = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
                         string path = System.IO.Path.Combine(
-                        Server.MapPath("~/uploads/media"), newname);
+                        Server.MapPath("~/uploads/media"), "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1]);
                         // file is uploaded
                         photo1.SaveAs(path);
-                        update.logo = newname;
+                        update.logo = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
                     }
                     if (photo2 != null)
                     {
                         string pic = System.IO.Path.GetFileName(photo2.FileName);
                         string newname = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
-                        string path = System.IO.Path.Combine(
-                        Server.MapPath("~/uploads/media"), newname);
                         // file is uploaded
-                        photo2.SaveAs(path);
+                        photo2.SaveAs(System.IO.Path.Combine(
+                        Server.MapPath("~/uploads/media"), path2: newname));
                         update.cover = newname;
                     }
                     update.clubname = pl.clubname;

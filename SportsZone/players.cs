@@ -32,10 +32,10 @@ namespace SportsZone
         public int roleid { get; set; }
     
         public virtual games_positions games_positions { get; set; }
+        public virtual users users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<player_associations> player_associations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<player_associations_request> player_associations_request { get; set; }
-        public virtual users users { get; set; }
     }
 }

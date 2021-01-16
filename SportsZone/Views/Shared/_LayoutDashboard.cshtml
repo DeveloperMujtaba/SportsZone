@@ -89,26 +89,88 @@
                                 <i class="dripicons-meter"></i><span> Dashboard </span>
                             </a>
                         </li>
-                        <li>
-                            <a href="/players/@_u[0].username" target="_blank" class="waves-effect"><i class="dripicons-user"></i><span> My Profile </span> <i style="font-size:12px" class="fa fa-external-link-alt"></i></a>
-                        </li>
                         @if (_u[0].usertype == "Player")
                         {
-                        <li class="menu-title">Enrollments</li>
-                        <li>
-                            <a href="/player-activities/my-enrollments" class="waves-effect"><i class="dripicons-information"></i><span> My Enrollments </span></a>
-                        </li>
-                        <li>
-                            <a href="/player-activities/enrollment-requests" class="waves-effect"><i class="dripicons-return"></i><span> Enrollment Requests </span></a>
-                        </li>
-                        <li>
-                            <a href="/player-activities/create-enrollment-request" class="waves-effect"><i class="dripicons-document-new"></i><span> New Enrollment </span></a>
-                        </li>
-                        <li class="menu-title">Reviews</li>
-                        <li>
-                            <a href="/player-activities/reviews" class="waves-effect"><i class="dripicons-box"></i><span> Your Reviews </span></a>
-                        </li>
+                            <li>
+                                <a href="/players/@_u[0].username" target="_blank" class="waves-effect"><i class="dripicons-user"></i><span> My Profile </span> <i style="font-size:12px" class="fa fa-external-link-alt"></i></a>
+                            </li>
+                            <li class="menu-title">Enrollments</li>
+                            <li>
+                                <a href="/player-activities/my-enrollments" class="waves-effect"><i class="dripicons-information"></i><span> My Enrollments </span></a>
+                            </li>
+                            <li>
+                                <a href="/player-activities/enrollment-requests" class="waves-effect"><i class="dripicons-return"></i><span> Enrollment Requests </span></a>
+                            </li>
+                            <li>
+                                <a href="/player-activities/create-enrollment-request" class="waves-effect"><i class="dripicons-document-new"></i><span> New Enrollment </span></a>
+                            </li>
+                            <li class="menu-title">Reviews</li>
+                            <li>
+                                <a href="/player-activities/reviews" class="waves-effect"><i class="dripicons-box"></i><span> Your Reviews </span></a>
+                            </li>
                         }
+                        else if (_u[0].usertype == "Coach")
+                        {
+                            <li>
+                                <a href="/coachs/@_u[0].username" target="_blank" class="waves-effect"><i class="dripicons-user"></i><span> My Profile </span> <i style="font-size:12px" class="fa fa-external-link-alt"></i></a>
+                            </li>
+                            <li class="menu-title">Enrollments</li>
+                            <li>
+                                <a href="/coach-activities/my-enrollments" class="waves-effect"><i class="dripicons-information"></i><span> My Enrollments </span></a>
+                            </li>
+                            <li>
+                                <a href="/coach-activities/enrollment-requests" class="waves-effect"><i class="dripicons-return"></i><span> Enrollment Requests </span></a>
+                            </li>
+                            <li>
+                                <a href="/coach-activities/create-enrollment-request" class="waves-effect"><i class="dripicons-document-new"></i><span> New Enrollment </span></a>
+                            </li>
+                            <li class="menu-title">Reviews</li>
+                            <li>
+                                <a href="/coach-activities/reviews" class="waves-effect"><i class="dripicons-box"></i><span> Your Reviews </span></a>
+                            </li>
+                            <li class="menu-title">Players</li>
+                            <li>
+                                <a href="/coach-activities/your-players" class="waves-effect"><i class="dripicons-user-group"></i><span> Your Players </span></a>
+                            </li>
+                        }
+                        else if (_u[0].usertype == "Club")
+                        {
+                            <li>
+                                <a href="/clubs/@_u[0].username" target="_blank" class="waves-effect"><i class="dripicons-user"></i><span> My Profile </span> <i style="font-size:12px" class="fa fa-external-link-alt"></i></a>
+                            </li>
+                            <li class="menu-title">Teams</li>
+                            <li>
+                                <a href="/club-activities/teams" class="waves-effect"><i class="dripicons-user-group"></i><span> My Teams </span></a>
+                            </li>
+                            <li>
+                                <a href="/club-activities/create-team" class="waves-effect"><i class="dripicons-plus"></i><span> Create Team </span></a>
+                            </li>
+                            <li class="menu-title">Matchs</li>
+                            <li>
+                                <a href="/club-activities/match-schedual-requests" class="waves-effect"><i class="dripicons-time-reverse"></i><span> Schedule Requests </span></a>
+                            </li>
+                            <li>
+                                <a href="/club-activities/match-scheduals" class="waves-effect"><i class="dripicons-archive"></i><span> Your Schedules </span></a>
+                            </li>
+                            <li>
+                                <a href="/club-activities/schedual-match" class="waves-effect"><i class="dripicons-plus"></i><span> New Schedule </span></a>
+                            </li>
+                            <li class="menu-title">Match Results</li>
+                            <li>
+                                <a href="/club-activities/match-result" class="waves-effect"><i class="dripicons-arrow-down"></i><span> Add Result </span></a>
+                            </li>
+                            <li class="menu-title">Players</li>
+                            <li>
+                                <a href="/club-activities/enrolled-players" class="waves-effect"><i class="dripicons-user-group"></i><span> Enrolled Players </span></a>
+                                <a href="/club-activities/player-requests" class="waves-effect"><i class="dripicons-user-group"></i><span> Player Requests </span></a>
+                            </li>
+                            <li class="menu-title">Coachs</li>
+                            <li>
+                                <a href="/club-activities/enrolled-coachs" class="waves-effect"><i class="dripicons-user-group"></i><span> Enrolled Coach </span></a>
+                                <a href="/club-activities/coach-requests" class="waves-effect"><i class="dripicons-user-group"></i><span> Coach Requests </span></a>
+                            </li>
+                        }
+
                         <li class="menu-title">Payments</li>
                         <li>
                             <a href="/membership/dues" class="waves-effect"><i class="fa fa-dollar-sign"></i><span> Payment &amp; Dues  </span></a>

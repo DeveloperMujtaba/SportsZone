@@ -141,7 +141,8 @@
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AssociationsController.cs" />
+    <Compile Include="Controllers\ClubController.cs" />
+    <Compile Include="Controllers\CoachActivitiesController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\GlobalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -160,6 +161,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Authority\Authorized.cs" />
+    <Compile Include="Helpers\Authority\OnlyForClub.cs" />
+    <Compile Include="Helpers\Authority\OnlyForCoach.cs" />
     <Compile Include="Helpers\Authority\OnlyForPlayer.cs" />
     <Compile Include="Helpers\IsExist.cs" />
     <Compile Include="matches.cs">
@@ -170,6 +173,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClubsSearch.cs" />
+    <Compile Include="Models\CustomPlayers.cs" />
     <Compile Include="Models\GamePositionsHolder.cs" />
     <Compile Include="players.cs">
       <DependentUpon>SZModel.tt</DependentUpon>
@@ -1003,9 +1007,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Associations\" />
-    <Folder Include="Views\Feedback\" />
-    <Folder Include="Views\Misc\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="themes\default\fonts\fontawesome-webfont.eot" />
@@ -1152,6 +1153,21 @@
     <Content Include="Views\PlayerActivities\EnrollmentRequests.cshtml" />
     <Content Include="Views\PlayerActivities\CreateEnrollmentRequest.cshtml" />
     <Content Include="Views\PlayerActivities\Reviews.cshtml" />
+    <Content Include="Views\CoachActivities\YourPlayers.cshtml" />
+    <Content Include="Views\CoachActivities\CreateEnrollmentRequest.cshtml" />
+    <Content Include="Views\CoachActivities\EnrollmentRequests.cshtml" />
+    <Content Include="Views\CoachActivities\Enrollments.cshtml" />
+    <Content Include="Views\CoachActivities\Reviews.cshtml" />
+    <Content Include="Views\Club\Teams.cshtml" />
+    <Content Include="Views\Club\CreateTeam.cshtml" />
+    <Content Include="Views\Club\MatchScheduals.cshtml" />
+    <Content Include="Views\Club\MatchSchedualRequests.cshtml" />
+    <Content Include="Views\Club\SchedualMatch.cshtml" />
+    <Content Include="Views\Club\MatchResult.cshtml" />
+    <Content Include="Views\Club\PlayerAssociationRequest.cshtml" />
+    <Content Include="Views\Club\EnrolledPlayers.cshtml" />
+    <Content Include="Views\Club\CoachAssociationRequest.cshtml" />
+    <Content Include="Views\Club\EnrolledCoachs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

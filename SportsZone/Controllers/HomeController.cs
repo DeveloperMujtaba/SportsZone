@@ -231,7 +231,7 @@ namespace SportsZone.Controllers
                                 int gameid = tms[i].gameid;
                                 int totalplayerinteam = (from tpt in context.player_associations where tpt.teamid == teamid select tpt).Count();
                                 int totalcoachsinteam = (from tct in context.coach_associations where tct.teamid == teamid select tct).Count();
-                                string gamename = (from gn in context.games where gn.gameid == gameid select gn.gamename).ToString();
+                                string gamename = (from gn in context.games where gn.gameid == gameid select gn.gamename).SingleOrDefault();
                                 teams tm = new teams()
                                 {
                                     teamid = teamid,
@@ -250,7 +250,7 @@ namespace SportsZone.Controllers
                                 int chid = chs[i];
                                 List<coachs> coachs = (from c_c in context.coachs where c_c.coachid==chid select c_c).ToList();
                                 int? positionid = coachs[0].positionid;
-                                string position = (from pos in context.games_positions where pos.positionid == positionid select pos.position).ToString();
+                                string position = (from pos in context.games_positions where pos.positionid == positionid select pos.position).SingleOrDefault();
                                 //get user data
                                 int userid = coachs[0].userid;
                                 List<users> users = (from usr in context.users where usr.userid == userid select usr).ToList();
@@ -273,7 +273,7 @@ namespace SportsZone.Controllers
                             {
                                 int roleid = pa[i].roleid;
                                 int playerid = pa[i].playerid;
-                                string position = (from rnam in context.games_positions where rnam.positionid == roleid select rnam.position).ToString();
+                                string position = (from rnam in context.games_positions where rnam.positionid == roleid select rnam.position).SingleOrDefault();
                                 List<players> player = (from ply in context.players where ply.playerid == playerid select ply).ToList();
                                 players plyr = new players
                                 {
@@ -323,11 +323,12 @@ namespace SportsZone.Controllers
                                          .ToList();
                     if (team.Count > 0)
                     {
-                        List<players> pl = (from p in context.player_associations
+                        List<player_associations> pl = (from p in context.player_associations
                                             where p.teamid == id
-                                            select p.players)
-                                                        .Include("players.users")
-                                                        .Include("players.games_positions")
+                                            select p)
+                                            
+                                            .Include("players.users")
+                                            .Include("players.games_positions")
                                                         .ToList();
                         if (pl.Count > 0) return ViewBag.Players = pl;
                         else ViewBag.Players = null;
