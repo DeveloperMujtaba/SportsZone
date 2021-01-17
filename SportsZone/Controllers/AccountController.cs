@@ -98,11 +98,14 @@ namespace SportsZone.Controllers
                         }
                         else
                         {
+                            int __userid = (from u in context.users where u.email == rm.Email select u.userid).SingleOrDefault();
                             clubs _c = new clubs
                             {
-                                userid = (from u in context.users where u.email == rm.Email select u.userid).SingleOrDefault(),
+                                clubid = __userid,
+                                userid = __userid,
                                 logo = "no-image.jpg",
-                                cover = "no-cover.jpg"
+                                cover = "no-cover.jpg",
+                                cg = ""
                             };
                             context.clubs.Add(_c);
                             context.SaveChanges();
