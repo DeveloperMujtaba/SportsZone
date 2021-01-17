@@ -14,5 +14,11 @@ namespace SportsZone.Helpers
             if (isthere == null) return false;
             else return true;
         }
+        internal bool NotBan(string email)
+        {
+            bool? isBan = (from i in context.users where i.email == email && i.C_status == true select i.C_status).SingleOrDefault();
+            bool ban = isBan ?? false;
+            return ban;
+        }
     }
 }

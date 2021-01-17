@@ -90,12 +90,12 @@
                                         @if (Model[i].parstatus == true)
                                         {
                                             <td><span class="badge badge-success">Open</span></td>
-                                            <td><a title="Withdraw this request!" id="@Model[i].parid-@Model[i].playerid" onclick="withdrawrequest(this.id)" class="btn btn-outline-danger"><i class="fa fa-thumbs-down"></i>Withdraw Request</a></td>
+                                            <td><a href="#" title="Withdraw this request!" id="@Model[i].parid-@Model[i].playerid" onclick="withdrawrequest(this.id)" class="btn btn-outline-danger"><i class="fa fa-thumbs-down"></i> Withdraw Request</a></td>
                                         }
                                         else
                                         {
                                             <td><span class="badge badge-danger">Closed</span></td>
-                                            <td><a disabled="" title="This request can't be withdrwan, because it's already closed!" id="@Model[i].parid-@Model[i].playerid" class="btn btn-outline-dark"><i class="fa fa-thumbs-down"></i>Withdraw Request</a></td>
+                                            <td><a title="This request can't be withdrwan, because it's already closed!"><i class="fa fa-thumbs-down"></i> Withdrawn</a></td>
                                         }
                                     </tr>
                                     }
@@ -130,7 +130,8 @@
                 data: data,
                 success: function (response) {
                     $("#alert-msg").show();
-                    $("#errmsg").html(response.Msg)
+                    $("#errmsg").html(response.Msg);
+                    setTimeout(function () { location.reload(); }, 2000);
                 },
                 error: function (response) {
                     $("#alert-msg").show();

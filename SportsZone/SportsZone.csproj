@@ -141,11 +141,13 @@
       <DependentUpon>SZModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ClubController.cs" />
     <Compile Include="Controllers\CoachActivitiesController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\GlobalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MembershipController.cs" />
     <Compile Include="Controllers\MiscController.cs" />
     <Compile Include="Controllers\PlayerActivitiesController.cs" />
     <Compile Include="feedback.cs">
@@ -161,6 +163,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Authority\Authorized.cs" />
+    <Compile Include="Helpers\Authority\OnlyForAdmin.cs" />
     <Compile Include="Helpers\Authority\OnlyForClub.cs" />
     <Compile Include="Helpers\Authority\OnlyForCoach.cs" />
     <Compile Include="Helpers\Authority\OnlyForPlayer.cs" />
@@ -988,8 +991,10 @@
     <Content Include="themes\ud\plugins\x-editable\img\loading.gif" />
     <Content Include="themes\ud\plugins\x-editable\js\bootstrap-editable.js" />
     <Content Include="themes\ud\plugins\x-editable\js\bootstrap-editable.min.js" />
+    <Content Include="uploads\media\jabbar.jpg" />
     <Content Include="uploads\media\no-cover.jpg" />
     <Content Include="uploads\media\no-image.jpg" />
+    <Content Include="uploads\media\zia.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1168,6 +1173,13 @@
     <Content Include="Views\Club\EnrolledPlayers.cshtml" />
     <Content Include="Views\Club\CoachAssociationRequest.cshtml" />
     <Content Include="Views\Club\EnrolledCoachs.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
+    <Content Include="Views\Admin\Clubs.cshtml" />
+    <Content Include="Views\Admin\Coachs.cshtml" />
+    <Content Include="Views\Admin\Players.cshtml" />
+    <Content Include="Views\Home\MatchrResults.cshtml" />
+    <Content Include="Views\Shared\Partial\admin.cshtml" />
+    <Content Include="Views\Membership\Dues.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -88,6 +88,11 @@ namespace SportsZone.Controllers
                         cover = cover
                     };
                     context.teams.Add(tm);
+                    //adding games to clubs
+                    var update = context.clubs.Find(clubid);
+                    update.cg = update.cg + gameid + ",";
+                    context.Entry(update).State = EntityState.Modified;
+                    //save changes to db
                     context.SaveChanges();
                     TempData["Message"] = "New team has been created!";
                     return RedirectToAction("teams");
@@ -375,6 +380,11 @@ namespace SportsZone.Controllers
                     };
                     context.player_associations.Add(plyas);
                     context.SaveChanges();
+                    //closing request
+                    var update = context.player_associations_request.Find(cid);
+                    update.parstatus = false;
+                    context.Entry(update).State = EntityState.Modified;
+                    context.SaveChanges();
                     return Json(new { Msg = "Player's request has been accepted and closed!" }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -462,6 +472,11 @@ namespace SportsZone.Controllers
                         C_date = DateTime.Now
                     };
                     context.coach_associations.Add(plyas);
+                    context.SaveChanges();
+                    //closing request
+                    var update = context.coach_associations_request.Find(cid);
+                    update.carstatus = false;
+                    context.Entry(update).State = EntityState.Modified;
                     context.SaveChanges();
                     return Json(new { Msg = "Coach's request has been accepted and closed!" }, JsonRequestBehavior.AllowGet);
                 }

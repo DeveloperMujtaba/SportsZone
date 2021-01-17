@@ -181,6 +181,11 @@ _status char default 'L', --Lose=L, Draw=D, Win=W
 constraint "which match which team" foreign key (mid) references matches(mid),
 constraint "loser and winner" foreign key(clubid) references clubs(clubid),
 );
-
-select * from matches
-select * from match_result
+go
+insert into users values('admin','admin@admin.com','6545655465','$2a$13$VXnRyhr8cUQyFrUjux2LjufjnB.35PwMP3AquOfQaix6PcwjwkV4.','Admin',GETDATE(), 0,0,1,0)
+select * from games
+select * from games_positions
+-- Add New Games
+insert into games(gamename) values('Tennis')
+-- Add New Game Position
+insert into games_positions values(5,'Main')

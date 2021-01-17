@@ -2,7 +2,9 @@
 @{
     Layout = null;
 }
+
 <title>JZ Sports Zone | Login</title>
+<link href="~/themes/default/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 <body style="background-image:url('https://motionarray.imgix.net/preview-279485-UenCPR1wxc-high_0008.jpg'); background-repeat:no-repeat; background-size:cover">
     <link href="~/themes/default/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/themes/default/login/style.css" rel="stylesheet" />
@@ -21,7 +23,7 @@
                 <input type="email" placeholder="Email" name="Email" required />
                 <input type="password" placeholder="Password" name="Password" required />
                 <!--<a href="#">Forgot your password?</a>-->
-                <input type="submit" value="Sign In" form="mainloginform" />
+                <input style="color:orangered; border:1px solid orangered" class="btn btn-outline-danger" type="submit" value="Sign In" form="mainloginform" />
             </form>
         </div>
         <div class="overlay-container">
@@ -29,7 +31,7 @@
                 <div class="overlay-panel overlay-right">
                     <h1>Hello, Friend!</h1>
                     <p>Enter your personal details and start journey with us</p>
-                    <button onclick="navigatetoregister()" class="ghost" id="signUp">Sign Up</button>
+                    <button href="#" onclick="navigatetoregister()" class="btn btn-outline-success ghost" id="signUp">Sign Up</button>
                 </div>
             </div>
         </div>
@@ -40,14 +42,12 @@
             <p style="color:red">@ViewBag.Message</p>
         </div>
     }
-    <footer>
-        <p>
-            Created with <i class="fa fa-heart"></i> by
-            <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
-            - Read how I created this and how you can join the challenge
-            <a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
-        </p>
-    </footer>
+        <footer>
+            <p>
+                Created with <i class="fa fa-heart"></i> by
+                <a href="#">JZ Sports Zone</a>
+            </p>
+        </footer>
     <script>
         function navigatetoregister() {
             window.location.href = '/account/register';

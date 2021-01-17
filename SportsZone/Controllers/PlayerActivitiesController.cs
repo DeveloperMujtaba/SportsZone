@@ -89,7 +89,7 @@ namespace SportsZone.Controllers
             }
         }
         [HttpPost]
-        public ActionResult WithDrawEnrollmentRequest(string parid, string playerid)
+        public JsonResult WithDrawEnrollmentRequest(string parid, string playerid)
         {
             try
             {
@@ -107,24 +107,22 @@ namespace SportsZone.Controllers
                             delas.parstatus = false;
                             context.Entry(delas).State = EntityState.Modified;
                             context.SaveChanges();
-                            TempData["Message"] = "Your request has been withdrawn!";
+                            return Json(new { Msg= "Your request has been withdrawn!"}, JsonRequestBehavior.AllowGet);
                         }
                         else
                         {
-                            TempData["Message"] = "This request has already been witdrawn or processed!";
+                            return Json(new { Msg = "This request has already been witdrawn or processed!" }, JsonRequestBehavior.AllowGet);
                         }
-                        return RedirectToAction("enrollment-requests");
                     }
                     else
                     {
-                        return RedirectToAction("error-401", "global");
+                        return Json(new { Msg = "You don't have permissions to do that!" }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("enrollment-requests");
+                return Json(new { Msg = "Error occured! "+ ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
         [ActionName("create-enrollment-request")]

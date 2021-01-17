@@ -41,6 +41,11 @@ namespace SportsZone
                 url: "club-activities/{action}/{id}",
                 defaults: new { controller = "club", action = "index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "admin-activities-routes",
+                url: "admin-activities/{action}/{id}",
+                defaults: new { controller = "admin", action = "index", id = UrlParameter.Optional }
+            );
             //misc routes
             routes.MapRoute(
                 name: "misc-routes",
@@ -51,7 +56,13 @@ namespace SportsZone
             routes.MapRoute(
                 name: "global-error-routes",
                 url: "global/{action}",
-                defaults: new { controller = "global", action = "error-401"}
+                defaults: new { controller = "global", action = "error-401" }
+                );
+            // membership routes
+            routes.MapRoute(
+                name: "membership-routes",
+                url: "membership/{action}",
+                defaults: new { controller = "membership", action = "index"}
             );
             routes.MapRoute(
                 name: "Default",

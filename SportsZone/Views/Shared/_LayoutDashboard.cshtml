@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta content="Responsive admin theme build on top of Bootstrap 4" name="description" />
-    <meta content="Ghulam Mujtaba" name="author" />
-    <link rel="shortcut icon" href="~/themes/ud/images/favicon.ico">
+    <meta content="" name="author" />
+    <link rel="shortcut icon" href="https://www.eurosoccerusa.com/wp-content/uploads/2016/10/cropped-favicon-1.png">
     @Styles.Render("~/bundles/dashboard/css")
 </head>
 <body>
@@ -22,9 +22,9 @@
 
             <!-- LOGO -->
             <div class="topbar-left">
-                <a href="index.html" class="logo">
-                    <img src="~/themes/ud/images/logo-light.png" class="logo-lg" alt="" height="22">
-                    <img src="~/themes/ud/images/logo-sm.png" class="logo-sm" alt="" height="24">
+                <a href="/account/me" class="logo">
+                    <img src="https://sportszonearuba.com/wp-content/uploads/2016/03/logo_sza4-4.png" class="logo-lg" alt="" height="60">
+                    <img src="~/themes/default/images/our-logo.png" class="logo-sm" alt="" height="22">
                 </a>
             </div>
             <nav class="navbar-custom">
@@ -170,6 +170,15 @@
                                 <a href="/club-activities/coach-requests" class="waves-effect"><i class="dripicons-user-group"></i><span> Coach Requests </span></a>
                             </li>
                         }
+                        else if (_u[0].usertype == "Admin")
+                        {
+                            <li>
+                                <a href="/admin-activities/users" class="waves-effect"><i class="dripicons-user-group"></i><span> Users </span></a>
+                                <a href="/admin-activities/clubs" class="waves-effect"><i class="dripicons-user-group"></i><span> Clubs </span></a>
+                                <a href="/admin-activities/coachs" class="waves-effect"><i class="dripicons-user-group"></i><span> Coachs </span></a>
+                                <a href="/admin-activities/players" class="waves-effect"><i class="dripicons-user-group"></i><span> Players </span></a>
+                            </li>
+                        }
 
                         <li class="menu-title">Payments</li>
                         <li>
@@ -200,7 +209,7 @@
             <!-- content -->
 
             <footer class="footer">
-                © 2019 Zegva <span class="d-none d-sm-inline-block"> - Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign</span>.
+                © Zia & Jabbar <span class="d-none d-sm-inline-block"> - Comsats <i class="mdi mdi-heart text-danger"></i> FYP</span>.
             </footer>
 
         </div>

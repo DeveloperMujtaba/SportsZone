@@ -134,7 +134,7 @@ namespace SportsZone.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel lm)
         {
-            if (ModelState.IsValid && _IsExist.User(lm.Email) && _auth.Verify(lm.Email, lm.Password))
+            if (ModelState.IsValid && _IsExist.User(lm.Email) && _auth.Verify(lm.Email, lm.Password)  && _IsExist.NotBan(lm.Email))
             {
                 try
                 {
@@ -156,7 +156,7 @@ namespace SportsZone.Controllers
             }
             else
             {
-                ViewBag.Message = "Invalid data or user doesn't exist!";
+                ViewBag.Message = "Invalid data, user doesn't exist, or you don't have permissions to login";
                 return View("login");
             }
         }
@@ -242,7 +242,7 @@ namespace SportsZone.Controllers
                     return PartialView("~/Views/Shared/Partial/coachdetail.cshtml", pp);
                 }
             }
-            else
+            else if (d[0].usertype == "Club")
             {
                 using (var ctx = new Entities())
                 {
@@ -250,6 +250,10 @@ namespace SportsZone.Controllers
                     clubs pp = p[0];
                     return PartialView("~/Views/Shared/Partial/clubdetail.cshtml", pp);
                 }
+            }
+            else
+            {
+                return PartialView("~/Views/Shared/Partial/admin.cshtml");
             }
         }
         [Authorized]

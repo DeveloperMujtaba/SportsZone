@@ -141,6 +141,7 @@ namespace SportsZone.Controllers
                                                             where pl.coachs.users.username == id
                                                             select pl)
                                                             .Include("teams")
+                                                            .Include("teams.games")
                                                             .Include("clubs")
                                                             .ToList();
                             if (ca.Count == 0) ViewBag.CoachAssociations = null;
@@ -330,7 +331,7 @@ namespace SportsZone.Controllers
                                             .Include("players.users")
                                             .Include("players.games_positions")
                                                         .ToList();
-                        if (pl.Count > 0) return ViewBag.Players = pl;
+                        if (pl.Count > 0) ViewBag.Players = pl;
                         else ViewBag.Players = null;
                         return View("teamdetail", team[0]);
                     }
@@ -346,7 +347,33 @@ namespace SportsZone.Controllers
         [ActionName("matchs")]
         public ActionResult Matchs()
         {
-            return View();
+            using (var context = new Entities())
+            {
+                List<matches> mtchs = (from m in context.matches
+                                       where m.ov == "Accepted"
+                                       select m)
+                                       .Include("clubs")
+                                       .Include("clubs1")
+                                       .Include("games")
+                                       .ToList();
+                return View(mtchs);
+            }
+                
+        }
+        [ActionName("match-results")]
+        public ActionResult MatchrResults()
+        {
+            using (var context = new Entities())
+            {
+                List<match_result> mtchs = (from m in context.match_result
+                                       select m)
+                                       .Include("matches")
+                                       .Include("matches.games")
+                                       .Include("clubs")
+                                       .ToList();
+                return View("MatchrResults", mtchs);
+            }
+                
         }
     }
 }
