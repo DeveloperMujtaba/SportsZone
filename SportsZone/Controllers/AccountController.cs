@@ -101,7 +101,7 @@ namespace SportsZone.Controllers
                             int __userid = (from u in context.users where u.email == rm.Email select u.userid).SingleOrDefault();
                             clubs _c = new clubs
                             {
-                                clubid = __userid,
+                                clubid = (context.clubs.Max(c => c.clubid)+1),
                                 userid = __userid,
                                 logo = "no-image.jpg",
                                 cover = "no-cover.jpg",
@@ -184,19 +184,21 @@ namespace SportsZone.Controllers
         }
         [Authorized]
         [HttpPost]
-        public ActionResult UpdateUser(users um)
+        public ActionResult UpdateUser(string email, string phone, string passwd)
         {
             try
             {
+                List<users> d = (List<users>)Session["Data"];
+                int uid = d[0].userid;
                 using (var context = new Entities())
                 {
-                    var update = context.users.Find(um.userid);
-                    if (um.passwd!=null && um.passwd.Length >= 6)
+                    var update = context.users.Find(uid);
+                    if (passwd!=null && passwd.Length >= 6)
                     {
-                        update.passwd = _auth.GenPassword(um.passwd);
+                        update.passwd = _auth.GenPassword(passwd);
                     }
-                    update.email = um.email;
-                    update.phone = um.phone;
+                    update.email = email;
+                    update.phone = phone;
                     context.Entry(update).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
                     TempData["Message"] = "Changes have been saved!";
@@ -261,13 +263,17 @@ namespace SportsZone.Controllers
         }
         [Authorized]
         [HttpPost]
-        public ActionResult SavePlayers(players pl, HttpPostedFileBase photo1, HttpPostedFileBase photo2)
+        public ActionResult SavePlayers(string playername, string age, string height, string bio, HttpPostedFileBase photo1, HttpPostedFileBase photo2)
         {
             try
             {
+                List<users> d = (List<users>)Session["Data"];
+                int uid = d[0].userid;
+                
                 using (var context = new Entities())
                 {
-                    var update = context.players.Find(pl.playerid);
+                    int playerid = (from p in context.players where p.userid == uid select p.playerid).SingleOrDefault();
+                    var update = context.players.Find(playerid);
                     if (photo1 != null)
                     {
                         string pic = System.IO.Path.GetFileName(photo1.FileName);
@@ -288,10 +294,10 @@ namespace SportsZone.Controllers
                         photo2.SaveAs(path);
                         update.cover = newname;
                     }
-                    update.age = pl.age;
-                    update.bio = pl.bio;
-                    update.height = pl.height;
-                    update.playername = pl.playername;
+                    update.age = int.Parse(age);
+                    update.bio = bio;
+                    update.height = float.Parse(height);
+                    update.playername = playername;
                     context.Entry(update).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
                     TempData["Message"] = "Changes have been saved!";
@@ -306,13 +312,16 @@ namespace SportsZone.Controllers
         }
         [Authorized]
         [HttpPost]
-        public ActionResult SaveCoach(coachs pl, HttpPostedFileBase photo1, HttpPostedFileBase photo2)
+        public ActionResult SaveCoach(string name, string age, string bio, HttpPostedFileBase photo1, HttpPostedFileBase photo2)
         {
             try
             {
+                List<users> d = (List<users>)Session["Data"];
+                int uid = d[0].userid;
                 using (var context = new Entities())
                 {
-                    var update = context.coachs.Find(pl.coachid);
+                    int coachid = (from ci in context.coachs where ci.userid == uid select ci.coachid).SingleOrDefault();
+                    var update = context.coachs.Find(coachid);
                     if (photo1 != null)
                     {
                         string pic = System.IO.Path.GetFileName(photo1.FileName);
@@ -333,9 +342,9 @@ namespace SportsZone.Controllers
                         photo2.SaveAs(path);
                         update.cover = newname;
                     }
-                    update.age = pl.age;
-                    update.bio = pl.bio;
-                    update.name = pl.name;
+                    update.age = int.Parse(age);
+                    update.bio = bio;
+                    update.name = name;
                     context.Entry(update).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
                     TempData["Message"] = "Changes have been saved!";
@@ -350,37 +359,42 @@ namespace SportsZone.Controllers
         }
         [Authorized]
         [HttpPost]
-        public ActionResult SaveClub(clubs pl, HttpPostedFileBase photo1, HttpPostedFileBase photo2)
+        public ActionResult SaveClub(string clubname, string city, string C_state, string C_address, string @long, string lat, HttpPostedFileBase photo1, HttpPostedFileBase photo2)
         {
             try
             {
+                List<users> d = (List<users>)Session["Data"];
+                int uid = d[0].userid;
                 using (var context = new Entities())
                 {
-                    var update = context.clubs.Find(pl.clubid);
+                    int clubid = (from cl in context.clubs where cl.userid == uid select cl.clubid).SingleOrDefault();
+                    var update = context.clubs.Find(clubid);
                     if (photo1 != null)
                     {
                         string pic = System.IO.Path.GetFileName(photo1.FileName);
+                        string newname = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
                         string path = System.IO.Path.Combine(
-                        Server.MapPath("~/uploads/media"), "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1]);
+                        Server.MapPath("~/uploads/media"), newname);
                         // file is uploaded
                         photo1.SaveAs(path);
-                        update.logo = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
+                        update.logo = newname;
                     }
                     if (photo2 != null)
                     {
                         string pic = System.IO.Path.GetFileName(photo2.FileName);
                         string newname = "spz-" + pic.Split('.')[0] + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss") + "." + pic.Split('.')[1];
+                        string path = System.IO.Path.Combine(
+                        Server.MapPath("~/uploads/media"), newname);
                         // file is uploaded
-                        photo2.SaveAs(System.IO.Path.Combine(
-                        Server.MapPath("~/uploads/media"), path2: newname));
+                        photo2.SaveAs(path);
                         update.cover = newname;
                     }
-                    update.clubname = pl.clubname;
-                    update.city = pl.city;
-                    update.C_state = pl.C_state;
-                    update.C_address = pl.C_address;
-                    update.lat = pl.lat;
-                    update.@long = pl.@long;
+                    update.clubname = clubname;
+                    update.city = city;
+                    update.C_state = C_state;
+                    update.C_address = C_address;
+                    update.lat = lat;
+                    update.@long = @long;
                     context.Entry(update).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
                     TempData["Message"] = "Changes have been saved!";
